@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Training;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -22,7 +24,7 @@ class TrainingCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            TextEditorField::new('description'),
+            TextareaField::new('description'),
             DateField::new('startDate'),
             DateField::new('endDate'),
             MoneyField::new('price')
@@ -36,10 +38,7 @@ class TrainingCrudController extends AbstractCrudController
                 ->setRequired(false)
                 ->setHelp('Select the courses related to this training')
                 ->setLabel('Courses')
-                ->setColumns('col-12 col-md-6 col-lg-4')
-                ->setFormTypeOption('attr', [
-                    'class' => 'form-check-input',
-                ])
+                ->setColumns('col-12 col-md-6 col-lg-4'),
         ];
     }
 }
