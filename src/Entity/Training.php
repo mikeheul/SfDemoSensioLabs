@@ -32,14 +32,14 @@ class Training
     private ?float $price = null;
 
     /**
-     * @var Collection<int, Shedule>
+     * @var Collection<int, Course>
      */
-    #[ORM\OneToMany(targetEntity: Shedule::class, mappedBy: 'training', orphanRemoval: true)]
-    private Collection $shedules;
+    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'trainings')]
+    private Collection $courses;
 
     public function __construct()
     {
-        $this->shedules = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,31 +108,25 @@ class Training
     }
 
     /**
-     * @return Collection<int, Shedule>
+     * @return Collection<int, Course>
      */
-    public function getShedules(): Collection
+    public function getCourses(): Collection
     {
-        return $this->shedules;
+        return $this->courses;
     }
 
-    public function addShedule(Shedule $shedule): static
+    public function addCourse(Course $course): static
     {
-        if (!$this->shedules->contains($shedule)) {
-            $this->shedules->add($shedule);
-            $shedule->setTraining($this);
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
         }
 
         return $this;
     }
 
-    public function removeShedule(Shedule $shedule): static
+    public function removeCourse(Course $course): static
     {
-        if ($this->shedules->removeElement($shedule)) {
-            // set the owning side to null (unless already changed)
-            if ($shedule->getTraining() === $this) {
-                $shedule->setTraining(null);
-            }
-        }
+        $this->courses->removeElement($course);
 
         return $this;
     }

@@ -29,12 +29,6 @@ class TrainingCrudController extends AbstractCrudController
                 ->setCurrency('EUR')
                 ->setStoredAsCents(false)
                 ->setCustomOption('maxLength', 10),
-            AssociationField::new('shedules')
-                ->setFormTypeOption('by_reference', false)
-                ->setFormTypeOption('multiple', true)
-                ->setFormTypeOption('expanded', true)
-                ->setFormTypeOption('attr', ['class' => 'form-check-input'])
-                ->setCustomOption('maxLength', 10),
         ];
     }
 }

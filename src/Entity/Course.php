@@ -23,14 +23,14 @@ class Course
     private ?string $description = null;
 
     /**
-     * @var Collection<int, Shedule>
+     * @var Collection<int, Training>
      */
-    #[ORM\OneToMany(targetEntity: Shedule::class, mappedBy: 'course', orphanRemoval: true)]
-    private Collection $shedules;
+    #[ORM\ManyToMany(targetEntity: Training::class, mappedBy: 'courses')]
+    private Collection $trainings;
 
     public function __construct()
     {
-        $this->shedules = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,30 +63,27 @@ class Course
     }
 
     /**
-     * @return Collection<int, Shedule>
+     * @return Collection<int, Training>
      */
-    public function getShedules(): Collection
+    public function getTrainings(): Collection
     {
-        return $this->shedules;
+        return $this->trainings;
     }
 
-    public function addShedule(Shedule $shedule): static
+    public function addTraining(Training $training): static
     {
-        if (!$this->shedules->contains($shedule)) {
-            $this->shedules->add($shedule);
-            $shedule->setCourse($this);
+        if (!$this->trainings->contains($training)) {
+            $this->trainings->add($training);
+            $training->addCourse($this);
         }
 
         return $this;
     }
 
-    public function removeShedule(Shedule $shedule): static
+    public function removeTraining(Training $training): static
     {
-        if ($this->shedules->removeElement($shedule)) {
-            // set the owning side to null (unless already changed)
-            if ($shedule->getCourse() === $this) {
-                $shedule->setCourse(null);
-            }
+        if ($this->trainings->removeElement($training)) {
+            $training->removeCourse($this);
         }
 
         return $this;
