@@ -24,18 +24,23 @@ class Training
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['training:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['training:read'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['training:read'])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['training:read'])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column]
+    #[Groups(['training:read'])]
     private ?float $price = null;
 
     /**
