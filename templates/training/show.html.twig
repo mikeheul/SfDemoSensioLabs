@@ -27,9 +27,9 @@
             {% endif %}
         {% endif %}
 
-        <div class="flex gap-3">
+        <div class="flex flex-col lg:flex-row gap-3">
             <!-- Courses Section -->
-            <div class="mt-8 w-1/2">
+            <div class="mt-8 w-full lg:w-1/2">
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
                 <ul class="mt-4 space-y-4">
                     {% for course in training.courses %}
@@ -43,7 +43,7 @@
     
             <!-- Students -->
             {% if app.user and is_granted("ROLE_ADMIN") or is_granted("ROLE_TEACHER") %}
-                <div class="mt-8 w-1/2">
+                <div class="mt-8 w-full lg:w-1/2">
                     <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
                     <ul class="mt-4 space-y-4">
                         {% for student in training.trainees %}
