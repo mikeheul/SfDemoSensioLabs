@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\TrainingRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\TrainingRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TrainingRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['training:read']],
+    denormalizationContext: ['groups' => ['training:write']]
+)]
 class Training
 {
     #[ORM\Id]
@@ -35,6 +42,8 @@ class Training
      * @var Collection<int, Course>
      */
     #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'trainings')]
+    #[ApiProperty(readable: true)]
+    #[Groups(['training:read'])]
     private Collection $courses;
 
     public function __construct()
