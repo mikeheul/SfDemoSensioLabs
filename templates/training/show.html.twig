@@ -3,18 +3,24 @@
 {% block title %}Training Page{% endblock %}
 
 {% block body %}
-    <h1>{{ training.title }}</h1>
+    <div class="container mx-auto px-6 py-8">
+        <!-- Title and Description -->
+        <div class="mb-6">
+            <h1 class="text-4xl font-semibold text-gray-800">{{ training.title }}</h1>
+            <p class="text-lg text-gray-600 mt-2">{{ training.description }}</p>
+            <p class="text-xl font-bold text-indigo-600 mt-4">{{ training.price }} €</p>
+        </div>
 
-    <p>{{ training.description }}</p>
-    <p>{{ training.price }} €</p>
-    
-    <div>
-        <h2>Sheduled courses</h2>
-        <ul>
-            {% for course in training.courses %}
-                <li>{{ course.name }}</li>
-            {% endfor %}
-        </ul>
+        <!-- Courses Section -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
+            <ul class="mt-4 space-y-4">
+                {% for course in training.courses %}
+                    <li class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-50 transition duration-200">
+                        <p class="text-lg text-blue-600 font-semibold">{{ course.name }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
 {% endblock %}

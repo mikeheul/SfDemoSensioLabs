@@ -3,8 +3,15 @@
 {% block title %}Course Page{% endblock %}
 
 {% block body %}
-    <h1>{{ course.name }}</h1>
+    <div class="container mx-auto px-6 py-8">
+        <!-- Course Title -->
+        <div class="mb-6">
+            <h1 class="text-4xl font-semibold text-gray-800">{{ course.name }}</h1>
+        </div>
 
-    <p>{{ course.description }}</p>
-
+        <!-- Course Description -->
+        <div class="mt-4">
+            <p class="text-lg text-gray-600">{{ course.description }}</p>
+        </div>
+    </div>
 {% endblock %}
