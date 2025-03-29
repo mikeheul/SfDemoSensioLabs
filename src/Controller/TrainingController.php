@@ -48,8 +48,12 @@ final class TrainingController extends AbstractController
         $training = $trainingService->getTrainingById($id);
         $user = $this->getUser();
 
-        if (in_array('ROLE_STUDENT', $user->getRoles())) {
-            $isEnrolled = $training->getTrainees()->contains($user);
+        if ($user) {
+            if (in_array('ROLE_STUDENT', $user->getRoles())) {
+                $isEnrolled = $training->getTrainees()->contains($user);
+            } else {
+                $isEnrolled = false;
+            }
         } else {
             $isEnrolled = false;
         }
