@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/training')]
 final class TrainingController extends AbstractController
 {
-    #[Route('/training', name: 'app_training')]
+    #[Route('/', name: 'app_training')]
     public function index(): Response
     {
         return $this->render('training/index.html.twig', [
@@ -20,7 +21,7 @@ final class TrainingController extends AbstractController
         ]);
     }
 
-    #[Route('/training/new', name: 'new_training')]
+    #[Route('/new', name: 'new_training')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(TrainingType::class, new Training());
