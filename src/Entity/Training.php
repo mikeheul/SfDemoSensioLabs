@@ -51,9 +51,16 @@ class Training
     #[Groups(['training:read'])]
     private Collection $courses;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trainings')]
+    private Collection $trainees;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->trainees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,5 +155,29 @@ class Training
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getTrainees(): Collection
+    {
+        return $this->trainees;
+    }
+
+    public function addTrainee(User $trainee): static
+    {
+        if (!$this->trainees->contains($trainee)) {
+            $this->trainees->add($trainee);
+        }
+
+        return $this;
+    }
+
+    public function removeTrainee(User $trainee): static
+    {
+        $this->trainees->removeElement($trainee);
+
+        return $this;
     }
 }

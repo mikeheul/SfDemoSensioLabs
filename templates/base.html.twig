@@ -29,8 +29,12 @@
 
                 <div class="flex gap-5 items-center">
                     {% if app.user %}
-                        <span class="text-md font-semibold">{{ app.user.username }}</span>
+                        <span class="text-md font-semibold">{{ app.user.email }}</span>
                         <a href="{{ path('app_logout') }}" class="text-md font-semibold hover:text-indigo-200">Logout</a>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('admin') }}" class="text-md font-semibold hover:text-indigo-200">Admin</a>
+                        {% endif %}
                     {% else %}
                         <a href="{{ path('app_register') }}" class="text-md font-semibold hover:text-indigo-200">Register</a>
                         <a href="{{ path('app_login') }}" class="text-md font-semibold hover:text-indigo-200">Login</a>
