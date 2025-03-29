@@ -22,11 +22,11 @@ Course : name, description
 
 Steps :
 ✅ -- Création projet : symfony new SfDemoSensioLabs --webapp
--- Installation des dépendances : 
+✅ -- Installation des dépendances : 
     ✅ - composer require easycorp/easyadmin-bundle
     ✅ - composer require api
 ✅ -- Création dashboard admin : symfony console make:admin:dashboard
--- Installation / configuration de TailwindCSS 
+✅ -- Installation / configuration de TailwindCSS 
 ✅ -- Modification du fichier .env pour la base de données (MySQL)
 ✅ -- Création de la base de données : symfony console doctrine:database:create (d:d:c)
 ✅ -- Création des entités : symfony console make:entity
