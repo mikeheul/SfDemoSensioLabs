@@ -29,6 +29,17 @@ class TrainingCrudController extends AbstractCrudController
                 ->setCurrency('EUR')
                 ->setStoredAsCents(false)
                 ->setCustomOption('maxLength', 10),
+            AssociationField::new('courses')
+                ->setFormTypeOption('multiple', true)
+                ->setFormTypeOption('expanded', true)
+                ->setFormTypeOption('by_reference', false)
+                ->setRequired(false)
+                ->setHelp('Select the courses related to this training')
+                ->setLabel('Courses')
+                ->setColumns('col-12 col-md-6 col-lg-4')
+                ->setFormTypeOption('attr', [
+                    'class' => 'form-check-input',
+                ])
         ];
     }
 }
