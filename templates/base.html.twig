@@ -46,6 +46,12 @@
 
     <!-- Main content -->
     <main class="container mx-auto px-6 py-8">
+        {% if app.user %}
+            <p class="text-lg text-gray-600 mb-4">{{ app.user.roles | join(', ') }}</p>
+        {% else %}
+            <p class="text-lg text-gray-600 mb-4">Please register or login to access our trainings and courses.</p>
+        {% endif %}
+
         {% block body %}{% endblock %}
     </main>
 </body>
