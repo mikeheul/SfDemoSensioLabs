@@ -8,15 +8,15 @@ User
 Training : title, description, startDate, endDate, price, teacher, courses
 Course : name, description
 
--- CRUD training, course 
--- Auth : role student, teacher, admin
--- S'inscrire à un cours --> Mail de confirmation (EventSubscriber / EventListener)
--- Créer des services pour récupérer les formations, cours, students
--- API training, course (API Platform)
+✅ -- CRUD training, course 
+✅ -- Auth : role student, teacher, admin
+🟧 -- S'inscrire à un cours --> Mail de confirmation (EventSubscriber / EventListener)
+✅ -- Créer des services pour récupérer les formations, cours, students
+✅ -- API training, course (API Platform)
+✅ -- Back office Easy Admin (collectiontype courses dans training ?)
+-- Tests unitaires / fonctionnels / intégration
 -- Workflow pour l'inscription à un cours (admin valide l'inscription)
 -- Voters pour prof pour modifier sa formation, admin peut tout modifier
--- Tests unitaires / fonctionnels / intégration
-✅ -- Back office Easy Admin (collectiontype courses dans training ?)
 -- Fixtures pôur alimenter la base de données ?
 
 
