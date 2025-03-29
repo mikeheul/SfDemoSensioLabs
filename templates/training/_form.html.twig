@@ -1,27 +1,57 @@
-<div>
-    {{ form_start(formAddTraining, {'method': 'POST', 'action': path('new_training')}) }}
-        <div>
-            {{ form_row(formAddTraining.title) }}
+<div class="container mx-auto px-4 py-8">
+    <!-- Formulaire de création de formation -->
+    <div class="bg-white p-6 rounded-lg max-w-3xl mx-auto">
+        <h1 class="text-3xl font-semibold mb-6 text-center">Create New Training</h1>
+
+        {{ form_start(formAddTraining, {'method': 'POST', 'action': path('new_training')}) }}
+        
+        <!-- Titre de la formation -->
+        <div class="mb-4">
+            {{ form_row(formAddTraining.title, {
+                'label': 'Training Title',
+                'attr': {'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+            }) }}
         </div>
 
-        <div>
-            {{ form_row(formAddTraining.description) }}
+        <!-- Description de la formation -->
+        <div class="mb-4">
+            {{ form_row(formAddTraining.description, {
+                'label': 'Description',
+                'attr': {'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+            }) }}
         </div>
 
-        <div>
-            {{ form_row(formAddTraining.startDate) }}
+        <!-- Date de début -->
+        <div class="mb-4">
+            {{ form_row(formAddTraining.startDate, {
+                'label': 'Start Date',
+                'attr': {'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+            }) }}
         </div>
 
-        <div>
-            {{ form_row(formAddTraining.endDate) }}
+        <!-- Date de fin -->
+        <div class="mb-4">
+            {{ form_row(formAddTraining.endDate, {
+                'label': 'End Date',
+                'attr': {'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+            }) }}
         </div>
 
-        <div>
-            {{ form_row(formAddTraining.price) }}
+        <!-- Prix -->
+        <div class="mb-4">
+            {{ form_row(formAddTraining.price, {
+                'label': 'Price (EUR)',
+                'attr': {'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+            }) }}
         </div>
 
-        <div>
-            <button type="submit">Enregistrer</button>
+        <!-- Bouton de soumission -->
+        <div class="mb-4 text-center">
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Enregistrer
+            </button>
         </div>
-    {{ form_end(formAddTraining) }}
+
+        {{ form_end(formAddTraining) }}
+    </div>
 </div>
