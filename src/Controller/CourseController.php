@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Form\CourseType;
+use App\Service\CourseService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class CourseController extends AbstractController
 {
     #[Route('/', name: 'app_course')]
-    public function index(): Response
+    public function index(CourseService $courseService): Response
     {
+        $courses = $courseService->getAllCourses();
         return $this->render('course/index.html.twig', [
-            'controller_name' => 'CourseController',
+            'courses' => $courses,
         ]);
     }
     
@@ -38,6 +40,15 @@ final class CourseController extends AbstractController
         }
         return $this->render('course/new.html.twig', [
             'formAddCourse' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show_course')]
+    public function show(int $id, CourseService $courseService): Response
+    {
+        $course = $courseService->getCourseById($id);
+        return $this->render('course/show.html.twig', [
+            'course' => $course,
         ]);
     }
 }

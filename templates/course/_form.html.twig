@@ -1,3 +1,15 @@
 <div>
-    {{ form(formAddCourse) }}
+    {{ form_start(formAddCourse, {'method': 'POST', 'action': path('new_course')}) }}
+        <div>
+            {{ form_row(formAddCourse.name) }}
+        </div>
+
+        <div>
+            {{ form_row(formAddCourse.description) }}
+        </div>
+
+        <div>
+            <button type="submit">Enregistrer</button>
+        </div>
+    {{ form_end(formAddCourse) }}
 </div>

@@ -26,7 +26,6 @@ class TrainingType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('price', NumberType::class, [])
-            ->add('submit', SubmitType::class, [])
         ;
     }
 

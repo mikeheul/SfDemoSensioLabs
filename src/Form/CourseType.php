@@ -17,7 +17,6 @@ class CourseType extends AbstractType
         $builder
             ->add('name', TextType::class, [])
             ->add('description', TextareaType::class, [])
-            ->add('submit', SubmitType::class, [])
         ;
     }
 

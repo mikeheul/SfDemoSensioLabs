@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Training;
 use App\Form\TrainingType;
+use App\Service\TrainingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class TrainingController extends AbstractController
 {
     #[Route('/', name: 'app_training')]
-    public function index(): Response
+    public function index(TrainingService $trainingService): Response
     {
+        $trainings = $trainingService->getAllTrainings();
         return $this->render('training/index.html.twig', [
-            'controller_name' => 'TrainingController',
+            'trainings' => $trainings,
         ]);
     }
 
@@ -37,6 +39,15 @@ final class TrainingController extends AbstractController
         }
         return $this->render('training/new.html.twig', [
             'formAddTraining' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show_training')]
+    public function show(int $id, TrainingService $trainingService): Response
+    {
+        $training = $trainingService->getTrainingById($id);
+        return $this->render('training/show.html.twig', [
+            'training' => $training,
         ]);
     }
 }

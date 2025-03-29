@@ -9,4 +9,13 @@
         <button class="btn btn-primary">Create new training</button>
     </a>
 
+    <div>
+        {% for training in trainings %}
+            <div>
+                <h2><a href="{{ path('show_training', {'id': training.id}) }}">{{ training.title }}</a></h2>
+                <p>{{ training.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

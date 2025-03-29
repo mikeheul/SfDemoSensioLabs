@@ -1,3 +1,27 @@
 <div>
-    {{ form(formAddTraining) }}
+    {{ form_start(formAddTraining, {'method': 'POST', 'action': path('new_training')}) }}
+        <div>
+            {{ form_row(formAddTraining.title) }}
+        </div>
+
+        <div>
+            {{ form_row(formAddTraining.description) }}
+        </div>
+
+        <div>
+            {{ form_row(formAddTraining.startDate) }}
+        </div>
+
+        <div>
+            {{ form_row(formAddTraining.endDate) }}
+        </div>
+
+        <div>
+            {{ form_row(formAddTraining.price) }}
+        </div>
+
+        <div>
+            <button type="submit">Enregistrer</button>
+        </div>
+    {{ form_end(formAddTraining) }}
 </div>

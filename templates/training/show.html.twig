@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Training Page{% endblock %}
+
+{% block body %}
+    <h1>{{ training.title }}</h1>
+
+    <p>{{ training.description }}</p>
+    
+    <div>
+        <h2>Sheduled courses</h2>
+        <ul>
+            {% for course in training.courses %}
+                <li>{{ course.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
