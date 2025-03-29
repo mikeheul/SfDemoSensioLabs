@@ -46,8 +46,36 @@ final class TrainingController extends AbstractController
     public function show(int $id, TrainingService $trainingService): Response
     {
         $training = $trainingService->getTrainingById($id);
+        $user = $this->getUser();
+
+        if (in_array('ROLE_STUDENT', $user->getRoles())) {
+            $isEnrolled = $training->getTrainees()->contains($user);
+        } else {
+            $isEnrolled = false;
+        }
+
         return $this->render('training/show.html.twig', [
             'training' => $training,
+            'isEnrolled' => $isEnrolled,
         ]);
+    }
+
+    #[Route('/{id}/enroll', name: 'enroll_training')]
+    public function toggleEnrollment(Training $training, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if (in_array('ROLE_STUDENT', $user->getRoles())) {
+            if ($training->getTrainees()->contains($user)) {
+                $training->removeTrainee($user);
+            } else {
+                $training->addTrainee($user);
+            }
+
+            $entityManager->persist($training);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
     }
 }
