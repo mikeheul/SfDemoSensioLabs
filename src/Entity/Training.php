@@ -151,12 +151,7 @@ class Training
 
         return $this;
     }
-
-    public function __toString(): string
-    {
-        return $this->title;
-    }
-
+    
     /**
      * @return Collection<int, User>
      */
@@ -164,20 +159,25 @@ class Training
     {
         return $this->trainees;
     }
-
+    
     public function addTrainee(User $trainee): static
     {
         if (!$this->trainees->contains($trainee)) {
             $this->trainees->add($trainee);
         }
-
+        
         return $this;
     }
-
+    
     public function removeTrainee(User $trainee): static
     {
         $this->trainees->removeElement($trainee);
-
+        
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title.' - ' . $this->startDate->format('Y-m-d') . ' to ' . $this->endDate->format('Y-m-d');
     }
 }
