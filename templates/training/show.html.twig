@@ -11,7 +11,7 @@
             <p class="text-xl font-bold text-indigo-600 mt-4">{{ training.price }} €</p>
         </div>
 
-        {% if app.user and is_granted("ROLE_STUDENT") %}
+        {% if is_granted('TRAINING_SUBSCRIBE', training) %}
             {% if isEnrolled %}
                 <form action="{{ path('enroll_training', {'id': training.id}) }}" method="post">
                     <button type="submit" class="py-2 px-4 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
@@ -52,7 +52,7 @@
             </div>
     
             <!-- Students -->
-            {% if app.user and is_granted("ROLE_ADMIN") or is_granted("ROLE_TEACHER") %}
+            {% if is_granted('TRAINING_VIEW_STUDENTS', training) %}
                 <div class="mt-8 w-full lg:w-1/2">
                     <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
                     <ul class="mt-4 space-y-4">
