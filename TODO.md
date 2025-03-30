@@ -14,7 +14,7 @@ Course : name, description
 ✅ -- Créer des services pour récupérer les formations, cours, students
 ✅ -- API training, course (API Platform)
 ✅ -- Back office Easy Admin (collectiontype courses dans training ?)
--- Tests unitaires / fonctionnels / intégration
+✅ -- Tests unitaires / fonctionnels / intégration
 -- Workflow pour l'inscription à un cours (admin valide l'inscription)
 ✅ -- Voters
 ✅ -- Subscriber : inscription / désinscription d'un stagiaire à une formation --> email de confirmation
