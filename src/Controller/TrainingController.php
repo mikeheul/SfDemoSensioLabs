@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Service\TrainingService;
+use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_training')]
-    public function show(int $id, TrainingService $trainingService): Response
+    public function show(int $id, TrainingService $trainingService, TrainingRepository $tr): Response
     {
         $training = $trainingService->getTrainingById($id);
         $user = $this->getUser();
@@ -58,9 +59,12 @@ final class TrainingController extends AbstractController
             $isEnrolled = false;
         }
 
+        $coursesNotInTraining = $tr->findCoursesNotInTraining($training);
+
         return $this->render('training/show.html.twig', [
             'training' => $training,
             'isEnrolled' => $isEnrolled,
+            'coursesNotInTraining' => $coursesNotInTraining,
         ]);
     }
 

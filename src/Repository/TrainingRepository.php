@@ -16,28 +16,26 @@ class TrainingRepository extends ServiceEntityRepository
         parent::__construct($registry, Training::class);
     }
 
-    //    /**
-    //     * @return Training[] Returns an array of Training objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findCoursesNotInTraining(Training $training): array
+    {
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
 
-    //    public function findOneBySomeField($value): ?Training
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $qb = $sub;
+
+        $qb->select('c')
+            ->from('App\Entity\Course', 'c')
+            ->leftJoin('c.trainings', 't')
+            ->where('t.id = :id');
+            
+        $sub = $em->createQueryBuilder();
+
+        $sub->select('co')
+            ->from('App\Entity\Course', 'co')
+            ->where($qb->expr()->notIn('co.id', $qb->getDQL()))
+            ->setParameter('id', $training->getId());
+        
+        $query = $sub->getQuery();
+        return $query->getResult();
+    }
 }
