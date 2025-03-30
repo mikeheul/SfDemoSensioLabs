@@ -17,6 +17,7 @@ Course : name, description
 -- Tests unitaires / fonctionnels / intégration
 -- Workflow pour l'inscription à un cours (admin valide l'inscription)
 ✅ -- Voters
+✅ -- Subscriber : inscription / désinscription d'un stagiaire à une formation --> email de confirmation
 -- Fixtures pôur alimenter la base de données ?
 
 
