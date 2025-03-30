@@ -16,7 +16,7 @@ Course : name, description
 ✅ -- Back office Easy Admin (collectiontype courses dans training ?)
 -- Tests unitaires / fonctionnels / intégration
 -- Workflow pour l'inscription à un cours (admin valide l'inscription)
--- Voters pour prof pour modifier sa formation, admin peut tout modifier
+✅ -- Voters
 -- Fixtures pôur alimenter la base de données ?
 
 
