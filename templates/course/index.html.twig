@@ -7,13 +7,7 @@
         <h1 class="text-5xl font-bold text-gray-800 mb-8">Courses</h1>
 
         <div class="mb-6">
-            {% if is_granted("ENTITY_CREATE") %}
-                <a href="{{ path('new_course') }}">
-                    <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out cursor-pointer">
-                        Create New Course
-                    </button>
-                </a>
-            {% endif %}
+            {% include 'components/create_button.html.twig' with { 'route': 'new_course', 'label': 'Create New Course' } %}
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
