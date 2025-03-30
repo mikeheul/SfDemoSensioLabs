@@ -47,6 +47,12 @@ final class TrainingController extends AbstractController
     public function show(int $id, TrainingService $trainingService, TrainingRepository $tr): Response
     {
         $training = $trainingService->getTrainingById($id);
+
+        if (!$training) {
+            $this->addFlash('error', 'Training not found.');
+            return $this->redirectToRoute('app_training');
+        }
+
         $user = $this->getUser();
 
         if ($user) {

@@ -47,6 +47,11 @@ final class CourseController extends AbstractController
     public function show(int $id, CourseService $courseService): Response
     {
         $course = $courseService->getCourseById($id);
+
+        if (!$course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+        
         return $this->render('course/show.html.twig', [
             'course' => $course,
         ]);
