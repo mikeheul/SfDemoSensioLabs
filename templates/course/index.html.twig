@@ -24,9 +24,9 @@
                         </h2>
                         <p class="text-gray-600 mb-4">{{ course.description | slice(0, 150) }}...</p>
                     </div>
-                    <div class="mt-4">
+                    {# <div class="mt-4">
                         <a href="{{ path('show_course', {'id': course.id}) }}" class="text-indigo-500 hover:text-indigo-600">Read more</a>
-                    </div>
+                    </div> #}
                 </div>
             {% endfor %}
         </div>

@@ -1,7 +1,7 @@
 {% if is_granted('ENTITY_CREATE') %}
     <div class="mb-6">
         <a href="{{ path(route) }}">
-            <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out cursor-pointer">
+            <button aria-label="Create button" class="bg-indigo-600 text-white px-8 py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out cursor-pointer">
                 {{ label }}
             </button>
         </a>

@@ -29,17 +29,17 @@
                         
                         <!-- Date Display -->
                         <div class="mt-2 flex flex-col sm:flex-row gap-2">
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-400 rounded-lg">
+                            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-600 rounded-lg">
                                 {{ training.startDate|date('F j, Y') }}
                             </span>
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-400 rounded-lg">
+                            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-600 rounded-lg">
                                 {{ training.endDate|date('F j, Y') }}
                             </span>
                         </div>
         
-                        <div class="mt-4">
+                        {# <div class="mt-4">
                             <a href="{{ path('show_training', {'id': training.id}) }}" class="text-indigo-500 hover:text-indigo-600">Read more</a>
-                        </div>
+                        </div> #}
                     </div>
                 </div>
             {% endfor %}
