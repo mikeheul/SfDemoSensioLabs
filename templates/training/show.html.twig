@@ -33,20 +33,14 @@
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
                 <ul class="mt-4 space-y-4">
                     {% for course in training.courses %}
-                        <li class="bg-white border-l-2 border-l-green-500 shadow-lg rounded-tr-lg rounded-br-lg p-6 hover:bg-gray-50 transition duration-200">
-                            <p class="text-lg text-blue-600 font-semibold">{{ course.name }}</p>
-                            <p class="text-sm text-slate-500 mt-3">{{ course.description }}</p>
-                        </li>
+                        {% include 'components/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
                     {% endfor %}
                 </ul>
 
                 <h2 class="text-2xl font-semibold text-gray-700 mt-4">Not Scheduled Courses</h2>
                 <ul class="mt-4 space-y-4">
                     {% for course in coursesNotInTraining %}
-                        <li class="bg-white border-l-2 border-l-red-500 shadow-lg rounded-tr-lg rounded-br-lg p-6 hover:bg-gray-50 transition duration-200">
-                            <p class="text-lg text-blue-600 font-semibold">{{ course.name }}</p>
-                            <p class="text-sm text-slate-500 mt-3">{{ course.description }}</p>
-                        </li>
+                        {% include 'components/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-red-500' } %}
                     {% endfor %}
                 </ul>
             </div>
@@ -57,9 +51,7 @@
                     <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
                     <ul class="mt-4 space-y-4">
                         {% for student in training.trainees %}
-                            <li class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-50 transition duration-200">
-                                <p class="text-sm text-gray-500">{{ student.email }}</p>
-                            </li>
+                            {% include 'components/student_item.html.twig' %}
                         {% endfor %}
                     </ul>
                 </div>
