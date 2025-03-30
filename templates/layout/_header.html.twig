@@ -14,6 +14,7 @@
 
             <div class="flex gap-5 items-center">
                 {% if app.user %}
+                    <span class="text-xs px-4 py-2 bg-slate-500">{{ app.user.roles | join(', ') }}</span>
                     <span class="text-md font-thin">{{ app.user.email }}</span>
                     <a data-turbo="false" href="{{ path('app_logout') }}" class="text-md font-semibold hover:text-indigo-200">Logout</a>
 

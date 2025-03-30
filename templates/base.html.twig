@@ -53,9 +53,7 @@
             {% endfor %}
         {% endfor %}
 
-        {% if app.user %}
-            <p class="text-lg text-gray-600 mb-4 text-center">{{ app.user.roles | join(', ') }}</p>
-        {% else %}
+        {% if not app.user %}
             <p class="text-lg text-gray-600 mb-4 text-center">Please register or login to access our trainings and courses.</p>
         {% endif %}
 
