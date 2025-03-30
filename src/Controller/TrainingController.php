@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Service\TrainingService;
+use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/training')]
@@ -75,11 +77,14 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/{id}/enroll', name: 'enroll_training')]
-    public function toggleEnrollment(Training $training, EntityManagerInterface $entityManager): Response
+    public function toggleEnrollment(Training $training, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher): Response
     {
         $user = $this->getUser();
 
         if (in_array('ROLE_STUDENT', $user->getRoles())) {
+
+            $isEnrolled = !$training->getTrainees()->contains($user);
+
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
             } else {
@@ -88,6 +93,10 @@ final class TrainingController extends AbstractController
 
             $entityManager->persist($training);
             $entityManager->flush();
+
+            $dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
+                $isEnrolled ? TrainingEnrollmentEvent::ENROLLED : TrainingEnrollmentEvent::UNENROLLED
+        );
         }
 
         return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
