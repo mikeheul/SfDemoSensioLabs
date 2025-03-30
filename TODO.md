@@ -10,7 +10,7 @@ Course : name, description
 
 ✅ -- CRUD training, course 
 ✅ -- Auth : role student, teacher, admin
-🟧 -- S'inscrire à un cours --> Mail de confirmation (EventSubscriber / EventListener)
+✅ -- S'inscrire à un cours --> Mail de confirmation (EventSubscriber / EventListener)
 ✅ -- Créer des services pour récupérer les formations, cours, students
 ✅ -- API training, course (API Platform)
 ✅ -- Back office Easy Admin (collectiontype courses dans training ?)
@@ -18,7 +18,7 @@ Course : name, description
 -- Workflow pour l'inscription à un cours (admin valide l'inscription)
 ✅ -- Voters
 ✅ -- Subscriber : inscription / désinscription d'un stagiaire à une formation --> email de confirmation
--- Fixtures pôur alimenter la base de données ?
+✅ -- Fixtures pôur alimenter la base de données ?
 
 
 Steps :
