@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+/* Conteneur de la pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* Liens de pagination */
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 3px;
+    background-color: #f3f4f6; /* Gris clair */
+    color: #4b5563; /* Gris foncé */
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Effet au survol */
+.pagination a:hover {
+    background-color: #e5e7eb; /* Gris plus foncé au survol */
+    color: #111827; /* Gris plus foncé pour le texte au survol */
+}
+
+/* Page active (page courante) */
+.pagination .current {
+    background-color: #4f39f6; 
+    color: white;
+    cursor: default;
+}
+
+/* Liens désactivés (Précédent, Suivant quand inactif) */
+.pagination .disabled {
+    background-color: #e5e7eb; 
+    color: #d1d5db; 
+    cursor: not-allowed;
+}
+
+/* Espacement entre les éléments */
+.pagination li {
+    list-style: none;
+}
+

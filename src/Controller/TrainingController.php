@@ -8,6 +8,7 @@ use App\Service\TrainingService;
 use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,11 +19,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class TrainingController extends AbstractController
 {
     #[Route('/', name: 'app_training')]
-    public function index(TrainingService $trainingService): Response
+    public function index(Request $request, TrainingService $trainingService, PaginatorInterface $paginator): Response
     {
         $trainings = $trainingService->getAllTrainings();
+
+        $pagination = $paginator->paginate(
+            $trainings,
+            $request->query->getInt('page', 1),
+            6
+        );
+
         return $this->render('training/index.html.twig', [
-            'trainings' => $trainings,
+            'trainings' => $pagination,
         ]);
     }
 
