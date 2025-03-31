@@ -41,6 +41,12 @@ class TrainingCrudController extends AbstractCrudController
                 ->setHelp('Select the courses related to this training')
                 ->setLabel('Courses')
                 ->setColumns('col-12 col-md-6 col-lg-4'),
+            AssociationField::new('trainees')
+                ->setFormTypeOption('multiple', true)
+                ->setFormTypeOption('expanded', true) 
+                ->setLabel('Enrolled Users') 
+                // ->setTemplatePath('admin/users_in_training.html.twig') // Facultatif : si vous voulez personnaliser l'affichage
+                ->setSortable(false), 
         ];
     }
 }
