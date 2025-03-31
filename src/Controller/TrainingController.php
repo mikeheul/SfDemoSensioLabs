@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[Route('/training')]
 final class TrainingController extends AbstractController
@@ -50,13 +51,18 @@ final class TrainingController extends AbstractController
     #[Route('/', name: 'app_training')]
     public function index(Request $request): Response
     {
-        $trainings = $this->trainingService->getAllTrainings();
+        try {
+            $trainings = $this->trainingService->getAllTrainings();
 
-        $pagination = $this->paginator->paginate(
-            $trainings,
-            $request->query->getInt('page', 1),
-            6
-        );
+            $pagination = $this->paginator->paginate(
+                $trainings,
+                $request->query->getInt('page', 1),
+                6
+            );
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while fetching trainings.');
+            return $this->redirectToRoute('app_home'); 
+        }
 
         return $this->render('training/index.html.twig', [
             'trainings' => $pagination,
@@ -66,9 +72,13 @@ final class TrainingController extends AbstractController
     #[Route('/getTrainingsAPI', name: 'trainings_api')]
     public function getTrainingsAPI()
     {
-        $trainings = $this->trainingRepository->findBy([], ["title" => "ASC"]);
-        $jsonContent = $this->serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
-        return new JsonResponse($jsonContent, 200, [], true);
+        try {
+            $trainings = $this->trainingRepository->findBy([], ["title" => "ASC"]);
+            $jsonContent = $this->serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
+            return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Failed to fetch trainings.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     #[Route('/new', name: 'new_training')]
@@ -78,12 +88,18 @@ final class TrainingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $training = $form->getData();
+            try {
+                $training = $form->getData();
+                $this->entityManager->persist($training);
+                $this->entityManager->flush();
 
-            $this->entityManager->persist($training);
-            $this->entityManager->flush();
-            
-            return $this->redirectToRoute('app_training');
+                $this->addFlash('success', 'Training successfully created.');
+                return $this->redirectToRoute('app_training');
+            } catch (ORMException $e) {
+                $this->addFlash('error', 'Failed to save the training.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'An unexpected error occurred.');
+            }
         }
         return $this->render('training/new.html.twig', [
             'formAddTraining' => $form,
@@ -93,26 +109,26 @@ final class TrainingController extends AbstractController
     #[Route('/{id}', name: 'show_training')]
     public function show(int $id): Response
     {
-        $training = $this->trainingService->getTrainingById($id);
+        try {
+            $training = $this->trainingService->getTrainingById($id);
 
-        if (!$training) {
+            if (!$training) {
+                throw new NotFoundHttpException('Training not found.');
+            }
+
+            $user = $this->getUser();
+            $isEnrolled = $user && in_array('ROLE_STUDENT', $user->getRoles()) 
+                ? $training->getTrainees()->contains($user) 
+                : false;
+
+            $coursesNotInTraining = $this->trainingRepository->findCoursesNotInTraining($training);
+        } catch (NotFoundHttpException $e) {
             $this->addFlash('error', 'Training not found.');
             return $this->redirectToRoute('app_training');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while fetching the training details.');
+            return $this->redirectToRoute('app_training');
         }
-
-        $user = $this->getUser();
-
-        if ($user) {
-            if (in_array('ROLE_STUDENT', $user->getRoles())) {
-                $isEnrolled = $training->getTrainees()->contains($user);
-            } else {
-                $isEnrolled = false;
-            }
-        } else {
-            $isEnrolled = false;
-        }
-
-        $coursesNotInTraining = $this->trainingRepository->findCoursesNotInTraining($training);
 
         return $this->render('training/show.html.twig', [
             'training' => $training,
@@ -124,26 +140,34 @@ final class TrainingController extends AbstractController
     #[Route('/{id}/enroll', name: 'enroll_training')]
     public function toggleEnrollment(Training $training): Response
     {
-        $user = $this->getUser();
+        try {
+            $user = $this->getUser();
 
-        if (in_array('ROLE_STUDENT', $user->getRoles())) {
+            if (!$user || !in_array('ROLE_STUDENT', $user->getRoles())) {
+                throw new \Exception('You do not have permission to enroll in this training.');
+            }
 
             $isEnrolled = !$training->getTrainees()->contains($user);
 
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
-                $this->notificationService->createNotification('You have successfully unenrolled from the training : ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You have successfully unenrolled from the training: ' . $training->getTitle(), $user);
             } else {
                 $training->addTrainee($user);
-                $this->notificationService->createNotification('You are already enrolled in this training : ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You are already enrolled in this training: ' . $training->getTitle(), $user);
             }
 
             $this->entityManager->persist($training);
             $this->entityManager->flush();
 
-            $this->dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
+            $this->dispatcher->dispatch(
+                new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
                 $isEnrolled ? TrainingEnrollmentEvent::ENROLLED : TrainingEnrollmentEvent::UNENROLLED
-        );
+            );
+
+            $this->addFlash('success', 'Your enrollment status has been updated.');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Failed to update enrollment status.');
         }
 
         return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
