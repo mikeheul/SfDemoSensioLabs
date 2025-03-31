@@ -24,7 +24,7 @@
                             <i class="fas fa-bell text-2xl"></i>
                         </a>
                         {% if unread_notifications_count(app.user) > 0 %}
-                            <span class="absolute -top-2 -right-4 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                            <span class="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
                                 {{ unread_notifications_count(app.user) }}
                             </span>
                         {% endif %}
