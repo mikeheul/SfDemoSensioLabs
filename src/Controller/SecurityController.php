@@ -33,12 +33,19 @@ class SecurityController extends AbstractController
     #[Route(path: '/profile', name: 'app_profile')]
     public function profile()
     {
-        $user = $this->getUser();
-
-        if(!$user) {
-            return $this->redirectToRoute('app_login');
+        try {
+            $user = $this->getUser();
+    
+            if (!$user) {
+                $this->addFlash('error', 'You must be logged in to access your profile.');
+                return $this->redirectToRoute('app_login');
+            }
+    
+            return $this->render('security/profile.html.twig', ['user' => $user]);
+    
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An unexpected error occurred.');
+            return $this->redirectToRoute('app_home'); 
         }
-
-        return $this->render('security/profile.html.twig', []);
     }
 }
