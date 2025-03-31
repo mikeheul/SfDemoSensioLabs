@@ -53,8 +53,6 @@ class DeactivateUserCommand extends Command
         $user->setIsActive(false);
         $this->entityManager->flush();
 
-        // $notification = new UserDeactivatedNotification();
-        // $this->notifier->send($notification, new Recipient($user->getEmail()));
         $notification = new Notification();
         $notification->setMessage('Votre compte a été désactivé.');
         $notification->setUser($user);
