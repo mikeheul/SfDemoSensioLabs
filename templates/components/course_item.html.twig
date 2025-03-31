@@ -1,4 +1,4 @@
 <li class="bg-white border-l-2 {{ borderColor }} shadow-lg rounded-tr-lg rounded-br-lg p-6 hover:bg-gray-50 transition duration-200">
     <p class="text-lg text-blue-600 font-semibold">{{ course.name }}</p>
-    <p class="text-sm text-slate-500 mt-3">{{ course.description }}</p>
+    <p class="text-sm text-slate-500 mt-3">{{ course.description | slice(0, 50) }}...</p>
 </li>
