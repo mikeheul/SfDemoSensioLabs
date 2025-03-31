@@ -12,6 +12,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -32,6 +34,14 @@ final class TrainingController extends AbstractController
         return $this->render('training/index.html.twig', [
             'trainings' => $pagination,
         ]);
+    }
+
+    #[Route('/getTrainingsAPI', name: 'trainings_api')]
+    public function getTrainingsAPI(SerializerInterface $serializer, TrainingRepository $trainingRepository)
+    {
+        $trainings = $trainingRepository->findBy([], ["title" => "ASC"]);
+        $jsonContent = $serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
+        return new JsonResponse($jsonContent, 200, [], true);
     }
 
     #[Route('/new', name: 'new_training')]

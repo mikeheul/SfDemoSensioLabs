@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiProperty;
@@ -24,11 +25,11 @@ class Training
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['training:read'])]
+    #[Groups(['training:read', 'training_detail'])]
     private ?string $title = null;
-
+    
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['training:read'])]
+    #[Groups(['training:read', 'training_detail'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -55,6 +56,7 @@ class Training
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'trainings')]
+    #[Groups(["training_detail_trainees"])]
     private Collection $trainees;
 
     public function __construct()
