@@ -33,15 +33,15 @@ class Training
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['training:read'])]
+    #[Groups(['training:read', 'training_detail'])]
     private ?\DateTimeInterface $startDate = null;
-
+    
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['training:read'])]
+    #[Groups(['training:read', 'training_detail'])]
     private ?\DateTimeInterface $endDate = null;
-
+    
     #[ORM\Column]
-    #[Groups(['training:read'])]
+    #[Groups(['training:read', 'training_detail'])]
     private ?float $price = null;
 
     /**
