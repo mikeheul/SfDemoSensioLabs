@@ -106,10 +106,10 @@ final class TrainingController extends AbstractController
 
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
-                $message = "You have successfully unenrolled in the training". $training->getTitle();
+                $message = "You have successfully unenrolled in the training : ". $training->getTitle();
             } else {
                 $training->addTrainee($user);
-                $message = "You have successfully enrolled in the training". $training->getTitle();
+                $message = "You have successfully enrolled in the training : ". $training->getTitle();
             }
 
             $entityManager->persist($training);
