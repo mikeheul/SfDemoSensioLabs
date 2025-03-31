@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Training;
 use App\Form\TrainingType;
+use App\Entity\Notification;
 use App\Service\TrainingService;
 use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
@@ -105,11 +106,19 @@ final class TrainingController extends AbstractController
 
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
+                $message = "You have successfully unenrolled in the training". $training->getTitle();
             } else {
                 $training->addTrainee($user);
+                $message = "You have successfully enrolled in the training". $training->getTitle();
             }
 
             $entityManager->persist($training);
+            $entityManager->flush();
+
+            $notification = new Notification();
+            $notification->setMessage($message);
+            $notification->setUser($user);
+            $entityManager->persist($notification);
             $entityManager->flush();
 
             $dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 

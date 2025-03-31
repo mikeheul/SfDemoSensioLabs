@@ -45,7 +45,7 @@ class DeactivateUserCommand extends Command
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
         if (!$user) {
-            $io->error("Aucun utilisateur trouvé avec l'email $email.");
+            $io->error("No user found with email $email.");
             return Command::FAILURE;
         }
 
@@ -54,12 +54,12 @@ class DeactivateUserCommand extends Command
         $this->entityManager->flush();
 
         $notification = new Notification();
-        $notification->setMessage('Votre compte a été désactivé.');
+        $notification->setMessage('Account deactivated');
         $notification->setUser($user);
         $this->entityManager->persist($notification);
         $this->entityManager->flush();
 
-        $io->success("L'utilisateur $email a été désactivé avec succès.");
+        $io->success("User $email successfully deactivated");
         return Command::SUCCESS;
     }
 }
