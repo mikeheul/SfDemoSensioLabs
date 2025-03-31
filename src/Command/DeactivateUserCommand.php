@@ -2,14 +2,18 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use App\Entity\User;
+use App\Entity\Notification;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use App\Notification\UserDeactivatedNotification;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
 
 #[AsCommand(
     name: 'app:deactivate-user',
@@ -18,11 +22,13 @@ use App\Entity\User;
 class DeactivateUserCommand extends Command
 {
     private EntityManagerInterface $entityManager;
+    private NotifierInterface $notifier;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, NotifierInterface $notifier)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->notifier = $notifier;
     }
 
     protected function configure(): void
@@ -45,6 +51,14 @@ class DeactivateUserCommand extends Command
 
         // Désactivation de l'utilisateur
         $user->setIsActive(false);
+        $this->entityManager->flush();
+
+        // $notification = new UserDeactivatedNotification();
+        // $this->notifier->send($notification, new Recipient($user->getEmail()));
+        $notification = new Notification();
+        $notification->setMessage('Votre compte a été désactivé.');
+        $notification->setUser($user);
+        $this->entityManager->persist($notification);
         $this->entityManager->flush();
 
         $io->success("L'utilisateur $email a été désactivé avec succès.");
