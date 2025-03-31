@@ -6,6 +6,7 @@ use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Entity\Notification;
 use App\Service\TrainingService;
+use App\Service\NotificationService;
 use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/training')]
 final class TrainingController extends AbstractController
 {
+    private NotificationService $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     #[Route('/', name: 'app_training')]
     public function index(Request $request, TrainingService $trainingService, PaginatorInterface $paginator): Response
     {
@@ -106,19 +114,13 @@ final class TrainingController extends AbstractController
 
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
-                $message = "You have successfully unenrolled in the training : ". $training->getTitle();
+                $this->notificationService->createNotification('You have successfully unenrolled in the training: ' . $training->getTitle(), $user);
             } else {
                 $training->addTrainee($user);
-                $message = "You have successfully enrolled in the training : ". $training->getTitle();
+                $this->notificationService->createNotification('You are already enrolled in this training.', $user);
             }
 
             $entityManager->persist($training);
-            $entityManager->flush();
-
-            $notification = new Notification();
-            $notification->setMessage($message);
-            $notification->setUser($user);
-            $entityManager->persist($notification);
             $entityManager->flush();
 
             $dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
