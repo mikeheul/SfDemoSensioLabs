@@ -23,18 +23,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class TrainingController extends AbstractController
 {
     private NotificationService $notificationService;
+    private TrainingService $trainingService;
+    private PaginatorInterface $paginator;
+    private EntityManagerInterface $entityManager;
+    private TrainingRepository $trainingRepository;
+    private EventDispatcherInterface $dispatcher;
 
-    public function __construct(NotificationService $notificationService)
+    public function __construct(
+        NotificationService $notificationService, 
+        TrainingService $trainingService, 
+        PaginatorInterface $paginator,
+        EntityManagerInterface $entityManager,
+        TrainingRepository $trainingRepository,
+        SerializerInterface $serializer,
+        EventDispatcherInterface $dispatcher)
     {
         $this->notificationService = $notificationService;
+        $this->trainingService = $trainingService;
+        $this->paginator = $paginator;
+        $this->entityManager = $entityManager;
+        $this->trainingRepository = $trainingRepository;
+        $this->serializer = $serializer;
+        $this->dispatcher = $dispatcher;
     }
 
     #[Route('/', name: 'app_training')]
-    public function index(Request $request, TrainingService $trainingService, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $trainings = $trainingService->getAllTrainings();
+        $trainings = $this->trainingService->getAllTrainings();
 
-        $pagination = $paginator->paginate(
+        $pagination = $this->paginator->paginate(
             $trainings,
             $request->query->getInt('page', 1),
             6
@@ -46,15 +64,15 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/getTrainingsAPI', name: 'trainings_api')]
-    public function getTrainingsAPI(SerializerInterface $serializer, TrainingRepository $trainingRepository)
+    public function getTrainingsAPI()
     {
-        $trainings = $trainingRepository->findBy([], ["title" => "ASC"]);
-        $jsonContent = $serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
+        $trainings = $this->trainingRepository->findBy([], ["title" => "ASC"]);
+        $jsonContent = $this->serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
         return new JsonResponse($jsonContent, 200, [], true);
     }
 
     #[Route('/new', name: 'new_training')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request): Response
     {
         $form = $this->createForm(TrainingType::class, new Training());
         $form->handleRequest($request);
@@ -62,8 +80,8 @@ final class TrainingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $training = $form->getData();
 
-            $em->persist($training);
-            $em->flush();
+            $this->entityManager->persist($training);
+            $this->entityManager->flush();
             
             return $this->redirectToRoute('app_training');
         }
@@ -73,9 +91,9 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_training')]
-    public function show(int $id, TrainingService $trainingService, TrainingRepository $tr): Response
+    public function show(int $id): Response
     {
-        $training = $trainingService->getTrainingById($id);
+        $training = $this->trainingService->getTrainingById($id);
 
         if (!$training) {
             $this->addFlash('error', 'Training not found.');
@@ -94,7 +112,7 @@ final class TrainingController extends AbstractController
             $isEnrolled = false;
         }
 
-        $coursesNotInTraining = $tr->findCoursesNotInTraining($training);
+        $coursesNotInTraining = $this->trainingRepository->findCoursesNotInTraining($training);
 
         return $this->render('training/show.html.twig', [
             'training' => $training,
@@ -104,7 +122,7 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/{id}/enroll', name: 'enroll_training')]
-    public function toggleEnrollment(Training $training, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher): Response
+    public function toggleEnrollment(Training $training): Response
     {
         $user = $this->getUser();
 
@@ -120,10 +138,10 @@ final class TrainingController extends AbstractController
                 $this->notificationService->createNotification('You are already enrolled in this training : ' . $training->getTitle(), $user);
             }
 
-            $entityManager->persist($training);
-            $entityManager->flush();
+            $this->entityManager->persist($training);
+            $this->entityManager->flush();
 
-            $dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
+            $this->dispatcher->dispatch(new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
                 $isEnrolled ? TrainingEnrollmentEvent::ENROLLED : TrainingEnrollmentEvent::UNENROLLED
         );
         }

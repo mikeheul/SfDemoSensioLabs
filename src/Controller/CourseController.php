@@ -6,37 +6,61 @@ use App\Entity\Course;
 use App\Form\CourseType;
 use App\Service\CourseService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 #[Route('/course')]
 final class CourseController extends AbstractController
 {
-    #[Route('/', name: 'app_course')]
-    public function index(CourseService $courseService): Response
+
+    private CourseService $courseService;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(CourseService $courseService, EntityManagerInterface $entityManager)
     {
-        $courses = $courseService->getAllCourses();
+        $this->courseService = $courseService;
+        $this->entityManager = $entityManager;
+    }
+
+    #[Route('/', name: 'app_course')]
+    public function index(): Response
+    {
+        try {
+            $courses = $this->courseService->getAllCourses();
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while fetching courses.');
+            $courses = [];
+        }
+
         return $this->render('course/index.html.twig', [
             'courses' => $courses,
         ]);
     }
     
     #[Route('/new', name: 'new_course')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request): Response
     {
         $form = $this->createForm(CourseType::class, new Course());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $course = $form->getData();
+            try {
+                $course = $form->getData();
+                $this->entityManager->persist($course);
+                $this->entityManager->flush();
 
-            $em->persist($course);
-            $em->flush();
-            
-            return $this->redirectToRoute('app_course');
+                $this->addFlash('success', 'Course successfully created.');
+                return $this->redirectToRoute('app_course');
+            } catch (ORMException $e) {
+                $this->addFlash('error', 'Failed to save the course.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'An unexpected error occurred.');
+            }
         }
         return $this->render('course/new.html.twig', [
             'formAddCourse' => $form,
@@ -44,14 +68,22 @@ final class CourseController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_course')]
-    public function show(int $id, CourseService $courseService): Response
+    public function show(int $id): Response
     {
-        $course = $courseService->getCourseById($id);
+        try {
+            $course = $this->courseService->getCourseById($id);
 
-        if (!$course) {
-            throw $this->createNotFoundException('Course not found');
+            if (!$course) {
+                throw new NotFoundHttpException('Course not found');
+            }
+        } catch (NotFoundHttpException $e) {
+            $this->addFlash('error', 'Course not found.');
+            return $this->redirectToRoute('app_course');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'An error occurred while fetching the course.');
+            return $this->redirectToRoute('app_course');
         }
-        
+
         return $this->render('course/show.html.twig', [
             'course' => $course,
         ]);
