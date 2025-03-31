@@ -114,10 +114,10 @@ final class TrainingController extends AbstractController
 
             if ($training->getTrainees()->contains($user)) {
                 $training->removeTrainee($user);
-                $this->notificationService->createNotification('You have successfully unenrolled in the training: ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You have successfully unenrolled in the training : ' . $training->getTitle(), $user);
             } else {
                 $training->addTrainee($user);
-                $this->notificationService->createNotification('You are already enrolled in this training.', $user);
+                $this->notificationService->createNotification('You are already enrolled in this training : ' . $training->getTitle(), $user);
             }
 
             $entityManager->persist($training);
