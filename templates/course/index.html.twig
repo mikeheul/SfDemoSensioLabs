@@ -17,17 +17,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for course in courses %}
-                <div class="bg-white p-6 rounded-xl transition-all duration-300 ease-in-out flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-3xl font-semibold text-gray-900 mb-3">
-                            <a href="{{ path('show_course', {'id': course.id}) }}" class="text-indigo-600 hover:underline">{{ course.name }}</a>
-                        </h2>
-                        <p class="text-gray-600 mb-4">{{ course.description | slice(0, 150) }}...</p>
-                    </div>
-                    {# <div class="mt-4">
-                        <a href="{{ path('show_course', {'id': course.id}) }}" class="text-indigo-500 hover:text-indigo-600">Read more</a>
-                    </div> #}
-                </div>
+                {% include 'components/course_card.html.twig' %}
             {% endfor %}
         </div>
     </div>

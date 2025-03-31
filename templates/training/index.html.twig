@@ -17,29 +17,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for training in trainings %}
-                <div class="bg-white p-6 rounded-xl transition-all duration-300 ease-in-out flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-3xl font-semibold text-gray-900 mb-3">
-                            <a href="{{ path('show_training', {'id': training.id}) }}" class="text-indigo-600 hover:underline">{{ training.title }}</a>
-                        </h2>
-                        <p class="text-gray-600 mb-4">{{ training.description | slice(0, 150) }}...</p>
-                    </div>
-                    <div>
-                        <p class="text-lg font-medium text-indigo-600">{{ training.price }} €</p>
-                        
-                        <!-- Date Display -->
-                        <div class="mt-2 flex flex-col sm:flex-row gap-2">
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-600 rounded-lg">
-                                From {{ training.startDate|date('F j, Y') }}
-                                to {{ training.endDate|date('F j, Y') }}
-                            </span>
-                        </div>
-        
-                        {# <div class="mt-4">
-                            <a href="{{ path('show_training', {'id': training.id}) }}" class="text-indigo-500 hover:text-indigo-600">Read more</a>
-                        </div> #}
-                    </div>
-                </div>
+                {% include 'components/training_card.html.twig' %}
             {% endfor %}
         </div>    
         {{ knp_pagination_render(trainings) }}
