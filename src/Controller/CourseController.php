@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[Route('/course')]
 final class CourseController extends AbstractController
 {
-
     private CourseService $courseService;
     private EntityManagerInterface $entityManager;
 
