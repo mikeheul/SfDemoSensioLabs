@@ -12,6 +12,7 @@ use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -62,10 +63,14 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/', name: 'app_training')]
-    public function index(Request $request): Response
+    public function index(Request $request, Security $security): Response
     {
         try {
-            $trainings = $this->trainingService->getAllTrainings();
+
+            $user = $security->getUser();
+            $trainings = ($user && in_array('ROLE_ADMIN', $user->getRoles())) 
+                ? $this->trainingService->getAllTrainings() 
+                : $this->trainingService->getAllTrainingsConfirmed();
 
             $pagination = $this->paginator->paginate(
                 $trainings,

@@ -19,6 +19,11 @@ class TrainingService
         return $this->trainingRepository->findBy([], ['startDate' => 'ASC']);
     }
 
+    public function getAllTrainingsConfirmed(): array
+    {
+        return $this->trainingRepository->findBy(['status' => 'confirmed'], ['startDate' => 'ASC']);
+    }
+
     public function getTrainingById(int $id): ?Training
     {
         return $this->trainingRepository->find($id);

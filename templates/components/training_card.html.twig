@@ -1,4 +1,15 @@
 <div class="relative bg-white p-6 rounded-xl transition-all duration-300 ease-in-out flex flex-col justify-between">
+    {% if is_granted("TRAINING_CREATE", training) %}
+
+        {% set bgColor = {
+            'draft': 'bg-gray-400',
+            'review': 'bg-blue-400',
+            'confirmed': 'bg-green-400'
+        }[training.status] | default('bg-gray-400') %}
+
+        <div class="absolute top-3 right-3 h-[10px] w-[10px] {{ bgColor }}  rounded-full"></div>    
+    {% endif %}
+    
     <div>
         {% include 'components/header_card.html.twig' with { 
             'title': training.title, 
