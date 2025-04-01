@@ -59,10 +59,14 @@ class Training
     #[Groups(["training_detail_trainees"])]
     private Collection $trainees;
 
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
         $this->trainees = new ArrayCollection();
+        $this->status = 'draft';
     }
 
     public function getId(): ?int
@@ -181,5 +185,17 @@ class Training
     public function __toString(): string
     {
         return $this->title.' - ' . $this->startDate->format('Y-m-d') . ' to ' . $this->endDate->format('Y-m-d');
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

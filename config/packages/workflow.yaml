@@ -1,2 +1,21 @@
 framework:
-    workflows: null
+    workflows:
+        training_workflow:
+            type: 'state_machine'
+            supports:
+                - App\Entity\Training
+            initial_marking: draft
+            places:
+                - draft
+                - review
+                - confirmed
+            transitions:
+                to_review:
+                    from: draft
+                    to: review
+                to_confirmed:
+                    from: review
+                    to: confirmed
+                to_draft:
+                    from: review
+                    to: draft
