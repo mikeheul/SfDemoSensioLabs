@@ -21,6 +21,7 @@ use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -37,6 +38,7 @@ final class TrainingController extends AbstractController
     private MessageBusInterface $bus;
     private LoggerInterface $logger;
     private WorkflowInterface $workflow;
+    private SluggerInterface $slugger;
     
     public function __construct(
         NotificationService $notificationService, 
@@ -48,7 +50,8 @@ final class TrainingController extends AbstractController
         EventDispatcherInterface $dispatcher,
         MessageBusInterface $bus,
         LoggerInterface $logger,
-        WorkflowInterface $trainingWorkflow)
+        WorkflowInterface $trainingWorkflow,
+        SluggerInterface $slugger)
     {
             $this->notificationService = $notificationService;
             $this->trainingService = $trainingService;
@@ -60,6 +63,7 @@ final class TrainingController extends AbstractController
             $this->bus = $bus;
             $this->logger = $logger;
             $this->workflow = $trainingWorkflow;
+            $this->slugger = $slugger;
     }
 
     #[Route('/', name: 'app_training')]
@@ -108,6 +112,10 @@ final class TrainingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $training = $form->getData();
+
+                $slug = $this->slugger->slug($training->getTitle());
+                $training->setSlug($slug);
+
                 $this->entityManager->persist($training);
                 $this->entityManager->flush();
 
