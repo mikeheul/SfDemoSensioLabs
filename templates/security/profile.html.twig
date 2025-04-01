@@ -15,10 +15,7 @@
             {% else %}
                 <ul class="space-y-3">
                     {% for training in app.user.trainings %}
-                        <li class="flex items-center justify-between p-3 bg-gray-100 rounded-md hover:bg-indigo-50 transition duration-300">
-                            <span class="text-md text-gray-800">{{ training.title }}</span>
-                            <a href="{{ path('show_training', {'id': training.id}) }}" class="text-indigo-600 hover:text-indigo-800 text-sm">Details</a>
-                        </li>
+                        {% include 'components/enrolled_trainings_item.html.twig' %}
                     {% endfor %}
                 </ul>
             {% endif %}
