@@ -2,15 +2,20 @@
 
 namespace App\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 class HttpClientService
 {
-    public function __construct()
+    private HttpClientInterface $httpClient;
+
+    public function __construct(HttpClientInterface $httpClient)
     {
-        // TODO: Inject dependencies here if needed
+        $this->httpClient = $httpClient;
     }
 
-    public function doSomething(): void
+    public function fetchExternalData(): array
     {
-        // TODO: Implement service logic
+        $response = $this->httpClient->request('GET', 'https://opentdb.com/api.php?amount=10');
+        return $response->toArray();
     }
 }
