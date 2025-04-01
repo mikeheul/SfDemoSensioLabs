@@ -203,7 +203,7 @@ final class TrainingController extends AbstractController
             $this->logger->error('Error: ' . $e->getMessage());
         }
 
-        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
     #[Route('/training/{id}/to-review', name: 'training_to_review')]
@@ -217,7 +217,7 @@ final class TrainingController extends AbstractController
             $this->addFlash('error', 'This training cannot be moved to review.');
         }
 
-        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
     #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
@@ -231,7 +231,7 @@ final class TrainingController extends AbstractController
             $this->addFlash('error', 'This training cannot be confirmed.');
         }
 
-        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
@@ -245,6 +245,6 @@ final class TrainingController extends AbstractController
             $this->addFlash('error', 'This training cannot be reverted to draft.');
         }
 
-        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 }
