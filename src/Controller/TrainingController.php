@@ -209,8 +209,8 @@ final class TrainingController extends AbstractController
     #[Route('/training/{id}/to-review', name: 'training_to_review')]
     public function toReview(Training $training): Response
     {
-        if ($this->workflow->can($training, 'to_review')) {
-            $this->workflow->apply($training, 'to_review');
+        if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
+            $this->workflow->apply($training, Training::TRANSITION_TO_REVIEW);
             $this->entityManager->flush();
             $this->addFlash('success', 'Training moved to review.');
         } else {
@@ -223,8 +223,8 @@ final class TrainingController extends AbstractController
     #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
     public function toConfirmed(Training $training): Response
     {
-        if ($this->workflow->can($training, 'to_confirmed')) {
-            $this->workflow->apply($training, 'to_confirmed');
+        if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
+            $this->workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
             $this->entityManager->flush();
             $this->addFlash('success', 'Training confirmed.');
         } else {
@@ -237,8 +237,8 @@ final class TrainingController extends AbstractController
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
     public function toDraft(Training $training): Response
     {
-        if ($this->workflow->can($training, 'to_draft')) {
-            $this->workflow->apply($training, 'to_draft');
+        if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
+            $this->workflow->apply($training, Training::TRANSITION_TO_DRAFT);
             $this->entityManager->flush();
             $this->addFlash('success', 'Training reverted to draft.');
         } else {

@@ -19,6 +19,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class Training
 {
+    public const PLACE_DRAFT = 'draft';
+    public const PLACE_REVIEW = 'review';
+    public const PLACE_CONFIRMED = 'confirmed';
+
+    public const TRANSITION_TO_REVIEW = 'to_review';
+    public const TRANSITION_TO_CONFIRMED = 'to_confirmed';
+    public const TRANSITION_TO_DRAFT = 'to_draft';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -69,7 +77,7 @@ class Training
     {
         $this->courses = new ArrayCollection();
         $this->trainees = new ArrayCollection();
-        $this->status = 'draft';
+        $this->status = self::PLACE_DRAFT;
     }
 
     public function getId(): ?int
