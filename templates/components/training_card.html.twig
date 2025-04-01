@@ -16,9 +16,12 @@
         
         <!-- Date Display -->
         <div class="flex flex-col sm:flex-row gap-2 mt-3">
-            <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-slate-600 rounded-lg">
-                From {{ training.startDate|date('F j, Y') }}
-                to {{ training.endDate|date('F j, Y') }}
+            <span class="inline-flex items-center text-sm">
+                <i class="fa-regular fa-calendar"></i>
+                <span class="ml-2">
+                    From {{ training.startDate|date('F j, Y') }}
+                    to {{ training.endDate|date('F j, Y') }}
+                </span>
             </span>
         </div>
         {# <div class="mt-4">
