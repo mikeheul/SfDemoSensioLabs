@@ -124,11 +124,11 @@ final class TrainingController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show_training')]
-    public function show(int $id): Response
+    #[Route('/{slug}', name: 'show_training')]
+    public function show(string $slug): Response
     {
         try {
-            $training = $this->trainingService->getTrainingById($id);
+            $training = $this->trainingService->getTrainingBySlug($slug);
 
             if (!$training) {
                 throw new NotFoundHttpException('Training not found.');

@@ -28,4 +28,9 @@ class TrainingService
     {
         return $this->trainingRepository->find($id);
     }
+
+    public function getTrainingBySlug(string $slug): ?Training
+    {
+        return $this->trainingRepository->findOneBy(["slug" => $slug]);
+    }
 }

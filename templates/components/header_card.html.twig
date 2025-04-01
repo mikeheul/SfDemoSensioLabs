@@ -3,5 +3,5 @@
         <span class="mr-4 text-slate-400 text-[1.5rem]">{{ icon|raw }}</span>
     {% endif %}
     
-    <a href="{{ path(route, {'id': id}) }}" class="text-indigo-600 hover:underline">{{ title }}</a>
+    <a href="{{ path(route, {'slug': slug}) }}" class="text-indigo-600 hover:underline">{{ title }}</a>
 </h2>

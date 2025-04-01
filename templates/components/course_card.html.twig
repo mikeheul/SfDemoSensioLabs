@@ -3,7 +3,7 @@
         {% include 'components/header_card.html.twig' with { 
             'title': course.name, 
             'route': 'show_course', 
-            'id': course.id, 
+            'slug': course.slug, 
             'icon': '<i class="fas fa-book"></i>' 
         } %}
         <p class="text-gray-600 mb-4">{{ course.description | slice(0, 150) }}...</p>

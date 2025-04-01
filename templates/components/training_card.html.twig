@@ -14,7 +14,7 @@
         {% include 'components/header_card.html.twig' with { 
             'title': training.title, 
             'route': 'show_training', 
-            'id': training.id, 
+            'slug': training.slug, 
             'icon': '<i class="fas fa-graduation-cap"></i>' 
         } %}
         <p class="text-gray-600 mb-4">{{ training.description | slice(0, 150) }}...</p>

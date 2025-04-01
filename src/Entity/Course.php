@@ -33,6 +33,9 @@ class Course
     #[ORM\ManyToMany(targetEntity: Training::class, mappedBy: 'courses')]
     private Collection $trainings;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->trainings = new ArrayCollection();
@@ -104,5 +107,17 @@ class Course
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

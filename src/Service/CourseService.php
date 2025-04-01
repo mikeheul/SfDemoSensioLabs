@@ -23,4 +23,9 @@ class CourseService
     {
         return $this->courseRepository->find($id);
     }
+
+    public function getCourseBySlug(string $slug): ?Course
+    {
+        return $this->courseRepository->findOneBy(["slug" => $slug]);
+    }
 }

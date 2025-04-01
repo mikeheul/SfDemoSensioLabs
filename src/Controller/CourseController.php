@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -22,15 +23,18 @@ final class CourseController extends AbstractController
     private CourseService $courseService;
     private EntityManagerInterface $entityManager;
     private SerializerInterface $serializerInterface;
+    private SluggerInterface $slugger;
 
     public function __construct(
         CourseService $courseService, 
         EntityManagerInterface $entityManager,
-        SerializerInterface $serializerInterface)
+        SerializerInterface $serializerInterface,
+        SluggerInterface $slugger)
     {
         $this->courseService = $courseService;
         $this->entityManager = $entityManager;
         $this->serializerInterface = $serializerInterface;
+        $this->slugger = $slugger;
     }
 
     #[Route('/', name: 'app_course')]
@@ -54,9 +58,14 @@ final class CourseController extends AbstractController
         $form = $this->createForm(CourseType::class, new Course());
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $course = $form->getData();
+                
+                $slug = $this->slugger->slug($course->getName());
+                $course->setSlug($slug);
+                
                 $this->entityManager->persist($course);
                 $this->entityManager->flush();
 
@@ -72,12 +81,12 @@ final class CourseController extends AbstractController
             'formAddCourse' => $form,
         ]);
     }
-
-    #[Route('/{id}', name: 'show_course')]
-    public function show(int $id): Response
+    
+    #[Route('/{slug}', name: 'show_course')]
+    public function show(string $slug): Response
     {
         try {
-            $course = $this->courseService->getCourseById($id);
+            $course = $this->courseService->getCourseBySlug($slug);
 
             if (!$course) {
                 throw new NotFoundHttpException('Course not found');
@@ -98,4 +107,6 @@ final class CourseController extends AbstractController
             // 'jsonCourses' => $jsonCourses
         ]);
     }
+
+
 }
