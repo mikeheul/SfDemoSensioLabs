@@ -19,7 +19,7 @@ final class TrainingVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         // return in_array($attribute, [self::CREATE]) && $subject === null;
-        return in_array($attribute, [self::SUBSCRIBE, self::VIEW_STUDENTS]) && $subject instanceof Training;
+        return in_array($attribute, [self::SUBSCRIBE, self::VIEW_STUDENTS, self::CREATE]) && $subject instanceof Training;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -34,6 +34,7 @@ final class TrainingVoter extends Voter
         return match ($attribute) {
             self::SUBSCRIBE => in_array('ROLE_STUDENT', $user->getRoles()),
             self::VIEW_STUDENTS => $this->security->isGranted('ROLE_ADMIN') || $this->security->isGranted('ROLE_TEACHER'),
+            self::CREATE => $this->security->isGranted('ROLE_ADMIN'),
             default => false
         };
     }

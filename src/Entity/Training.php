@@ -181,21 +181,31 @@ class Training
         
         return $this;
     }
-
-    public function __toString(): string
-    {
-        return $this->title.' - ' . $this->startDate->format('Y-m-d') . ' to ' . $this->endDate->format('Y-m-d');
-    }
-
+    
     public function getStatus(): ?string
     {
         return $this->status;
     }
-
+    
     public function setStatus(?string $status): static
     {
         $this->status = $status;
-
+        
         return $this;
+    }
+
+    public function getMarking(): ?string
+    {
+        return $this->status; 
+    }
+
+    public function setMarking(string $marking): void
+    {
+        $this->status = $marking;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title.' - ' . $this->startDate->format('Y-m-d') . ' to ' . $this->endDate->format('Y-m-d');
     }
 }

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Message\TrainingEnrollmentNotification;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -34,7 +35,8 @@ final class TrainingController extends AbstractController
     private EventDispatcherInterface $dispatcher;
     private MessageBusInterface $bus;
     private LoggerInterface $logger;
-
+    private WorkflowInterface $workflow;
+    
     public function __construct(
         NotificationService $notificationService, 
         TrainingService $trainingService, 
@@ -44,17 +46,19 @@ final class TrainingController extends AbstractController
         SerializerInterface $serializer,
         EventDispatcherInterface $dispatcher,
         MessageBusInterface $bus,
-        LoggerInterface $logger)
+        LoggerInterface $logger,
+        WorkflowInterface $trainingWorkflow)
     {
-        $this->notificationService = $notificationService;
-        $this->trainingService = $trainingService;
-        $this->paginator = $paginator;
-        $this->entityManager = $entityManager;
-        $this->trainingRepository = $trainingRepository;
-        $this->serializer = $serializer;
-        $this->dispatcher = $dispatcher;
-        $this->bus = $bus;
-        $this->logger = $logger;
+            $this->notificationService = $notificationService;
+            $this->trainingService = $trainingService;
+            $this->paginator = $paginator;
+            $this->entityManager = $entityManager;
+            $this->trainingRepository = $trainingRepository;
+            $this->serializer = $serializer;
+            $this->dispatcher = $dispatcher;
+            $this->bus = $bus;
+            $this->logger = $logger;
+            $this->workflow = $trainingWorkflow;
     }
 
     #[Route('/', name: 'app_training')]
@@ -184,6 +188,48 @@ final class TrainingController extends AbstractController
         } catch (\Exception $e) {
             $this->addFlash('error', 'Failed to update enrollment status.');
             $this->logger->error('Error: ' . $e->getMessage());
+        }
+
+        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+    }
+
+    #[Route('/training/{id}/to-review', name: 'training_to_review')]
+    public function toReview(Training $training): Response
+    {
+        if ($this->workflow->can($training, 'to_review')) {
+            $this->workflow->apply($training, 'to_review');
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Training moved to review.');
+        } else {
+            $this->addFlash('error', 'This training cannot be moved to review.');
+        }
+
+        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+    }
+
+    #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
+    public function toConfirmed(Training $training): Response
+    {
+        if ($this->workflow->can($training, 'to_confirmed')) {
+            $this->workflow->apply($training, 'to_confirmed');
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Training confirmed.');
+        } else {
+            $this->addFlash('error', 'This training cannot be confirmed.');
+        }
+
+        return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
+    }
+
+    #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
+    public function toDraft(Training $training): Response
+    {
+        if ($this->workflow->can($training, 'to_draft')) {
+            $this->workflow->apply($training, 'to_draft');
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Training reverted to draft.');
+        } else {
+            $this->addFlash('error', 'This training cannot be reverted to draft.');
         }
 
         return $this->redirectToRoute('show_training', ['id' => $training->getId()]);

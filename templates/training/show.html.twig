@@ -11,6 +11,28 @@
             <p class="text-xl font-bold text-indigo-600 mt-4">{{ training.price }} €</p>
         </div>
 
+        <div class="my-5">
+            {% if is_granted('TRAINING_CREATE', training) %}
+                <p>Status : {{ training.status }}</p>
+            
+                {% if training.status == 'draft' %}
+                    <a data-turbo="false" href="{{ path('training_to_review', {'id': training.id}) }}" 
+                        class="inline-block px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                        Move to Review
+                    </a>
+                {% elseif training.status == 'review' %}
+                    <a data-turbo="false" href="{{ path('training_to_confirmed', {'id': training.id}) }}" 
+                        class="inline-block px-4 py-2 mt-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200">
+                        Confirm Training
+                    </a>
+                    <a data-turbo="false" href="{{ path('training_to_draft', {'id': training.id}) }}" 
+                        class="inline-block px-4 py-2 mt-2 ml-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200">
+                        Revert to Draft
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+
         {% if is_granted('TRAINING_SUBSCRIBE', training) %}
             {% if isEnrolled %}
                 <form action="{{ path('enroll_training', {'id': training.id}) }}" method="post">
