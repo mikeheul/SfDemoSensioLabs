@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Entity\Notification;
+use Psr\Log\LoggerInterface;
 use App\Service\TrainingService;
 use App\Service\NotificationService;
 use App\Event\TrainingEnrollmentEvent;
@@ -14,7 +15,9 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Message\TrainingEnrollmentNotification;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +32,8 @@ final class TrainingController extends AbstractController
     private EntityManagerInterface $entityManager;
     private TrainingRepository $trainingRepository;
     private EventDispatcherInterface $dispatcher;
+    private MessageBusInterface $bus;
+    private LoggerInterface $logger;
 
     public function __construct(
         NotificationService $notificationService, 
@@ -37,7 +42,9 @@ final class TrainingController extends AbstractController
         EntityManagerInterface $entityManager,
         TrainingRepository $trainingRepository,
         SerializerInterface $serializer,
-        EventDispatcherInterface $dispatcher)
+        EventDispatcherInterface $dispatcher,
+        MessageBusInterface $bus,
+        LoggerInterface $logger)
     {
         $this->notificationService = $notificationService;
         $this->trainingService = $trainingService;
@@ -46,6 +53,8 @@ final class TrainingController extends AbstractController
         $this->trainingRepository = $trainingRepository;
         $this->serializer = $serializer;
         $this->dispatcher = $dispatcher;
+        $this->bus = $bus;
+        $this->logger = $logger;
     }
 
     #[Route('/', name: 'app_training')]
@@ -149,12 +158,17 @@ final class TrainingController extends AbstractController
 
             $isEnrolled = !$training->getTrainees()->contains($user);
 
-            if ($training->getTrainees()->contains($user)) {
+            if (!$isEnrolled) {
                 $training->removeTrainee($user);
                 $this->notificationService->createNotification('You have successfully unenrolled from the training: ' . $training->getTitle(), $user);
             } else {
                 $training->addTrainee($user);
-                $this->notificationService->createNotification('You are already enrolled in this training: ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You are now enrolled in this training: ' . $training->getTitle(), $user);
+                
+                // $this->bus->dispatch(new TrainingEnrollmentNotification(
+                //     $user->getEmail(),
+                //     $training->getTitle()
+                // ));
             }
 
             $this->entityManager->persist($training);
@@ -166,8 +180,10 @@ final class TrainingController extends AbstractController
             );
 
             $this->addFlash('success', 'Your enrollment status has been updated.');
+
         } catch (\Exception $e) {
             $this->addFlash('error', 'Failed to update enrollment status.');
+            $this->logger->error('Error: ' . $e->getMessage());
         }
 
         return $this->redirectToRoute('show_training', ['id' => $training->getId()]);
