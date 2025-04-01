@@ -6,18 +6,21 @@
 
     <h1 class="text-2xl font-bold mb-4">Random Quiz Questions</h1>
     {% for result in results.results %}
-        {% if result.category is defined %}
-            <h2 class="text-lg font-semibold">{{ result.category }}</h2>
-        {% else %}
-            <h2 class="text-lg font-semibold">Category not available</h2>
-        {% endif %}
-        
-        <p class="text-gray-700">{{ result.question }}</p>
-        <p class="text-sm text-gray-500">Difficulty: {{ result.difficulty | capitalize }}</p>
+        <div class="border border-slate-400 p-4 mb-2">
+            {% if result.category is defined %}
+                <h2 class="text-lg font-semibold">{{ result.category | raw }}</h2>
+            {% else %}
+                <h2 class="text-lg font-semibold">Category not available</h2>
+            {% endif %}
+            
+            <p class="text-gray-700">{{ result.question }}</p>
+            <p class="text-sm text-gray-500">Difficulty: {{ result.difficulty | capitalize }}</p>
 
-        <details class="mt-2">
-            <summary class="text-blue-600 cursor-pointer">Show Answer</summary>
-            <p class="mt-2 font-semibold">{{ result.correct_answer }}</p>
-        </details>
+            <details class="mt-2">
+                <summary class="text-blue-600 cursor-pointer">Show Answer</summary>
+                <p class="mt-2 font-semibold">{{ result.correct_answer }}</p>
+            </details>
+
+        </div>
     {% endfor %}
 {% endblock %}
