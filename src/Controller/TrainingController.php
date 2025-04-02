@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -207,6 +208,7 @@ final class TrainingController extends AbstractController
     }
 
     #[Route('/training/{id}/to-review', name: 'training_to_review')]
+    #[IsGranted("ROLE_ADMIN")]
     public function toReview(Training $training): Response
     {
         if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
@@ -219,8 +221,9 @@ final class TrainingController extends AbstractController
 
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
-
+    
     #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
+    #[IsGranted("ROLE_ADMIN")]
     public function toConfirmed(Training $training): Response
     {
         if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
@@ -230,11 +233,12 @@ final class TrainingController extends AbstractController
         } else {
             $this->addFlash('error', 'This training cannot be confirmed.');
         }
-
+        
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
-
+    
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
+    #[IsGranted("ROLE_ADMIN")]
     public function toDraft(Training $training): Response
     {
         if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
