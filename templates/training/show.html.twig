@@ -14,7 +14,7 @@
         <div class="my-5">
             {% if is_granted('TRAINING_CREATE', training) %}
 
-                {% set color = training.status == "confirmed" ? "text-green-500" : "text-black" %}
+                {% set color = training.status == training_status_confirmed() ? "text-green-500" : "text-black" %}
                 <p class="{{ color }}">Status : {{ training.status }}</p>
             
                 {% if training.status == 'draft' %}
