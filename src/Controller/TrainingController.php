@@ -211,15 +211,20 @@ final class TrainingController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function toReview(Training $training): Response
     {
-        if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
-            $this->workflow->apply($training, Training::TRANSITION_TO_REVIEW);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Training moved to review.');
-        } else {
-            $this->addFlash('error', 'This training cannot be moved to review.');
+        try {
+            if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
+                $this->workflow->apply($training, Training::TRANSITION_TO_REVIEW);
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Training moved to review.');
+            } else {
+                $this->addFlash('error', 'This training cannot be moved to review.');
+            }
+    
+            return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
+        } catch (\Exception $e) {
+            $this->get('logger')->error('Error reviewing training: ' . $e->getMessage());
+            $this->addFlash('error', 'An error occurred while reviewing the training.');
         }
-
-        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
     
     #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
@@ -237,6 +242,7 @@ final class TrainingController extends AbstractController
                 $this->notificationService->createNotification('You have successfully confirmed this training: ' . $training->getTitle(), $user);
 
                 $this->addFlash('success', 'Training confirmed.');
+                return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
             } else {
                 $this->addFlash('error', 'This training cannot be confirmed.');
             }
@@ -244,20 +250,23 @@ final class TrainingController extends AbstractController
             $this->get('logger')->error('Error confirming training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while confirming the training.');
         }
-
-        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
     #[IsGranted("ROLE_ADMIN")]
     public function toDraft(Training $training): Response
     {
-        if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
-            $this->workflow->apply($training, Training::TRANSITION_TO_DRAFT);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Training reverted to draft.');
-        } else {
-            $this->addFlash('error', 'This training cannot be reverted to draft.');
+        try {
+            if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
+                $this->workflow->apply($training, Training::TRANSITION_TO_DRAFT);
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Training reverted to draft.');
+            } else {
+                $this->addFlash('error', 'This training cannot be reverted to draft.');
+            }
+        } catch (\Exception $e) {
+            $this->get('logger')->error('Error drafting training: ' . $e->getMessage());
+            $this->addFlash('error', 'An error occurred while drafting the training.');
         }
 
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
