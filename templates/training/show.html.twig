@@ -13,7 +13,9 @@
 
         <div class="my-5">
             {% if is_granted('TRAINING_CREATE', training) %}
-                <p>Status : {{ training.status }}</p>
+
+                {% set color = training.status == "confirmed" ? "text-green-500" : "text-black" %}
+                <p class="{{ color }}">Status : {{ training.status }}</p>
             
                 {% if training.status == 'draft' %}
                     <a data-turbo="false" href="{{ path('training_to_review', {'id': training.id}) }}" 
