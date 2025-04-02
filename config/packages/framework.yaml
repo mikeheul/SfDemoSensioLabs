@@ -2,6 +2,9 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
+    http_cache:
+        enabled: true
+
     disallow_search_engine_index: false
 
     # Note that the session will be started ONLY if you read or write from it.
