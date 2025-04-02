@@ -226,17 +226,28 @@ final class TrainingController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function toConfirmed(Training $training): Response
     {
-        if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
-            $this->workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Training confirmed.');
-        } else {
-            $this->addFlash('error', 'This training cannot be confirmed.');
+        $user = $this->getUser();
+
+        try {
+            // Vérification que la transition est possible
+            if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
+                $this->workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
+                $this->entityManager->flush();
+
+                $this->notificationService->createNotification('You have successfully confirmed this training: ' . $training->getTitle(), $user);
+
+                $this->addFlash('success', 'Training confirmed.');
+            } else {
+                $this->addFlash('error', 'This training cannot be confirmed.');
+            }
+        } catch (\Exception $e) {
+            $this->get('logger')->error('Error confirming training: ' . $e->getMessage());
+            $this->addFlash('error', 'An error occurred while confirming the training.');
         }
-        
+
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
-    
+
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
     #[IsGranted("ROLE_ADMIN")]
     public function toDraft(Training $training): Response
