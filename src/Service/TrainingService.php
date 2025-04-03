@@ -7,12 +7,7 @@ use App\Repository\TrainingRepository;
 
 class TrainingService
 {
-    private TrainingRepository $trainingRepository;
-
-    public function __construct(TrainingRepository $trainingRepository)
-    {
-        $this->trainingRepository = $trainingRepository;
-    }
+    public function __construct(private TrainingRepository $trainingRepository) {}
     
     public function getAllTrainings(): array
     {

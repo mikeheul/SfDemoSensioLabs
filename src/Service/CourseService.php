@@ -7,12 +7,7 @@ use App\Repository\CourseRepository;
 
 class CourseService
 {
-    private CourseRepository $courseRepository;
-
-    public function __construct(courseRepository $courseRepository)
-    {
-        $this->courseRepository = $courseRepository;
-    }
+    public function __construct(private CourseRepository $courseRepository) {}
     
     public function getAllCourses(): array
     {

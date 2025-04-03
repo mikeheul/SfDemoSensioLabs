@@ -9,14 +9,10 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class NotificationService
 {
-    private EntityManagerInterface $entityManager;
-    private Security $security;
-
-    public function __construct(EntityManagerInterface $entityManager, Security $security)
-    {
-        $this->entityManager = $entityManager;
-        $this->security = $security;
-    }
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private Security $security
+    ) {}
 
     public function createNotification(string $message, User $user = null): void
     {
