@@ -1,6 +1,9 @@
 {% if is_granted('ENTITY_CREATE') %}
+    <!-- Section for creating a new entity, shown only if the user has the ENTITY_CREATE permission -->
     <div class="mb-6">
+        <!-- Link to the route for creating a new entity -->
         <a href="{{ path(route) }}">
+            <!-- Create button with styling and hover effects -->
             <button aria-label="Create button" class="bg-indigo-600 text-white px-8 py-3 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out cursor-pointer">
                 {{ label }}
             </button>

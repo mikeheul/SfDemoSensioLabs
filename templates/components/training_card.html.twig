@@ -1,28 +1,38 @@
+<!-- Container for the training card with hover effect and smooth transition -->
 <div class="relative bg-white hover:bg-blue-100 p-6 rounded-xl transition-all duration-300 ease-in-out flex flex-col justify-between">
+    
+    <!-- Check if the user has the permission to create a training -->
     {% if is_granted("TRAINING_CREATE", training) %}
-
+        
+        <!-- Set the background color for the training status -->
         {% set bgColor = {
             'draft': 'bg-gray-400',
             'review': 'bg-blue-400',
             'confirmed': 'bg-green-400'
         }[training.status] | default('bg-gray-400') %}
 
+        <!-- Render a small dot with the background color indicating the training status -->
         <div class="absolute top-3 right-3 h-[10px] w-[10px] {{ bgColor }}  rounded-full"></div>    
     {% endif %}
     
     <div>
+        <!-- Include a header card component with the training's title, route, and icon -->
         {% include 'components/header_card.html.twig' with { 
             'title': training.title, 
             'route': 'show_training', 
             'slug': training.slug, 
             'icon': '<i class="fas fa-graduation-cap"></i>' 
         } %}
+        
+        <!-- Display the training description, truncated to 150 characters -->
         <p class="text-gray-600 mb-4">{{ training.description | slice(0, 150) }}...</p>
     </div>
+    
     <div>
+        <!-- Display the price of the training -->
         <p class="text-lg font-medium text-indigo-600">{{ training.price }} €</p>
         
-        <!-- Date Display -->
+        <!-- Display the training date range -->
         <div class="flex flex-col sm:flex-row gap-2 mt-3">
             <span class="inline-flex items-center text-sm">
                 <i class="fa-regular fa-calendar"></i>

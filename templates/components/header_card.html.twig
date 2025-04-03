@@ -1,7 +1,11 @@
+<!-- Header section with large title and optional icon, styled with Tailwind CSS -->
 <h2 class="text-3xl font-semibold text-gray-900 mb-3 flex items-center">
+    
+    <!-- Check if an icon is provided, and if so, display it with specific styling -->
     {% if icon %}
         <span class="mr-4 text-slate-400 text-[1.5rem]">{{ icon|raw }}</span>
     {% endif %}
     
+    <!-- Display the title as a link, with a dynamic route using the 'slug' parameter -->
     <a href="{{ path(route, {'slug': slug}) }}" class="text-indigo-600 hover:underline">{{ title }}</a>
 </h2>

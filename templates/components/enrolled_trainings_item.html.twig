@@ -1,7 +1,12 @@
+<!-- List item displaying training title with a link to view details, styled with Tailwind CSS -->
 <li class="flex items-center justify-between p-3 bg-gray-100 rounded-md hover:bg-indigo-50 transition duration-300">
+    
+    <!-- Display the training title with text color and size styling -->
     <span class="text-md text-gray-800">
         {{ training.title }}
     </span>
+    
+    <!-- Link to the training details page, dynamically generated using the slug -->
     <a href="{{ path('show_training', {'slug': training.slug}) }}" class="text-indigo-600 hover:text-indigo-800 text-sm">
         Details
     </a>
