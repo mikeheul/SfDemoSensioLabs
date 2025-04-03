@@ -13,16 +13,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class NotificationController extends AbstractController
 {
-    private NotificationRepository $notificationRepository;
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        NotificationRepository $notificationRepository, 
-        EntityManagerInterface $entityManager)
-    {
-        $this->notificationRepository = $notificationRepository;
-        $this->entityManager = $entityManager;
-    }
+        private NotificationRepository $notificationRepository, 
+        private EntityManagerInterface $entityManager)
+    {}
 
     #[Route('/notification', name: 'app_notification')]
     public function index(UserInterface $user): Response

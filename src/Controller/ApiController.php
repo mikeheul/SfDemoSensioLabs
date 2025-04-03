@@ -9,12 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ApiController extends AbstractController
 {
-    private HttpClientService $httpClientService;
-
-    public function __construct(HttpClientService $httpClientService)
-    {
-        $this->httpClientService = $httpClientService;
-    }
+    public function __construct(private HttpClientService $httpClientService) {}
 
     #[Route('/external-api', name: 'external_api')]
     public function externalApi(): Response

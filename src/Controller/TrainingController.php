@@ -30,42 +30,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[Route('/training')]
 final class TrainingController extends AbstractController
 {
-    private NotificationService $notificationService;
-    private TrainingService $trainingService;
-    private PaginatorInterface $paginator;
-    private EntityManagerInterface $entityManager;
-    private TrainingRepository $trainingRepository;
-    private EventDispatcherInterface $dispatcher;
-    private MessageBusInterface $bus;
-    private LoggerInterface $logger;
-    private WorkflowInterface $workflow;
-    private SluggerInterface $slugger;
-    
     public function __construct(
-        NotificationService $notificationService, 
-        TrainingService $trainingService, 
-        PaginatorInterface $paginator,
-        EntityManagerInterface $entityManager,
-        TrainingRepository $trainingRepository,
-        SerializerInterface $serializer,
-        EventDispatcherInterface $dispatcher,
-        MessageBusInterface $bus,
-        LoggerInterface $logger,
-        WorkflowInterface $trainingWorkflow,
-        SluggerInterface $slugger)
-    {
-            $this->notificationService = $notificationService;
-            $this->trainingService = $trainingService;
-            $this->paginator = $paginator;
-            $this->entityManager = $entityManager;
-            $this->trainingRepository = $trainingRepository;
-            $this->serializer = $serializer;
-            $this->dispatcher = $dispatcher;
-            $this->bus = $bus;
-            $this->logger = $logger;
-            $this->workflow = $trainingWorkflow;
-            $this->slugger = $slugger;
-    }
+        private NotificationService $notificationService, 
+        private TrainingService $trainingService, 
+        private PaginatorInterface $paginator,
+        private EntityManagerInterface $entityManager,
+        private TrainingRepository $trainingRepository,
+        private SerializerInterface $serializer,
+        private EventDispatcherInterface $dispatcher,
+        private MessageBusInterface $bus,
+        private LoggerInterface $logger,
+        private WorkflowInterface $trainingWorkflow,
+        private SluggerInterface $slugger)
+    {}
 
     #[Route('/', name: 'app_training')]
     public function index(Request $request, Security $security): Response

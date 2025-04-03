@@ -20,22 +20,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[Route('/course')]
 final class CourseController extends AbstractController
 {
-    private CourseService $courseService;
-    private EntityManagerInterface $entityManager;
-    private SerializerInterface $serializerInterface;
-    private SluggerInterface $slugger;
-
     public function __construct(
-        CourseService $courseService, 
-        EntityManagerInterface $entityManager,
-        SerializerInterface $serializerInterface,
-        SluggerInterface $slugger)
-    {
-        $this->courseService = $courseService;
-        $this->entityManager = $entityManager;
-        $this->serializerInterface = $serializerInterface;
-        $this->slugger = $slugger;
-    }
+        private CourseService $courseService, 
+        private EntityManagerInterface $entityManager,
+        private SerializerInterface $serializerInterface,
+        private SluggerInterface $slugger)
+    {}
 
     #[Route('/', name: 'app_course')]
     public function index(): Response
