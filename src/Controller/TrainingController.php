@@ -6,7 +6,9 @@ use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Entity\Notification;
 use Psr\Log\LoggerInterface;
+use App\Handler\TrainingHandler;
 use App\Service\TrainingService;
+use App\Handler\EnrollmentHandler;
 use App\Service\NotificationService;
 use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
@@ -43,7 +45,9 @@ final class TrainingController extends AbstractController
         private MessageBusInterface $bus,
         private LoggerInterface $logger,
         private WorkflowInterface $trainingWorkflow,
-        private SluggerInterface $slugger)
+        private SluggerInterface $slugger,
+        private TrainingHandler $trainingHandler,
+        private EnrollmentHandler $enrollmentHandler)
     {}
 
     // Route to display all training courses, with pagination
@@ -105,9 +109,6 @@ final class TrainingController extends AbstractController
         // Process form submission if valid
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                // Get the data from the form
-                $training = $form->getData();
-
                 // Generate a slug for the training
                 $slug = $this->slugger->slug($training->getTitle());
                 $training->setSlug($slug);
