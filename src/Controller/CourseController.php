@@ -82,8 +82,6 @@ final class CourseController extends AbstractController
                 throw new NotFoundHttpException('Course not found');
             }
 
-            // $jsonCourses = $this->serializer->serialize($course, 'json');
-
         } catch (NotFoundHttpException $e) {
             $this->addFlash('error', 'Course not found.');
             return $this->redirectToRoute('app_course');
@@ -94,7 +92,6 @@ final class CourseController extends AbstractController
 
         return $this->render('course/show.html.twig', [
             'course' => $course,
-            // 'jsonCourses' => $jsonCourses
         ]);
     }
 
