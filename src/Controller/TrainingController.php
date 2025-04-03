@@ -27,9 +27,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+// Route to handle all training-related actions
 #[Route('/training')]
 final class TrainingController extends AbstractController
 {
+    // Constructor dependency injection for services and components
     public function __construct(
         private NotificationService $notificationService, 
         private TrainingService $trainingService, 
@@ -44,96 +46,126 @@ final class TrainingController extends AbstractController
         private SluggerInterface $slugger)
     {}
 
+    // Route to display all training courses, with pagination
     #[Route('/', name: 'app_training')]
     public function index(Request $request, Security $security): Response
     {
         try {
-
+            // Fetch the logged-in user
             $user = $security->getUser();
+
+            // Fetch all or confirmed trainings based on user role (admin vs regular user)
             $trainings = ($user && in_array('ROLE_ADMIN', $user->getRoles())) 
                 ? $this->trainingService->getAllTrainings() 
                 : $this->trainingService->getAllTrainingsConfirmed();
 
+            // Paginate the trainings data for display
             $pagination = $this->paginator->paginate(
                 $trainings,
-                $request->query->getInt('page', 1),
-                6
+                $request->query->getInt('page', 1), // Page number (default 1)
+                6 // Items per page
             );
         } catch (\Exception $e) {
+            // Handle error if fetching trainings fails
             $this->addFlash('error', 'An error occurred while fetching trainings.');
             return $this->redirectToRoute('app_home'); 
         }
 
+        // Render the training list page
         return $this->render('training/index.html.twig', [
             'trainings' => $pagination,
         ]);
     }
 
+    // API route to get all trainings in JSON format
     #[Route('/getTrainingsAPI', name: 'trainings_api')]
     public function getTrainingsAPI()
     {
         try {
+            // Fetch trainings from the repository
             $trainings = $this->trainingRepository->findBy([], ["title" => "ASC"]);
+            // Serialize the data into JSON format
             $jsonContent = $this->serializer->serialize($trainings, 'json', ['groups' => ['training_detail']]);
+            // Return JSON response
             return new JsonResponse($jsonContent, Response::HTTP_OK, [], true);
         } catch (\Exception $e) {
+            // Return error response if an issue occurs
             return new JsonResponse(['error' => 'Failed to fetch trainings.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
+    // Route to create a new training
     #[Route('/new', name: 'new_training')]
     public function new(Request $request): Response
     {
+        // Create and handle form submission for new training
         $form = $this->createForm(TrainingType::class, new Training());
         $form->handleRequest($request);
 
+        // Process form submission if valid
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                // Get the data from the form
                 $training = $form->getData();
 
+                // Generate a slug for the training
                 $slug = $this->slugger->slug($training->getTitle());
                 $training->setSlug($slug);
 
+                // Persist the training entity and save it to the database
                 $this->entityManager->persist($training);
                 $this->entityManager->flush();
 
+                // Show success message and redirect
                 $this->addFlash('success', 'Training successfully created.');
                 return $this->redirectToRoute('app_training');
             } catch (ORMException $e) {
+                // Handle ORM exception (e.g., database issues)
                 $this->addFlash('error', 'Failed to save the training.');
             } catch (\Exception $e) {
+                // Catch any other exception
                 $this->addFlash('error', 'An unexpected error occurred.');
             }
         }
+
+        // Render the form page for creating a new training
         return $this->render('training/new.html.twig', [
             'formAddTraining' => $form,
         ]);
     }
 
+    // Route to show details of a single training
     #[Route('/{slug}', name: 'show_training')]
     public function show(string $slug): Response
     {
         try {
+            // Fetch the training by its slug
             $training = $this->trainingService->getTrainingBySlug($slug);
 
+            // If training is not found, throw exception
             if (!$training) {
                 throw new NotFoundHttpException('Training not found.');
             }
 
+            // Check if the current user is enrolled in the training
             $user = $this->getUser();
             $isEnrolled = $user && in_array('ROLE_STUDENT', $user->getRoles()) 
                 ? $training->getTrainees()->contains($user) 
                 : false;
 
+            // Get courses not currently associated with the training
             $coursesNotInTraining = $this->trainingRepository->findCoursesNotInTraining($training);
         } catch (NotFoundHttpException $e) {
+            // Handle training not found exception
             $this->addFlash('error', 'Training not found.');
             return $this->redirectToRoute('app_training');
         } catch (\Exception $e) {
+            // Handle other types of errors
             $this->addFlash('error', 'An error occurred while fetching the training details.');
             return $this->redirectToRoute('app_training');
         }
 
+        // Render the page with training details
         return $this->render('training/show.html.twig', [
             'training' => $training,
             'isEnrolled' => $isEnrolled,
@@ -141,54 +173,67 @@ final class TrainingController extends AbstractController
         ]);
     }
 
+    // Route to toggle a user's enrollment status for a training
     #[Route('/{id}/enroll', name: 'enroll_training')]
     public function toggleEnrollment(Training $training): Response
     {
         try {
+            // Get the currently logged-in user
             $user = $this->getUser();
 
+            // Check if the user is allowed to enroll (role check)
             if (!$user || !in_array('ROLE_STUDENT', $user->getRoles())) {
                 throw new \Exception('You do not have permission to enroll in this training.');
             }
 
+            // Toggle the enrollment status
             $isEnrolled = !$training->getTrainees()->contains($user);
 
             if (!$isEnrolled) {
+                // Unenroll the user from the training
                 $training->removeTrainee($user);
                 $this->notificationService->createNotification('You have successfully unenrolled from the training: ' . $training->getTitle(), $user);
             } else {
+                // Enroll the user in the training
                 $training->addTrainee($user);
                 $this->notificationService->createNotification('You are now enrolled in this training: ' . $training->getTitle(), $user);
-                
+
+                // Dispatch enrollment notification (currently commented out)
                 // $this->bus->dispatch(new TrainingEnrollmentNotification(
                 //     $user->getEmail(),
                 //     $training->getTitle()
                 // ));
             }
 
+            // Persist the training entity and save changes
             $this->entityManager->persist($training);
             $this->entityManager->flush();
 
+            // Dispatch event based on enrollment status
             $this->dispatcher->dispatch(
                 new TrainingEnrollmentEvent($user, $training, $isEnrolled), 
                 $isEnrolled ? TrainingEnrollmentEvent::ENROLLED : TrainingEnrollmentEvent::UNENROLLED
             );
 
+            // Show success message
             $this->addFlash('success', 'Your enrollment status has been updated.');
-
         } catch (\Exception $e) {
+            // Handle error and log exception
             $this->addFlash('error', 'Failed to update enrollment status.');
             $this->logger->error('Error: ' . $e->getMessage());
         }
 
+        // Redirect back to training details page
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
+    // Route to move a training to the "review" stage
     #[Route('/training/{id}/to-review', name: 'training_to_review')]
     #[IsGranted("ROLE_ADMIN")]
     public function toReview(Training $training): Response
     {
         try {
+            // Check if the transition to review is possible
             if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
                 $this->workflow->apply($training, Training::TRANSITION_TO_REVIEW);
                 $this->entityManager->flush();
@@ -196,14 +241,17 @@ final class TrainingController extends AbstractController
             } else {
                 $this->addFlash('error', 'This training cannot be moved to review.');
             }
-    
+
+            // Redirect back to the training details page
             return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
         } catch (\Exception $e) {
+            // Log error and show error message
             $this->get('logger')->error('Error reviewing training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while reviewing the training.');
         }
     }
     
+    // Route to confirm a training
     #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
     #[IsGranted("ROLE_ADMIN")]
     public function toConfirmed(Training $training): Response
@@ -211,29 +259,34 @@ final class TrainingController extends AbstractController
         $user = $this->getUser();
 
         try {
-            // Vérification que la transition est possible
+            // Check if the transition to confirmed is possible
             if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
                 $this->workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
                 $this->entityManager->flush();
 
+                // Notify user about the confirmation
                 $this->notificationService->createNotification('You have successfully confirmed this training: ' . $training->getTitle(), $user);
 
+                // Show success message and redirect
                 $this->addFlash('success', 'Training confirmed.');
                 return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
             } else {
                 $this->addFlash('error', 'This training cannot be confirmed.');
             }
         } catch (\Exception $e) {
+            // Log error and show error message
             $this->get('logger')->error('Error confirming training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while confirming the training.');
         }
     }
 
+    // Route to move a training back to draft state
     #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
     #[IsGranted("ROLE_ADMIN")]
     public function toDraft(Training $training): Response
     {
         try {
+            // Check if the transition to draft is possible
             if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
                 $this->workflow->apply($training, Training::TRANSITION_TO_DRAFT);
                 $this->entityManager->flush();
@@ -242,10 +295,12 @@ final class TrainingController extends AbstractController
                 $this->addFlash('error', 'This training cannot be reverted to draft.');
             }
         } catch (\Exception $e) {
+            // Log error and show error message
             $this->get('logger')->error('Error drafting training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while drafting the training.');
         }
 
+        // Redirect back to the training details page
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 }
