@@ -2,17 +2,21 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\TrainingEnrollmentEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Twig\Environment;
+use App\Service\PdfService;
+use App\Service\EmailService;
+use Symfony\Component\Mime\Email;
+use App\Event\TrainingEnrollmentEvent;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrainingEnrollmentSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private MailerInterface $mailer,
-        private Environment $twig
+        private EmailService $emailService,
+        private PdfService $pdfService
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -38,18 +42,17 @@ class TrainingEnrollmentSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
         $training = $event->getTraining();
 
-        $emailContent = $this->twig->render('emails/training_notification.html.twig', [
+        $pdfContent = $this->pdfService->generatePdf('pdf/training_confirmation.html.twig', [
             'user' => $user,
             'training' => $training,
-            'isEnrolled' => $event->isEnrolled(),
         ]);
 
-        $email = (new Email())
-            ->from('noreply@formation.com')
-            ->to($user->getEmail())
-            ->subject($subject)
-            ->html($emailContent);
-
-        $this->mailer->send($email);
+        $this->emailService->sendEmail(
+            $user->getEmail(),
+            $subject,
+            'emails/training_notification.html.twig',
+            ['user' => $user, 'training' => $training, 'isEnrolled' => $event->isEnrolled()],
+            $pdfContent
+        );
     }
 }
