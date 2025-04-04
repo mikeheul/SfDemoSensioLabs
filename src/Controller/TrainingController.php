@@ -66,8 +66,8 @@ final class TrainingController extends AbstractController
             // Paginate the trainings data for display
             $pagination = $this->paginator->paginate(
                 $trainings,
-                $request->query->getInt('page', 1), // Page number (default 1)
-                6 // Items per page
+                $request->query->getInt('page', 1), 
+                6
             );
         } catch (\Exception $e) {
             // Handle error if fetching trainings fails
