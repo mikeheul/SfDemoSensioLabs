@@ -15,24 +15,9 @@
 
             <div class="hidden lg:flex gap-5 items-center">
                 {% if app.user %}
-                    <span class="text-xs px-4 py-2 bg-slate-500 rounded-lg">
-                        {% set roles = app.user.roles | filter(role => role != 'ROLE_USER') %}
-                        {{ roles ? roles | join(', ') : 'No special roles' }}
-                    </span>                    
-                    <span class="text-md font-thin">
-                        <a data-turbo="false" href="{{ path('app_profile') }}">{{ app.user.email }}</a>
-                    </span>
-                    
-                    <div class="relative">
-                        <a href="{{ path('app_notification') }}" class="text-white">
-                            <i class="fas fa-bell text-2xl"></i>
-                        </a>
-                        {% if unread_notifications_count(app.user) > 0 %}
-                            <span class="absolute -top-2 -right-3 bg-red-500 text-white text-lg font-semibold rounded-full w-6 h-6 flex items-center justify-center">
-                                {{ unread_notifications_count(app.user) }}
-                            </span>
-                        {% endif %}
-                    </div>
+                    {% include 'components/user_roles.html.twig' %}
+                    {% include 'components/user_info.html.twig' %}
+                    {% include 'components/user_notifications.html.twig' %}
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('admin') }}" class="text-md font-semibold hover:text-indigo-200">Admin</a>

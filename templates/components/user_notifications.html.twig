@@ -1,0 +1,10 @@
+<div class="relative">
+    <a href="{{ path('app_notification') }}" class="text-white">
+        <i class="fas fa-bell text-2xl"></i>
+    </a>
+    {% if unread_notifications_count(app.user) > 0 %}
+        <span class="absolute -top-2 -right-3 bg-red-500 text-white text-lg font-semibold rounded-full w-6 h-6 flex items-center justify-center">
+            {{ unread_notifications_count(app.user) }}
+        </span>
+    {% endif %}
+</div>
