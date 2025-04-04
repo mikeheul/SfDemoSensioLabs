@@ -13,6 +13,7 @@ use App\Service\NotificationService;
 use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Workflow\Registry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,8 @@ final class TrainingController extends AbstractController
         private WorkflowInterface $trainingWorkflow,
         private SluggerInterface $slugger,
         private TrainingHandler $trainingHandler,
-        private EnrollmentHandler $enrollmentHandler)
+        private EnrollmentHandler $enrollmentHandler,
+        private Registry $workflowRegistry)
     {}
 
     // Route to display all training courses, with pagination
@@ -229,14 +231,17 @@ final class TrainingController extends AbstractController
     }
 
     // Route to move a training to the "review" stage
-    #[Route('/training/{id}/to-review', name: 'training_to_review')]
+    #[Route('/{id}/to-review', name: 'training_to_review')]
     #[IsGranted("ROLE_ADMIN")]
     public function toReview(Training $training): Response
     {
         try {
+
+            $workflow = $this->workflowRegistry->get($training, 'training_workflow');
+
             // Check if the transition to review is possible
-            if ($this->workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
-                $this->workflow->apply($training, Training::TRANSITION_TO_REVIEW);
+            if ($workflow->can($training, Training::TRANSITION_TO_REVIEW)) {
+                $workflow->apply($training, Training::TRANSITION_TO_REVIEW);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Training moved to review.');
             } else {
@@ -247,22 +252,28 @@ final class TrainingController extends AbstractController
             return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
         } catch (\Exception $e) {
             // Log error and show error message
-            $this->get('logger')->error('Error reviewing training: ' . $e->getMessage());
+            // $this->get('logger')->error('Error reviewing training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while reviewing the training.');
         }
+
+        // Redirect back to the training details page
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
     
     // Route to confirm a training
-    #[Route('/training/{id}/to-confirmed', name: 'training_to_confirmed')]
+    #[Route('/{id}/to-confirmed', name: 'training_to_confirmed')]
     #[IsGranted("ROLE_ADMIN")]
     public function toConfirmed(Training $training): Response
     {
         $user = $this->getUser();
 
         try {
+
+            $workflow = $this->workflowRegistry->get($training, 'training_workflow');
+
             // Check if the transition to confirmed is possible
-            if ($this->workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
-                $this->workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
+            if ($workflow->can($training, Training::TRANSITION_TO_CONFIRMED)) {
+                $workflow->apply($training, Training::TRANSITION_TO_CONFIRMED);
                 $this->entityManager->flush();
 
                 // Notify user about the confirmation
@@ -276,20 +287,26 @@ final class TrainingController extends AbstractController
             }
         } catch (\Exception $e) {
             // Log error and show error message
-            $this->get('logger')->error('Error confirming training: ' . $e->getMessage());
+            // $this->get('logger')->error('Error confirming training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while confirming the training.');
         }
+
+        // Redirect back to the training details page
+        return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
 
     // Route to move a training back to draft state
-    #[Route('/training/{id}/to-draft', name: 'training_to_draft')]
+    #[Route('/{id}/to-draft', name: 'training_to_draft')]
     #[IsGranted("ROLE_ADMIN")]
     public function toDraft(Training $training): Response
     {
         try {
+
+            $workflow = $this->workflowRegistry->get($training, 'training_workflow');
+
             // Check if the transition to draft is possible
-            if ($this->workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
-                $this->workflow->apply($training, Training::TRANSITION_TO_DRAFT);
+            if ($workflow->can($training, Training::TRANSITION_TO_DRAFT)) {
+                $workflow->apply($training, Training::TRANSITION_TO_DRAFT);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Training reverted to draft.');
             } else {
@@ -297,7 +314,7 @@ final class TrainingController extends AbstractController
             }
         } catch (\Exception $e) {
             // Log error and show error message
-            $this->get('logger')->error('Error drafting training: ' . $e->getMessage());
+            // $this->get('logger')->error('Error drafting training: ' . $e->getMessage());
             $this->addFlash('error', 'An error occurred while drafting the training.');
         }
 
