@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+* {
+    font-family: "Playfair Display", serif;
+}
+
 /* Conteneur de la pagination */
 .pagination {
     display: flex;
