@@ -51,6 +51,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $notifications;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastName = null;
+
     public function __construct()
     {
         $this->trainings = new ArrayCollection();
@@ -205,5 +211,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->email;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
     }
 }
