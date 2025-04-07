@@ -1,0 +1,6 @@
+<div class="bg-white shadow-lg rounded-lg p-6">
+    <a href="{{ path(link_route, { id: user.id }) }}">
+        <h2 class="text-xl font-bold">{{ user.fullName }}</h2>
+    </a>
+    <p class="text-gray-600">{{ user.email }}</p>
+</div>

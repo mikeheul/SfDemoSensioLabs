@@ -16,14 +16,7 @@
         {% else %}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for student in students %}
-                    <div class="bg-white shadow-lg rounded-lg p-6">
-                        <a href="{{ path('app_student_show', { id: student.id }) }}">
-                            <h2 class="text-xl font-bold">
-                                {{ student.fullName }}
-                            </h2>
-                        </a>
-                        <p class="text-gray-600">{{ student.email }}</p>
-                    </div>
+                    {% include 'components/user_card.html.twig' with { 'user': student, 'link_route': 'app_student_show' } %}
                 {% endfor %}
             </div>
         {% endif %}
