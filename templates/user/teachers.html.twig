@@ -3,8 +3,13 @@
 {% block title %}Teachers{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Teachers</h1>
+    <div class="container max-w-7xl mx-auto py-8">
+        <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center">
+            Teachers 
+            <span class="ml-2 inline-block py-1 px-3 text-white bg-indigo-600 rounded-full text-lg">
+                {{ teachers | length }}
+            </span>
+        </h1>
 
         {% if teachers is empty %}
             <p class="text-lg text-gray-600">No teachers found.</p>
