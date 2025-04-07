@@ -3,5 +3,9 @@
 {% block title %}Student{% endblock %}
 
 {% block body %}
-    {{ student.email }}
+<div class="container max-w-7xl mx-auto py-8">
+    <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center">
+        {{ student.fullName }} 
+    </h1>
+</div>
 {% endblock %}
