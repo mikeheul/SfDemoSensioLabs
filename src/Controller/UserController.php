@@ -34,6 +34,20 @@ final class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/student/{id}', name: 'app_student_show')]
+    public function showUser(int $id): Response
+    {
+        try {
+            $student = $this->userService->getUserById($id);
+        } catch (\Exception $e) {
+            throw $this->createNotFoundException('No student found');
+        }
+        
+        return $this->render('user/student.html.twig', [
+            'student' => $student,
+        ]);
+    }
+
     #[Route('/teachers', name: 'app_teachers_show')]
     public function showTeachers(): Response
     {

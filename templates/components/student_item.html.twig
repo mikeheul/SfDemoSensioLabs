@@ -3,5 +3,5 @@
     
     <!-- Display the student's email in a smaller font with gray color -->
     <p class="text-sm text-gray-500">{{ student.email }}</p>
-    <a class="text-sm underline" href="">Details</a>
+    <a class="text-sm underline" href="{{ path('app_student_show', {'id': student.id})}}">Details</a>
 </li>
