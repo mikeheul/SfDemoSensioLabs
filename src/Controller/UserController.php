@@ -6,6 +6,7 @@ use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[Route('/user')]
 final class UserController extends AbstractController
@@ -39,8 +40,18 @@ final class UserController extends AbstractController
     {
         try {
             $student = $this->userService->getUserById($id);
+
+            if (!$student) {
+                throw new NotFoundHttpException('Student not found.');
+            }
+        } catch (NotFoundHttpException $e) {
+            // Handle student not found exception
+            $this->addFlash('error', 'Student not found.');
+            return $this->redirectToRoute('app_students_show');
         } catch (\Exception $e) {
-            throw $this->createNotFoundException('No student found');
+            // Handle other types of errors
+            $this->addFlash('error', 'An error occurred while fetching the student details.');
+            return $this->redirectToRoute('app_students_show');
         }
         
         return $this->render('user/student.html.twig', [
