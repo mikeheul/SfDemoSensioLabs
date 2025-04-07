@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teachers{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Teachers</h1>
+
+        {% if teachers is empty %}
+            <p class="text-lg text-gray-600">No teachers found.</p>
+        {% else %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for teacher in teachers %}
+                    <div class="bg-white shadow-lg rounded-lg p-6">
+                        <p class="text-gray-600">{{ teacher.email }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
