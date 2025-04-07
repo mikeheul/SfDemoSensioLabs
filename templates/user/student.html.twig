@@ -4,9 +4,7 @@
 
 {% block body %}
 <div class="container max-w-7xl mx-auto py-8">
-    <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center">
-        {{ student.fullName }} 
-    </h1>
+    {% include 'components/ui/page_title.html.twig' with { 'title': student.fullName } %}
 
     <p class="my-4">{{ student.email }}</p>
 
