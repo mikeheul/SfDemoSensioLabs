@@ -9,9 +9,9 @@
     </h1>
 
     <h2 class="text-2xl font-semibold text-gray-800 mb-8 flex items-center">Enrolled Trainings</h2>
-    <div class="grid grid-cols-4 gap-3">
+    <div class="grid gap-3">
         {% for training in student.trainings %}
-            <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+            <div class="bg-white shadow-md rounded-lg p-8 mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">{{ training.title }}</h3>
                 <p class="text-gray-600">{{ training.description }}</p>
                 <p class="text-gray-500 my-4"><i class="fa-regular fa-calendar-check"></i> {{ training.startDate|date('Y-m-d') }} to {{ training.endDate|date('Y-m-d') }}</p>
