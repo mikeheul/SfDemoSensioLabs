@@ -15,7 +15,7 @@
             {% else %}
                 <ul class="space-y-3">
                     {% for training in app.user.trainings %}
-                        {% include 'components/enrolled_trainings_item.html.twig' %}
+                        {% include 'components/training/enrolled_trainings_item.html.twig' %}
                     {% endfor %}
                 </ul>
             {% endif %}

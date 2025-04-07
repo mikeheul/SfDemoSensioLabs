@@ -2,7 +2,7 @@
     <!-- Container for the course card, with hover effect and smooth transition -->
     <div>
         <!-- Include a reusable header card component with dynamic values passed to it -->
-        {% include 'components/header_card.html.twig' with { 
+        {% include 'components/ui/header_card.html.twig' with { 
             'title': course.name, 
             'route': 'show_course', 
             'slug': course.slug, 

@@ -57,7 +57,7 @@
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
                 <ul class="mt-4 grid grid-cols-3 gap-2">
                     {% for course in training.courses %}
-                        {% include 'components/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
+                        {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
                     {% endfor %}
                 </ul>
 
@@ -76,7 +76,7 @@
                         <div class="px-4 py-2">
                             <ul class="grid grid-cols-3 gap-2">
                                 {% for course in coursesNotInTraining %}
-                                    {% include 'components/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-red-500' } %}
+                                    {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-red-500' } %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -90,7 +90,7 @@
                 <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
                 <ul class="mt-4 space-y-4">
                     {% for student in training.trainees %}
-                        {% include 'components/student_item.html.twig' %}
+                        {% include 'components/user/student_item.html.twig' %}
                     {% endfor %}
                 </ul>
             </div>

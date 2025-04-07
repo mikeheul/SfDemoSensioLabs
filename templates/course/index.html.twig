@@ -12,12 +12,12 @@
         </h1>
 
         <div class="mb-6">
-            {% include 'components/create_button.html.twig' with { 'route': 'new_course', 'label': 'Create New Course' } %}
+            {% include 'components/ui/create_button.html.twig' with { 'route': 'new_course', 'label': 'Create New Course' } %}
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for course in courses %}
-                {% include 'components/course_card.html.twig' %}
+                {% include 'components/course/course_card.html.twig' %}
             {% endfor %}
         </div>
     </div>
