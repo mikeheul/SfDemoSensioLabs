@@ -2,35 +2,36 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Training;
 use App\Form\TrainingType;
 use App\Entity\Notification;
+use Psr\Log\LoggerInterface;
 use App\Handler\TrainingHandler;
-use App\Handler\EnrollmentHandler;
 use App\Service\TrainingService;
+use App\Handler\EnrollmentHandler;
 use App\Service\NotificationService;
 use App\Event\TrainingEnrollmentEvent;
+
 use App\Repository\TrainingRepository;
-use App\Message\TrainingEnrollmentNotification;
-
-use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
-
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\HttpFoundation\Response;
+
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Message\TrainingEnrollmentNotification;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Route to handle all training-related actions
 #[Route('/training')]
@@ -231,6 +232,40 @@ final class TrainingController extends AbstractController
         // Redirect back to training details page
         return $this->redirectToRoute('show_training', ['slug' => $training->getSlug()]);
     }
+
+    #[Route('/{training}/{trainee}/unenroll', name: 'unenroll_training')]
+    #[IsGranted("ROLE_ADMIN")]
+    public function unenroll(Training $training, User $trainee): Response
+    {
+        try {
+            // Get the currently logged-in user
+            $user = $this->getUser();
+
+            // Check if the user is allowed to unenroll (role check)
+            if (!$user || !in_array('ROLE_ADMIN', $user->getRoles())) {
+                throw new \Exception('You do not have permission to unenroll student from this training.');
+            }
+
+            // Unenroll the user from the training
+            $training->removeTrainee($trainee);
+            $this->notificationService->createNotification('You have successfully unenrolled student from the training: ' . $training->getTitle(), $user);
+
+            // Persist the training entity and save changes
+            $this->entityManager->persist($training);
+            $this->entityManager->flush();
+
+            // Show success message
+            $this->addFlash('success', 'You have unenrolled this student from the training.');
+        } catch (\Exception $e) {
+            // Handle error and log exception
+            $this->addFlash('error', 'Failed to unenroll from training.');
+            $this->logger->error('Error: ' . $e->getMessage());
+        }
+
+        // Redirect back to training details page
+        return $this->redirectToRoute('app_student_show', ['id' => $trainee->getId()]);
+    }
+
 
     // Route to move a training to the "review" stage
     #[Route('/{id}/to-review', name: 'training_to_review')]
