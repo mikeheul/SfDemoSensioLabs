@@ -51,7 +51,7 @@
             {% endif %}
         {% endif %}
 
-        <div class="flex flex-col lg:flex-row gap-3">
+        <div class="flex flex-col lg:flex-row gap-6">
             <!-- Courses Section -->
             <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
@@ -86,14 +86,14 @@
     
             <!-- Students -->
             {% if is_granted('TRAINING_VIEW_STUDENTS', training) %}
-                <div class="mt-8 w-full lg:w-1/2">
-                    <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
-                    <ul class="mt-4 space-y-4">
-                        {% for student in training.trainees %}
-                            {% include 'components/student_item.html.twig' %}
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="mt-8 w-full lg:w-1/2">
+                <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
+                <ul class="mt-4 space-y-4">
+                    {% for student in training.trainees %}
+                        {% include 'components/student_item.html.twig' %}
+                    {% endfor %}
+                </ul>
+            </div>
             {% endif %}
         </div>
 
