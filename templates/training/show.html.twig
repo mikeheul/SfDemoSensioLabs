@@ -58,7 +58,7 @@
             <!-- Courses Section -->
             <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
-                <ul class="mt-4 grid grid-cols-3 gap-2">
+                <ul class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
                     {% for course in training.courses %}
                         {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
                     {% endfor %}
@@ -77,7 +77,7 @@
                         </summary>
 
                         <div class="px-4 py-2">
-                            <ul class="grid grid-cols-3 gap-2">
+                            <ul class="grid grid-cols-1 md:grid-cols-3 gap-2">
                                 {% for course in coursesNotInTraining %}
                                     {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-red-500' } %}
                                 {% endfor %}
