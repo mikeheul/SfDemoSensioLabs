@@ -1,0 +1,7 @@
+<a href="{{ path(route) }}" 
+    class="text-md font-semibold relative hover:text-indigo-300 
+        {{ app.request.attributes.get('_route') == route ? 'text-indigo-300' : '' }} 
+        hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
+        hover:after:w-full hover:after:transition-all hover:after:duration-300">
+    {{ label }}
+</a>
