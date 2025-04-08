@@ -1,5 +1,5 @@
 <div class="relative">
-    <a href="{{ path('app_notification') }}" class="text-white">
+    <a aria-label="notification" href="{{ path('app_notification') }}" class="text-white">
         <i class="fas fa-bell text-2xl"></i>
     </a>
     {% if unread_notifications_count(app.user) > 0 %}
