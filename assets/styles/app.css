@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 * {
-    font-family: "Playfair Display", serif;
+    /* font-family: "Playfair Display", serif; */
+    font-family: "Domine", serif;
 }
 
 /* Conteneur de la pagination */
