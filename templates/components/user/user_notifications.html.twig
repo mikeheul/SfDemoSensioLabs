@@ -3,8 +3,10 @@
         <i class="fas fa-bell text-2xl"></i>
     </a>
     {% if unread_notifications_count(app.user) > 0 %}
-        <span class="absolute -top-2 -right-3 bg-red-500 text-white text-lg font-semibold rounded-full w-6 h-6 flex items-center justify-center">
-            {{ unread_notifications_count(app.user) }}
-        </span>
+        <div class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+            <p class="absolute text-white text-sm font-semibold transform -translate-y-[2px]">
+                {{ unread_notifications_count(app.user) }}
+            </p>
+        </div>
     {% endif %}
 </div>
