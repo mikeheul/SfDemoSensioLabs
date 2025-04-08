@@ -43,6 +43,9 @@ class TrainingCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            TextField::new('status')
+                ->setLabel('Status')
+                ->setTemplatePath('admin/custom_status_field.html.twig'),
             TextField::new('title'),
             TextareaField::new('description'),
             DateField::new('startDate'),

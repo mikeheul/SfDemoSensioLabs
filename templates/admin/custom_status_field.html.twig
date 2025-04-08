@@ -1,0 +1,10 @@
+{# admin/custom_status_field.html.twig #}
+{% if field.getValue() == 'draft' %}
+    <span class="badge bg-secondary">{{ field.getValue() }}</span>
+{% elseif field.getValue() == 'review' %}
+    <span class="badge bg-primary">{{ field.getValue() }}</span>
+{% elseif field.getValue() == 'confirmed' %}
+    <span class="badge bg-success">{{ field.getValue() }}</span>
+{% else %}
+    <span class="badge bg-light">{{ field.getValue() }}</span>
+{% endif %}
