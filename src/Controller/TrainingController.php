@@ -114,6 +114,8 @@ final class TrainingController extends AbstractController
         // Process form submission if valid
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $training = $form->getData();
+
                 // Generate a slug for the training
                 $slug = $this->slugger->slug($training->getTitle());
                 $training->setSlug($slug);
