@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Course Page{% endblock %}
+{% block meta_description %}
+    <meta name="description" content="Course Page - Details of the selected course {{ course.name }}.">
+{% endblock %}
 
 {% block body %}
     <div class="container mx-auto px-6 py-8">
