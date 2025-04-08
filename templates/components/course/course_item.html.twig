@@ -1,6 +1,6 @@
 <li class="bg-white border-l-2 {{ borderColor }} shadow-lg rounded-tr-lg rounded-br-lg p-6 hover:bg-gray-50 transition duration-200">
     <!-- Display the course name with a larger, blue font and bold styling -->
-    <p class="text-lg text-blue-600 font-semibold">{{ course.name }}</p>
+    <a href="{{ path('show_course', {'slug': course.slug}) }}" class="text-lg text-blue-600 font-semibold">{{ course.name }}</a>
     
     <!-- Display a truncated description of the course, limited to the first 50 characters -->
     <p class="text-sm text-slate-500 mt-3">{{ course.description | slice(0, 50) }}...</p>
