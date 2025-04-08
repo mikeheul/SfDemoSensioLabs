@@ -29,11 +29,13 @@
     </div>
     
     <div>
+        {% if app.user %}
         <!-- Display the price of the training -->
         <p class="text-xl font-medium text-indigo-600">
             <i class="fa-solid fa-tag"></i>    
             {{ training.price }} €
         </p>
+        {% endif %}
         
         <!-- Display the training date range -->
         <div class="flex flex-col sm:flex-row gap-2 mt-3">
