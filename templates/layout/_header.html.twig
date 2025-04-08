@@ -8,39 +8,39 @@
 
             <div class="hidden lg:flex gap-5 items-center">
                 <a href="{{ path('app_training') }}" 
-                    class="text-md font-semibold relative hover:text-indigo-200 
-                        {{ app.request.attributes.get('_route') == 'app_training' ? 'text-indigo-200' : '' }} 
-                        hover:text-indigo-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-200 
+                    class="text-md font-semibold relative hover:text-indigo-300 
+                        {{ app.request.attributes.get('_route') == 'app_training' ? 'text-indigo-300' : '' }} 
+                        hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
                         hover:after:w-full hover:after:transition-all hover:after:duration-300">
                     Trainings
                 </a>
                 <a href="{{ path('app_course') }}" 
-                    class="text-md font-semibold relative hover:text-indigo-200 
-                        {{ app.request.attributes.get('_route') == 'app_course' ? 'text-indigo-200' : '' }} 
-                        hover:text-indigo-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-200 
+                    class="text-md font-semibold relative hover:text-indigo-300 
+                        {{ app.request.attributes.get('_route') == 'app_course' ? 'text-indigo-300' : '' }} 
+                        hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
                         hover:after:w-full hover:after:transition-all hover:after:duration-300">
                     Courses
                 </a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_students_show') }}" 
-                        class="text-md font-semibold relative hover:text-indigo-200 
-                            {{ app.request.attributes.get('_route') == 'app_students_show' ? 'text-indigo-200' : '' }} 
-                            hover:text-indigo-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-200 
+                        class="text-md font-semibold relative hover:text-indigo-300 
+                            {{ app.request.attributes.get('_route') == 'app_students_show' ? 'text-indigo-300' : '' }} 
+                            hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
                             hover:after:w-full hover:after:transition-all hover:after:duration-300">
                         Students
                     </a>
                     <a href="{{ path('app_teachers_show') }}" 
-                        class="text-md font-semibold relative hover:text-indigo-200 
-                            {{ app.request.attributes.get('_route') == 'app_teachers_show' ? 'text-indigo-200' : '' }} 
-                            hover:text-indigo-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-200 
+                        class="text-md font-semibold relative hover:text-indigo-300 
+                            {{ app.request.attributes.get('_route') == 'app_teachers_show' ? 'text-indigo-300' : '' }} 
+                            hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
                             hover:after:w-full hover:after:transition-all hover:after:duration-300">
                         Teachers
                     </a>
                 {% endif %}
                 <a href="{{ path('external_api') }}" 
-                    class="text-md font-semibold relative hover:text-indigo-200 
-                        {{ app.request.attributes.get('_route') == 'external_api' ? 'text-indigo-200' : '' }} 
-                        hover:text-indigo-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-200 
+                    class="text-md font-semibold relative hover:text-indigo-300 
+                        {{ app.request.attributes.get('_route') == 'external_api' ? 'text-indigo-300' : '' }} 
+                        hover:text-indigo-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-indigo-300 
                         hover:after:w-full hover:after:transition-all hover:after:duration-300">
                     API
                 </a>
