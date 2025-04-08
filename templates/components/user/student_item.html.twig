@@ -2,7 +2,6 @@
 <li class="flex justify-between bg-white shadow-lg rounded-lg p-4 hover:bg-gray-50 transition duration-200">
     
     <!-- Display the student's email in a smaller font with gray color -->
-    <p class="text-sm font-bold text-gray-500">{{ student.fullName }}</p>
-    <p class="text-sm text-gray-500">{{ student.email }}</p>
+    <p class="text-sm text-gray-500"><span class="font-bold">{{ student.fullName }}</span> - {{ student.email }}</p>
     <a class="text-sm underline" href="{{ path('app_student_show', {'id': student.id})}}">Details</a>
 </li>
