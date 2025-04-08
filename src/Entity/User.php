@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Training;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -235,6 +236,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullName(): string
     {
         return trim(sprintf('%s %s', $this->firstName, $this->lastName));
+    }
+
+    public function isEnrolledInTraining(Training $training): bool
+    {
+        return $this->trainings->contains($training);
     }
 
     public function __toString(): string

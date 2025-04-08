@@ -30,11 +30,25 @@
     
     <div>
         {% if app.user %}
-        <!-- Display the price of the training -->
-        <p class="text-xl font-medium text-indigo-600">
-            <i class="fa-solid fa-tag"></i>    
-            {{ training.price }} €
-        </p>
+
+            <!-- Check if the user is enrolled in the training -->
+            {% if app.user.isEnrolledInTraining(training) %}
+                <!-- Show a badge or visual indicator if the user is enrolled -->
+                <div class="absolute top-3 right-3 bg-green-500 text-white text-xs py-1 px-3 rounded-full">
+                    In
+                </div>
+            {% else %}
+                <!-- Optionally, show a "Not Enrolled" badge if the user is not enrolled -->
+                <div class="absolute top-3 right-3 bg-gray-500 text-white text-xs py-1 px-3 rounded-full">
+                    Out
+                </div>
+            {% endif %}
+
+            <!-- Display the price of the training -->
+            <p class="text-xl font-medium text-indigo-600">
+                <i class="fa-solid fa-tag"></i>    
+                {{ training.price }} €
+            </p>
         {% endif %}
         
         <!-- Display the training date range -->
