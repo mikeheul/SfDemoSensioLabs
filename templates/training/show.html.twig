@@ -60,11 +60,17 @@
             <!-- Courses Section -->
             <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
                 <h2 class="text-2xl font-semibold text-gray-700">Scheduled Courses</h2>
-                <ul class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
-                    {% for course in training.courses %}
-                        {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
-                    {% endfor %}
-                </ul>
+                {% if training.courses is empty %}
+                    <div class="w-full text-gray-500 mt-4 mb-8">
+                        <p>No courses are included in this training.</p>
+                    </div>
+                {% else %}
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+                        {% for course in training.courses %}
+                            {% include 'components/course/course_item.html.twig' with { 'course': course, 'borderColor': 'border-l-green-500' } %}
+                        {% endfor %}
+                    </ul>                
+                {% endif %}
 
                 <h2 class="text-2xl font-semibold text-gray-700 mt-4">Not Scheduled Courses</h2>
 
@@ -93,11 +99,19 @@
             {% if is_granted('TRAINING_VIEW_STUDENTS', training) %}
             <div class="mt-8 w-full lg:w-1/2">
                 <h2 class="text-2xl font-semibold text-gray-700">Trainees</h2>
-                <ul class="mt-4 space-y-4">
-                    {% for student in training.trainees %}
-                        {% include 'components/user/student_item.html.twig' %}
-                    {% endfor %}
-                </ul>
+
+                {% if training.courses is empty %}
+                    <div class="w-full text-gray-500 mt-4 mb-8">
+                        <p>No trainees enrolled in this training.</p>
+                    </div>
+                {% else %}
+                    <ul class="mt-4 space-y-4">
+                        {% for student in training.trainees %}
+                            {% include 'components/user/student_item.html.twig' %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                
             </div>
             {% endif %}
         </div>
