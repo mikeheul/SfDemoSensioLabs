@@ -68,6 +68,8 @@ final class TrainingController extends AbstractController
                 ? $this->trainingService->getAllTrainings() 
                 : $this->trainingService->getAllTrainingsConfirmed();
 
+            $totalTrainings = count($trainings);
+
             // Paginate the trainings data for display
             $pagination = $this->paginator->paginate(
                 $trainings,
@@ -83,6 +85,7 @@ final class TrainingController extends AbstractController
         // Render the training list page
         return $this->render('training/index.html.twig', [
             'trainings' => $pagination,
+            'totalTrainings' => $totalTrainings,
         ]);
     }
 
