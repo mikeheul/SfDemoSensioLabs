@@ -10,14 +10,26 @@ class TrainingService
 {
     public function __construct(private TrainingRepository $trainingRepository) {}
     
-    public function getAllTrainings(): array
+    public function getAllTrainings($levelFilter = null): array
     {
-        return $this->trainingRepository->findBy([], ['startDate' => 'ASC']);
+        $criteria = [];
+
+        if ($levelFilter) {
+            $criteria['level'] = $levelFilter;
+        }
+
+        return $this->trainingRepository->findBy($criteria, ['startDate' => 'ASC']);
     }
 
-    public function getAllTrainingsConfirmed(): array
+    public function getAllTrainingsConfirmed($levelFilter = null): array
     {
-        return $this->trainingRepository->findBy(['status' => 'confirmed'], ['startDate' => 'ASC']);
+        $criteria = ['status' => 'confirmed'];
+
+        if ($levelFilter) {
+            $criteria['level'] = $levelFilter;
+        }
+
+        return $this->trainingRepository->findBy($criteria, ['startDate' => 'ASC']);
     }
 
     public function getTrainingById(int $id): ?Training
