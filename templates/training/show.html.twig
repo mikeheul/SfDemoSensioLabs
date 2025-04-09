@@ -14,7 +14,9 @@
 
             <h1 class="flex items-center gap-4 text-4xl font-semibold text-gray-800 mb-8">
                 {{ training.title }}
-                {{ status_macro.status_class(training.status) }}
+                {% if is_granted('TRAINING_CREATE', training) %}
+                    {{ status_macro.status_class(training.status) }}
+                {% endif %}
             </h1>
 
             <p class="text-lg text-gray-600 mt-2">{{ training.description }}</p>
