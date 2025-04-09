@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Training;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -42,6 +43,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
         
         return $query->getQuery()->getResult();
+    }
+
+    public function getTraineesSortedByLastName(Training $training): array
+    {
+        return $this->createQueryBuilder('u')  
+            ->innerJoin('u.trainings', 't')  
+            ->where('t.id = :training_id')  
+            ->setParameter('training_id', $training->getId())
+            ->orderBy('u.lastName', 'ASC') 
+            ->getQuery()
+            ->getResult();  
     }
 
     //    /**

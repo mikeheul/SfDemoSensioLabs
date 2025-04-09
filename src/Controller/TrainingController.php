@@ -10,13 +10,14 @@ use Psr\Log\LoggerInterface;
 use App\Handler\TrainingHandler;
 use App\Service\TrainingService;
 use App\Handler\EnrollmentHandler;
+use App\Repository\UserRepository;
 use App\Service\NotificationService;
-use App\Event\TrainingEnrollmentEvent;
 
+use App\Event\TrainingEnrollmentEvent;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Workflow\Registry;
 
+use Symfony\Component\Workflow\Registry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,7 @@ final class TrainingController extends AbstractController
         private PaginatorInterface $paginator,
         private EntityManagerInterface $entityManager,
         private TrainingRepository $trainingRepository,
+        private UserRepository $userRepository,
         private SerializerInterface $serializer,
         private EventDispatcherInterface $dispatcher,
         private MessageBusInterface $bus,
@@ -76,6 +78,7 @@ final class TrainingController extends AbstractController
                 $request->query->getInt('page', 1), 
                 6
             );
+
         } catch (\Exception $e) {
             // Handle error if fetching trainings fails
             $this->addFlash('error', 'An error occurred while fetching trainings.');
@@ -158,14 +161,13 @@ final class TrainingController extends AbstractController
                 throw new NotFoundHttpException('Training not found.');
             }
 
-            // Check if the current user is enrolled in the training
             $user = $this->getUser();
-            $isEnrolled = $user && in_array('ROLE_STUDENT', $user->getRoles()) 
-                ? $training->getTrainees()->contains($user) 
-                : false;
 
-            // Get courses not currently associated with the training
-            $coursesNotInTraining = $this->trainingRepository->findCoursesNotInTraining($training);
+            $isEnrolled = $user ? $this->trainingService->isUserEnrolled($training, $user) : false;
+            $coursesNotInTraining = $this->trainingService->getCoursesNotInTraining($training);
+
+            $trainees = $this->userRepository->getTraineesSortedByLastName($training);
+
         } catch (NotFoundHttpException $e) {
             // Handle training not found exception
             $this->addFlash('error', 'Training not found.');
@@ -181,6 +183,7 @@ final class TrainingController extends AbstractController
             'training' => $training,
             'isEnrolled' => $isEnrolled,
             'coursesNotInTraining' => $coursesNotInTraining,
+            'trainees' => $trainees,
         ]);
     }
 
