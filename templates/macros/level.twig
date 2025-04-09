@@ -1,17 +1,21 @@
 {% macro level_badge(level) %}
     {% set level_traits = 0 %}
+    {% set level_color = '' %}  {# Variable pour stocker la couleur du niveau #}
 
     {% if level == 'beginner' %}
         {% set level_traits = 1 %}
+        {% set level_color = 'bg-green-400' %}
     {% elseif level == 'intermediate' %}
         {% set level_traits = 2 %}
+        {% set level_color = 'bg-orange-300' %}
     {% elseif level == 'expert' %}
         {% set level_traits = 3 %}
+        {% set level_color = 'bg-red-400' %}
     {% endif %}
 
     <div class="border border-slate-300 text-sm px-4 py-1 rounded-md items-center gap-1 bg-slate-100 inline-flex">
         {% for i in 1..3 %}
-            <div class="w-2 h-4 bg-gray-400 rounded-sm {{ i <= level_traits ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+            <div class="w-2 h-4 bg-gray-400 rounded-sm {{ i <= level_traits ? level_color : 'bg-gray-300' }}"></div>
         {% endfor %}
         <span class="text-slate-500 ml-2">{{ level }}</span>
     </div>
