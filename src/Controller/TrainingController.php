@@ -165,7 +165,6 @@ final class TrainingController extends AbstractController
 
             $isEnrolled = $user ? $this->trainingService->isUserEnrolled($training, $user) : false;
             $coursesNotInTraining = $this->trainingService->getCoursesNotInTraining($training);
-
             $trainees = $this->userRepository->getTraineesSortedByLastName($training);
 
         } catch (NotFoundHttpException $e) {
