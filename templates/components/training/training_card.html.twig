@@ -1,3 +1,5 @@
+{% import 'macros/level.twig' as level_macro %}
+
 <!-- Container for the training card with hover effect and smooth transition -->
 <div class="relative bg-white hover:bg-blue-100 p-6 rounded-xl transition-all duration-300 ease-in-out flex flex-col justify-between">
     
@@ -55,6 +57,10 @@
                     to {{ training.endDate|date('F j, Y') }}
                 </span>
             </span>
+        </div>
+
+        <div class="mt-8">
+            {{ level_macro.level_badge(training.level) }}
         </div>
     </div>
 </div>
