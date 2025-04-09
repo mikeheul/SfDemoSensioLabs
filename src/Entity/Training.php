@@ -11,6 +11,7 @@ use App\Repository\TrainingRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrainingRepository::class)]
 #[ApiResource(
@@ -33,6 +34,7 @@ class Training
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     #[Groups(['training:read', 'training_detail'])]
     private ?string $title = null;
     
@@ -45,10 +47,12 @@ class Training
     private ?\DateTimeInterface $startDate = null;
     
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(propertyPath: "startDate")]
     #[Groups(['training:read', 'training_detail'])]
     private ?\DateTimeInterface $endDate = null;
     
     #[ORM\Column]
+    #[Assert\Positive]
     #[Groups(['training:read', 'training_detail'])]
     private ?float $price = null;
 

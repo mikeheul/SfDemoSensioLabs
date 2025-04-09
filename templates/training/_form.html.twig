@@ -6,44 +6,59 @@
         
             <!-- Titre de la formation -->
             <div class="mb-4">
-                {{ form_row(formAddTraining.title, {
-                    'label': 'Training Title',
+                {{ form_label(formAddTraining.title, 'Training Title') }}
+                {{ form_widget(formAddTraining.title, {
                     'attr': {'class': 'w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
                 }) }}
+                <div class="text-red-500">
+                    {{ form_errors(formAddTraining.title) }}
+                </div>
             </div>
 
             <!-- Description de la formation -->
             <div class="mb-4">
-                {{ form_row(formAddTraining.description, {
-                    'label': 'Description',
+                {{ form_label(formAddTraining.description, 'Description') }}
+                {{ form_widget(formAddTraining.description, {
                     'attr': {'class': 'w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
                 }) }}
+                <div class="text-red-500">
+                    {{ form_errors(formAddTraining.description) }}
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Date de début -->
                 <div class="mb-4">
-                    {{ form_row(formAddTraining.startDate, {
-                        'label': 'Start Date',
+                    {{ form_label(formAddTraining.startDate, 'Start Date') }}
+                    {{ form_widget(formAddTraining.startDate, {
                         'attr': {'class': 'w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
                     }) }}
+                    <div class="text-red-500">
+                        {{ form_errors(formAddTraining.startDate) }}
+                    </div>
                 </div>
         
                 <!-- Date de fin -->
                 <div class="mb-4">
-                    {{ form_row(formAddTraining.endDate, {
-                        'label': 'End Date',
+                    {{ form_label(formAddTraining.endDate, 'End Date') }}
+                    {{ form_widget(formAddTraining.endDate, {
                         'attr': {'class': 'w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
                     }) }}
+                    <div class="text-red-500">
+                        {{ form_errors(formAddTraining.endDate) }}
+                    </div>
                 </div>
             </div>
 
             <!-- Prix -->
             <div class="mb-4">
-                {{ form_row(formAddTraining.price, {
-                    'label': 'Price (EUR)',
+                {{ form_label(formAddTraining.price, 'Price (EUR)') }}
+                {{ form_widget(formAddTraining.price, {
                     'attr': {'class': 'w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'}
                 }) }}
+                <div class="text-red-500">
+                    {{ form_errors(formAddTraining.price) }}
+                </div>
             </div>
 
             <!-- Bouton de soumission -->
