@@ -17,8 +17,8 @@
                 {{ training.title }}
                 {% if is_granted('TRAINING_CREATE', training) %}
                     {{ status_macro.status_class(training.status) }}
-                    {{ level_macro.level_badge(training.level) }}
                 {% endif %}
+                {{ level_macro.level_badge(training.level) }}
             </h1>
 
             <p class="text-lg text-gray-600 mt-2">{{ training.description }}</p>
