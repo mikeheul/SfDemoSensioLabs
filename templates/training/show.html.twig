@@ -13,7 +13,7 @@
         <!-- Title and Description -->
         <div class="mb-6">
 
-            <h1 class="flex items-center gap-2 text-4xl font-semibold text-gray-800 mb-8">
+            <h1 class="flex flex-col md:flex-row md:items-center gap-2 text-4xl font-semibold text-gray-800 mb-8">
                 {{ training.title }}
                 {% if is_granted('TRAINING_CREATE', training) %}
                     {{ status_macro.status_class(training.status) }}
