@@ -28,6 +28,10 @@ class Training
     public const TRANSITION_TO_CONFIRMED = 'to_confirmed';
     public const TRANSITION_TO_DRAFT = 'to_draft';
 
+    public const LEVEL_BEGINNER = 'beginner';
+    public const LEVEL_INTERMEDIATE = 'intermediate';
+    public const LEVEL_EXPERT = 'expert';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -77,11 +81,15 @@ class Training
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $level = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
         $this->trainees = new ArrayCollection();
         $this->status = self::PLACE_DRAFT;
+        $this->level = self::LEVEL_BEGINNER;
     }
 
     public function getId(): ?int
@@ -232,6 +240,18 @@ class Training
     public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getLevel(): ?string
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?string $level): static
+    {
+        $this->level = $level;
 
         return $this;
     }

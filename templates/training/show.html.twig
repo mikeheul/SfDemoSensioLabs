@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% import 'macros/status.twig' as status_macro %}
+{% import 'macros/level.twig' as level_macro %}
 
 {% block title %}Training Page{% endblock %}
 {% block meta_description %}
@@ -12,10 +13,11 @@
         <!-- Title and Description -->
         <div class="mb-6">
 
-            <h1 class="flex items-center gap-4 text-4xl font-semibold text-gray-800 mb-8">
+            <h1 class="flex items-center gap-2 text-4xl font-semibold text-gray-800 mb-8">
                 {{ training.title }}
                 {% if is_granted('TRAINING_CREATE', training) %}
                     {{ status_macro.status_class(training.status) }}
+                    {{ level_macro.level_badge(training.level) }}
                 {% endif %}
             </h1>
 
