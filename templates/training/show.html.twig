@@ -32,7 +32,10 @@
             
             <!-- Section pour les sessions programmées -->
             <div class="flex flex-col gap-3">
-                {% for training in upcomingTrainings[:3] %}
+                {% set random_count = random(1, 4) %}
+                {% set selected_trainings = upcomingTrainings|slice(0, random_count) %}
+
+                {% for training in selected_trainings %}
                     {% include 'components/training/upcoming_training.html.twig' with {'training': training} %}
                 {% endfor %}
             </div>
