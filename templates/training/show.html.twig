@@ -27,6 +27,17 @@
             {% endif %}
         </div>
 
+        <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Upcoming Trainings</h2>
+            
+            <!-- Section pour les sessions programmées -->
+            <div class="flex flex-col gap-3">
+                {% for training in upcomingTrainings[:3] %}
+                    {% include 'components/training/upcoming_training.html.twig' with {'training': training} %}
+                {% endfor %}
+            </div>
+        </div>            
+
         <div class="my-5">
             {% if is_granted('TRAINING_CREATE', training) %}
             

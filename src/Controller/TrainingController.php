@@ -167,6 +167,13 @@ final class TrainingController extends AbstractController
             $coursesNotInTraining = $this->trainingService->getCoursesNotInTraining($training);
             $trainees = $this->userRepository->getTraineesSortedByLastName($training);
 
+            $upcomingTrainings = [
+                ['title' => 'Data Science Bootcamp', 'description' => 'Learn the fundamentals of data analysis, machine learning, and more.', 'startDate' => '2025-06-01', 'endDate' => '2025-06-30'],
+                ['title' => 'Web Development Masterclass', 'description' => 'Become proficient in front-end and back-end web development.', 'startDate' => '2025-07-10', 'endDate' => '2025-07-25'],
+                ['title' => 'UX/UI Design Essentials', 'description' => 'Master the basics of user experience and interface design.', 'startDate' => '2025-08-05', 'endDate' => '2025-08-19'],
+                ['title' => 'Machine Learning for Beginners', 'description' => 'A beginner\'s guide to machine learning and AI.', 'startDate' => '2025-09-01', 'endDate' => '2025-09-30'],
+            ];
+
         } catch (NotFoundHttpException $e) {
             // Handle training not found exception
             $this->addFlash('error', 'Training not found.');
@@ -183,6 +190,7 @@ final class TrainingController extends AbstractController
             'isEnrolled' => $isEnrolled,
             'coursesNotInTraining' => $coursesNotInTraining,
             'trainees' => $trainees,
+            'upcomingTrainings' => $upcomingTrainings,
         ]);
     }
 
