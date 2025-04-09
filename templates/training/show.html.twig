@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% import 'macros/status.twig' as status_macro %}
+
 {% block title %}Training Page{% endblock %}
 {% block meta_description %}
     <meta name="description" content="Training Page - Details of the training {{ training.title }}.">
@@ -9,7 +11,12 @@
     <div class="container mx-auto px-6 py-8">
         <!-- Title and Description -->
         <div class="mb-6">
-            <h1 class="text-4xl font-semibold text-gray-800">{{ training.title }}</h1>
+
+            <h1 class="flex items-center gap-4 text-4xl font-semibold text-gray-800">
+                {{ training.title }}
+                {{ status_macro.status_class(training.status) }}
+            </h1>
+
             <p class="text-lg text-gray-600 mt-2">{{ training.description }}</p>
             {% if app.user %}
                 <p class="text-xl font-bold text-indigo-600 mt-4">{{ training.price }} €</p>
@@ -18,9 +25,6 @@
 
         <div class="my-5">
             {% if is_granted('TRAINING_CREATE', training) %}
-
-                {% set color = training.status == training_status_confirmed() ? "text-green-500" : "text-black" %}
-                <p class="{{ color }}">Status : {{ training.status }}</p>
             
                 {% if training.status == 'draft' %}
                     <a data-turbo="false" href="{{ path('training_to_review', {'id': training.id}) }}" 

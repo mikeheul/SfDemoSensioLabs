@@ -1,0 +1,19 @@
+{% macro status_class(status) %}
+    {% set status_color = '' %}
+    {% set background_color = '' %}
+
+    {% if status == 'confirmed' %}
+        {% set status_color = 'text-green-500' %}
+        {% set background_color = 'bg-green-100' %}
+    {% elseif status == 'review' %}
+        {% set status_color = 'text-yellow-500' %}
+        {% set background_color = 'bg-yellow-100' %}
+    {% elseif status == 'draft' %}
+        {% set status_color = 'text-red-500' %}
+        {% set background_color = 'bg-red-100' %}
+    {% endif %}
+
+    <span class="inline-block px-4 py-1 text-sm font-semibold {{ status_color }} {{ background_color }} rounded-lg">
+        {{ status }}
+    </span>
+{% endmacro %}
