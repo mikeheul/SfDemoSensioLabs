@@ -1,9 +1,9 @@
-<div class="flex justify-between items-center border bg-indigo-100 border-gray-300 p-4 rounded-md">
+<div class="flex flex-col xl:flex-row justify-between border bg-indigo-100 border-gray-300 p-4 rounded-md">
     <div>
         <h3 class="text-lg font-semibold text-gray-800">{{ training.title }}</h3>
         <p class="text-gray-600 text-sm">{{ training.description }}</p>
     </div>
-    <div class="text-right">
+    <div class="flex flex-row gap-2 mt-2 text-left xl:gap-0 xl:flex-col xl:text-right">
         <p class="text-gray-500 text-sm">Start: <strong class="text-gray-800">{{ training.startDate|date('F d, Y') }}</strong></p>
         <p class="text-gray-500 text-sm">End: <strong class="text-gray-800">{{ training.endDate|date('F d, Y') }}</strong></p>
     </div>
