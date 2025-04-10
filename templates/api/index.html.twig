@@ -13,7 +13,7 @@
                 <h2 class="text-lg font-semibold">Category not available</h2>
             {% endif %}
             
-            <p class="text-gray-700">{{ result.question }}</p>
+            <p class="text-gray-700">{{ result.question | raw }}</p>
             <p class="text-sm text-gray-500">Difficulty: {{ result.difficulty | capitalize }}</p>
 
             <details class="mt-2">
