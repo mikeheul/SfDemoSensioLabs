@@ -21,13 +21,13 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #4CAF50; 
+    background-color: #2c3674; 
     border-radius: 10px;
     border: 3px solid #f1f1f1; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #45a049; 
+    background-color: #3b5385; 
 }
 
 ::-webkit-scrollbar-horizontal {
@@ -35,7 +35,7 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-    background-color: #4CAF50;
+    background-color: #343174;
     border-radius: 10px;
     border: 3px solid #f1f1f1;
 }
