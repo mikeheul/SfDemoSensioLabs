@@ -27,20 +27,6 @@
             {% endif %}
         </div>
 
-        <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Upcoming Trainings</h2>
-            
-            <!-- Section pour les sessions programmées -->
-            <div class="flex flex-col gap-3">
-                {% set random_count = random(1, 4) %}
-                {% set selected_trainings = upcomingTrainings|slice(0, random_count) %}
-
-                {% for training in selected_trainings %}
-                    {% include 'components/training/upcoming_training.html.twig' with {'training': training} %}
-                {% endfor %}
-            </div>
-        </div>            
-
         <div class="my-5">
             {% if is_granted('TRAINING_CREATE', training) %}
             
@@ -61,6 +47,21 @@
                 {% endif %}
             {% endif %}
         </div>
+        
+        <div class="mt-8 w-full {% if is_granted('ROLE_STUDENT') %} lg:w-full {% else %} lg:w-1/2 {% endif %}">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Upcoming Trainings</h2>
+            
+            <!-- Section pour les sessions programmées -->
+            <div class="flex flex-col gap-3">
+                {% set random_count = random(1, 4) %}
+                {% set selected_trainings = upcomingTrainings|slice(0, random_count) %}
+
+                {% for training in selected_trainings %}
+                    {% include 'components/training/upcoming_training.html.twig' with {'training': training} %}
+                {% endfor %}
+            </div>
+        </div>            
+
 
         {% if is_granted('TRAINING_SUBSCRIBE', training) %}
             {% if isEnrolled %}
