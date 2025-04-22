@@ -15,7 +15,6 @@ class LocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // Si l'URL n'a pas de locale, on utilise celle de la session
         if (!$request->attributes->get('_locale')) {
             $request->setLocale($request->getSession()->get('_locale', 'en'));
         }
