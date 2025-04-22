@@ -4,10 +4,23 @@ link_teachers: "Profesores"
 link_students: "Estudiantes"
 link_register: "Registrarse"
 link_login: "Iniciar sesión"
+
 welcome_title: "¡ Bienvenido a tu aplicación !"
 welcome_description: "¡Tu aplicación está en funcionamiento! Consulta los siguientes detalles para empezar."
+
 page_title.trainings: "Formaciones"
 page_title.courses: "Cursos"
 page_description.trainings: "Lleve sus habilidades profesionales al siguiente nivel con nuestra amplia selección de programas de formación. Ofrecemos sesiones dirigidas por expertos que se adaptan a una variedad de sectores y estilos de aprendizaje, asegurando que haya algo para todos. Ya sea que busque mejorar sus conocimientos existentes, obtener una certificación o explorar nuevas áreas de interés, nuestras formaciones están diseñadas para proporcionar experiencia práctica, conocimiento profundo y aplicaciones concretas. Únase a una comunidad de aprendices apasionados por el crecimiento y comience a transformar su carrera hoy. Con opciones flexibles, formatos interactivos y un equipo de instructores experimentados, su éxito está a solo una formación de distancia."
 page_description.courses: "Abre nuevas oportunidades y haz avanzar tu carrera con nuestra amplia gama de cursos. Desde conocimientos básicos hasta técnicas avanzadas, nuestros cursos están cuidadosamente diseñados para brindarte las habilidades y la confianza necesarias para destacar en tu campo. Ya sea que estés comenzando o buscando mejorar tus competencias, cada curso está enfocado en aplicaciones prácticas del mundo real, asegurando que estés preparado para enfrentar los desafíos de la industria. Nuestro equipo de instructores expertos está comprometido en ofrecerte una experiencia de aprendizaje dinámica, combinando teoría y práctica para ayudarte a dominar los conceptos clave. Con rutas de aprendizaje flexibles y una comunidad solidaria, nunca ha sido tan fácil crecer a nivel personal y profesional. Comienza hoy tu aventura de aprendizaje y construye el camino hacia tu éxito futuro."
+
 auth_message: "Por favor, regístrese o inicie sesión para acceder a nuestras formaciones y cursos."
+form_register:
+  title: "Registro"
+  description: "Crea una cuenta para acceder a nuestras formaciones y cursos."
+  firstName: "Nombre"
+  lastName: "Apellido"
+  email: "Correo electrónico"
+  password: "Contraseña"
+  confirm_password: "Confirmar contraseña"
+  agree_terms: "Acepto los términos y condiciones"
+  submit: "Registrarse"

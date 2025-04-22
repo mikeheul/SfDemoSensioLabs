@@ -8,7 +8,7 @@
 {% block body %}
     <div class="flex justify-center items-center bg-gray-100">
         <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">Create an Account</h1>
+            <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">{{ 'form_register.title' | trans }} </h1>
 
             <!-- Display Form Errors -->
             <div class="mb-4 text-red-500">
@@ -21,6 +21,7 @@
                 <!-- Email Field -->
                 <div class="space-y-2">
                     {{ form_row(registrationForm.email, {
+                        label: 'form_register.email' | trans,
                         'attr': {
                             'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500'
                         }
@@ -31,6 +32,7 @@
                     <!-- First name / Last name Fields -->
                     <div class="space-y-2">
                         {{ form_row(registrationForm.firstName, {
+                            label: 'form_register.firstName' | trans,
                             'attr': {
                                 'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             }
@@ -39,6 +41,7 @@
                     <!-- Email Field -->
                     <div class="space-y-2">
                         {{ form_row(registrationForm.lastName, {
+                            label: 'form_register.lastName' | trans,
                             'attr': {
                                 'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             }
@@ -49,16 +52,17 @@
                 <!-- Password Field -->
                 <div class="space-y-2">
                     {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password',
+                        label: 'form_register.password' | trans,
                         'attr': {
                             'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500'
                         }
                     }) }}
                 </div>
-
+                
                 <!-- Terms Agreement -->
                 <div class="space-y-2">
                     {{ form_row(registrationForm.agreeTerms, {
+                        label: 'form_register.agree_terms' | trans,
                         'attr': {'class': 'inline-block text-gray-700 ml-2'}
                     }) }}
                 </div>
@@ -66,7 +70,7 @@
                 <!-- Submit Button -->
                 <div class="mt-6">
                     <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 focus:outline-none">
-                        Register
+                        {{ 'form_register.submit' | trans}}
                     </button>
                 </div>
 
