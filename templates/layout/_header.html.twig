@@ -37,15 +37,17 @@
                 {% endif %}
 
                 <ul class="lang-switcher border border-slate-500 p-3 rounded-xl">
-                    {% set flags = {'en': '🇬🇧', 'fr': '🇫🇷', 'es': '🇪🇸'} %}
+                    {% set flags = {'en': 'gb', 'fr': 'fr', 'es': 'es'} %}
                     {% for code, flag in flags %}
                         <li style="display: inline; margin: 0 5px;" class="">
                             <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'_locale': code})) }}">
-                                {{ flag }}
+                                {# {{ flag }} #}
+                                <span class="fi fi-{{ flag }}"></span>
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
+
             </div>
         </nav>
     </div>
