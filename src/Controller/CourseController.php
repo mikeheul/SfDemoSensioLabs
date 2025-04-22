@@ -17,7 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Route to handle all course-related actions
-#[Route('/course')]
+// #[Route('/course')]
+#[Route('/{_locale}/course', requirements: ['_locale' => 'en|fr|es'], defaults: ['_locale' => 'en'])]
 final class CourseController extends AbstractController
 {
     // Constructor dependency injection for services
