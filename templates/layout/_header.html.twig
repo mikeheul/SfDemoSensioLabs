@@ -7,8 +7,8 @@
             </div>
 
             <div class="hidden lg:flex gap-5 items-center">
-                {{ include('components/ui/_link.html.twig', { route: 'app_training', label: 'Trainings' }) }}
-                {{ include('components/ui/_link.html.twig', { route: 'app_course', label: 'Courses' }) }}
+                {{ include('components/ui/_link.html.twig', { route: 'app_training', label: 'link_trainings' | trans }) }}
+                {{ include('components/ui/_link.html.twig', { route: 'app_course', label: 'link_courses' | trans }) }}
                 
                 
                 {% if is_granted('ROLE_ADMIN') %}
@@ -37,13 +37,14 @@
                 {% endif %}
 
                 <ul>
-                {% for code, label in {'en': 'English', 'fr': 'Français', 'es': 'Español'} %}
+                    {% for code, label in {'en': 'English', 'fr': 'Français', 'es': 'Español'} %}
                     <li>
                         <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': code})) }}">
+                            {# <i class="fas fa-flag-{{ code }} mr-2"></i> #}
                             {{ label }}
                         </a>
                     </li>
-                {% endfor %}
+                    {% endfor %}
                 </ul>
             </div>
         </nav>

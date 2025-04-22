@@ -60,7 +60,7 @@
         {% endfor %}
 
         {% if not app.user %}
-            <p class="text-lg text-gray-600 mb-4 text-center">Please register or login to access our trainings and courses.</p>
+            <p class="text-lg text-gray-600 mb-4 text-center">{{ 'auth_message' | trans }}</p>
         {% endif %}
 
         {% block body %}{% endblock %}
