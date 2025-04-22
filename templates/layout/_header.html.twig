@@ -12,8 +12,8 @@
                 
                 
                 {% if is_granted('ROLE_ADMIN') %}
-                    {{ include('components/ui/_link.html.twig', { route: 'app_students_show', label: 'Students' }) }}
-                    {{ include('components/ui/_link.html.twig', { route: 'app_teachers_show', label: 'Teachers' }) }}
+                    {{ include('components/ui/_link.html.twig', { route: 'app_students_show', label: 'link_students' | trans }) }}
+                    {{ include('components/ui/_link.html.twig', { route: 'app_teachers_show', label: 'link_teachers' | trans }) }}
                 {% endif %}
                 
                 {{ include('components/ui/_link.html.twig', { route: 'external_api', label: 'API' }) }}
