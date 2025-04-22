@@ -32,8 +32,8 @@
                     <a data-turbo="false" aria-label="logout" href="{{ path('app_logout') }}" class="text-md font-semibold hover:text-indigo-200"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                     
                 {% else %}
-                    <a href="{{ path('app_register') }}" class="text-md font-semibold hover:text-indigo-200">Register</a>
-                    <a href="{{ path('app_login') }}" class="text-md font-semibold hover:text-indigo-200">Login</a>
+                    <a href="{{ path('app_register') }}" class="text-md font-semibold hover:text-indigo-200">{{ 'link_register' | trans }}</a>
+                    <a href="{{ path('app_login') }}" class="text-md font-semibold hover:text-indigo-200">{{ 'link_login' | trans }}</a>
                 {% endif %}
 
                 <ul>
