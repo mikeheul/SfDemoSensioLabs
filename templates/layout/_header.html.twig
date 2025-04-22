@@ -36,14 +36,14 @@
                     <a href="{{ path('app_login') }}" class="text-md font-semibold hover:text-indigo-200">{{ 'link_login' | trans }}</a>
                 {% endif %}
 
-                <ul>
-                    {% for code, label in {'en': 'EN', 'fr': 'FR', 'es': 'ES'} %}
-                    <li>
-                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'_locale': code})) }}">
-                            {# <i class="fas fa-flag-{{ code }} mr-2"></i> #}
-                            {{ label }}
-                        </a>
-                    </li>
+                <ul class="lang-switcher border border-slate-500 p-3 rounded-xl">
+                    {% set flags = {'en': '🇬🇧', 'fr': '🇫🇷', 'es': '🇪🇸'} %}
+                    {% for code, flag in flags %}
+                        <li style="display: inline; margin: 0 5px;" class="">
+                            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'_locale': code})) }}">
+                                {{ flag }}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
