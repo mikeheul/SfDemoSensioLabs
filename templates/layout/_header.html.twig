@@ -39,7 +39,7 @@
                 <ul>
                     {% for code, label in {'en': 'EN', 'fr': 'FR', 'es': 'ES'} %}
                     <li>
-                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': code})) }}">
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'_locale': code})) }}">
                             {# <i class="fas fa-flag-{{ code }} mr-2"></i> #}
                             {{ label }}
                         </a>
