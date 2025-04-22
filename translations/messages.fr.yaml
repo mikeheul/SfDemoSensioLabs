@@ -24,3 +24,9 @@ form_register:
   confirm_password: "Confirmer le mot de passe"
   agree_terms: "J'accepte les termes et conditions"
   submit: "S'inscrire"
+
+form_login:
+  title: "Veuillez vous connecter"
+  email: "Email"
+  password: "Mot de passe"
+  submit: "Se connecter"

@@ -24,3 +24,9 @@ form_register:
   confirm_password: "Confirmar contraseña"
   agree_terms: "Acepto los términos y condiciones"
   submit: "Registrarse"
+
+form_login:
+  title: "Por favor, inicie sesión"
+  email: "Correo electrónico"
+  password: "Contraseña"
+  submit: "Iniciar sesión"

@@ -24,3 +24,9 @@ form_register:
   confirm_password: "Confirm Password"
   agree_terms: "I agree to the terms and conditions"
   submit: "Register"
+
+form_login:
+  title: "Please Sign In"
+  email: "Email"
+  password: "Password"
+  submit: "Sign In"
