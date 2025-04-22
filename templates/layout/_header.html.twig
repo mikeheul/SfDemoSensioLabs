@@ -35,6 +35,16 @@
                     <a href="{{ path('app_register') }}" class="text-md font-semibold hover:text-indigo-200">Register</a>
                     <a href="{{ path('app_login') }}" class="text-md font-semibold hover:text-indigo-200">Login</a>
                 {% endif %}
+
+                <ul>
+                {% for code, label in {'en': 'English', 'fr': 'Français', 'es': 'Español'} %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': code})) }}">
+                            {{ label }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
             </div>
         </nav>
     </div>
