@@ -77,7 +77,7 @@
             {{ form_end(registrationForm) }}
             
             <div class="mt-4 text-center">
-                <p class="text-sm text-gray-600">Already have an account ? <a href="{{ path('app_login') }}" class="text-blue-500 hover:underline">Login here</a></p>
+                <p class="text-sm text-gray-600">{{ 'form_register.already_account' | trans }} <a href="{{ path('app_login') }}" class="text-blue-500 hover:underline">{{ 'form_register.login_here' | trans }}</a></p>
             </div>
         </div>
     </div>
