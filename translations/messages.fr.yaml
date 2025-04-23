@@ -37,6 +37,11 @@ level:
   intermediate: "Intermédiaire"
   expert: "Expert"
 
+status:
+  confirmed: "Confirmé"
+  review: "Revue"
+  draft: "Brouillon"
+
 training:
   upcoming: "Formations à Venir"
   sheduled_courses: "Cours Programmés"

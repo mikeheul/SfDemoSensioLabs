@@ -14,6 +14,7 @@
     {% endif %}
 
     <span class="border inline-block px-4 py-1 text-sm font-semibold {{ status_color }} {{ background_color }} rounded-md">
-        {{ status }}
+        {# {{ status }} #}
+        {{ ('status.' ~ status) | trans }}
     </span>
 {% endmacro %}

@@ -29,6 +29,11 @@ level:
   intermediate: "Intermedio"
   expert: "Experto"
 
+status:
+  confirmed: "Confirmed"
+  review: "Revisión"
+  draft: "Borrador"
+
 filter:
   label: "Filtrar por Nivel"
   label_all: "Todos los Niveles"
