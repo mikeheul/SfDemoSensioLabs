@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="container max-w-7xl mx-auto py-8">
-        {% include 'components/ui/page_title.html.twig' with { 'title': 'Students', 'count': students | length } %}
+        {% include 'components/ui/page_title.html.twig' with { 'title': 'page_title.students' | trans, 'count': students | length } %}
 
         {% if students is empty %}
             <p class="text-lg text-gray-600">No students found.</p>

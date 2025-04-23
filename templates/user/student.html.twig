@@ -15,8 +15,8 @@
     <div class="grid gap-3">
         {% for training in student.trainings %}
             <div class="bg-white shadow-md rounded-lg p-8 mb-4 flex flex-col">
-                <h3 class="text-xl font-semibold text-gray-800">{{ training.title }}</h3>
-                <p class="text-gray-600">{{ training.description }}</p>
+                <h3 class="text-xl font-semibold text-gray-800">{{ training | translate('title') }}</h3>
+                <p class="text-gray-600">{{ training | translate('description') }}</p>
                 <p class="text-gray-500 my-4"><i class="fa-regular fa-calendar-check"></i> {{ training.startDate|date('Y-m-d') }} to {{ training.endDate|date('Y-m-d') }}</p>
                 <a data-turbo="false" class="text-red-700 ml-auto" href="{{ path('unenroll_training', {'training': training.id, 'trainee': student.id})}}">
                     <i class="fa-solid fa-xmark"></i> Unenroll
