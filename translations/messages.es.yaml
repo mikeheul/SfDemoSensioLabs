@@ -20,6 +20,11 @@ page_description:
 create_button:
   training: "Crear Nueva Formación"
 
+workflow_button:
+  to_review: "Mover a Revisión"
+  confirm: "Confirmar Formación"
+  revert: "Revertir a Borrador"
+
 dates:
   from: "Desde"
   to: "Hasta"
@@ -30,7 +35,7 @@ level:
   expert: "Experto"
 
 status:
-  confirmed: "Confirmed"
+  confirmed: "Confirmado"
   review: "Revisión"
   draft: "Borrador"
 

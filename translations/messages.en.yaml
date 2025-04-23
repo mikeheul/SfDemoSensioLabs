@@ -20,6 +20,11 @@ page_description:
 create_button:
   training: "Create New Training"
 
+workflow_button:
+  to_review: "Move To Review"
+  confirm: "Confirm Training"
+  revert: "Revert To Draft"
+
 dates:
   from: "From"
   to: "To"
