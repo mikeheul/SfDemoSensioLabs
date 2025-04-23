@@ -29,6 +29,8 @@ subscribe_button:
   subscribe: "Subscribe"
   unsubscribe: "Unsubscribe"
 
+details_link: "Details"
+
 dates:
   from: "From"
   to: "To"

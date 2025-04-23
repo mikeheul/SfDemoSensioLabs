@@ -37,6 +37,8 @@ subscribe_button:
   subscribe: "S'inscrire"
   unsubscribe: "Se désinscrire"
 
+details_link: "Détails"
+
 dates:
   from: "Du"
   to: "au"
