@@ -62,6 +62,10 @@ training:
   enrolled_trainings: "Formations Suivies"
   unenroll: "Désinscrire"
 
+course:
+  trainings_included: "Formations incluant ce cours"
+  no_elements: "Aucune formation n'inclut ce cours"
+
 auth_message: "Veuillez vous inscrire ou vous connecter pour accéder à nos formations et cours."
 form_register:
   title: "Inscription"

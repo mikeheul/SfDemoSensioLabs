@@ -62,6 +62,10 @@ training:
   enrolled_trainings: "Enrolled Trainings"
   unenroll: "Unenroll"
 
+course:
+  trainings_included: "Trainings that included this course"
+  no_elements: "No training includes this course"
+
 auth_message: "Please register or login to access our trainings and courses."
 form_register:
   title: "Register"

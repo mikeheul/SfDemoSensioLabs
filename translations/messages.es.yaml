@@ -62,6 +62,10 @@ training:
   enrolled_trainings: "Formaciones activas"
   unenroll: "Desinscribirse"
 
+course:
+  trainings_included: "Formaciones que incluyen este curso"
+  no_elements: "Ninguna formación incluye este curso"
+
 auth_message: "Por favor, regístrese o inicie sesión para acceder a nuestras formaciones y cursos."
 form_register:
   title: "Registro"

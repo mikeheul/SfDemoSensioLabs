@@ -22,11 +22,11 @@
         </div>
 
         <div class="mt-6">
-            <h2 class="text-2xl font-medium my-4">Trainings that included this course</h2>
+            <h2 class="text-2xl font-medium my-4">{{ 'course.trainings_included' | trans }}</h2>
             <div class="flex flex-wrap gap-4">
                 {% if course.trainings is empty %}
                     <div class="w-full text-gray-500">
-                        <p>No trainings are included in this course.</p>
+                        <p>{{ 'course.no_elements' | trans }}</p>
                     </div>
                 {% else %}
                     {% for training in course.trainings %}
