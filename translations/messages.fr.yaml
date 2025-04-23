@@ -15,6 +15,14 @@ page_description:
   trainings: "Améliorez vos compétences professionnelles avec notre large sélection de programmes de formation. Nous proposons des sessions animées par des experts, adaptées à une variété de secteurs et de styles d'apprentissage, garantissant qu'il y en a pour tous. Que vous souhaitiez perfectionner vos compétences existantes, obtenir une certification ou explorer de nouveaux domaines d'intérêt, nos formations sont conçues pour offrir une expérience pratique, des connaissances approfondies et des applications concrètes. Rejoignez une communauté d'apprenants passionnés par la croissance et commencez à transformer votre carrière aujourd'hui. Avec des options flexibles, des formats interactifs et une équipe d'instructeurs expérimentés, votre succès n'est qu'à une formation de distance."
   courses: "Libérez de nouvelles opportunités et faites avancer votre carrière grâce à notre large gamme de cours. De l’acquisition des bases aux techniques les plus avancées, nos formations sont soigneusement conçues pour vous doter des compétences et de la confiance nécessaires à votre réussite. Que vous débutiez ou que vous souhaitiez monter en compétences, chaque cours est pensé pour avoir une application concrète sur le terrain, afin de vous préparer efficacement aux défis du secteur. Notre équipe d’instructeurs experts s’engage à offrir une expérience d’apprentissage dynamique, mêlant théorie et pratique pour vous aider à maîtriser les concepts clés. Grâce à des parcours flexibles et une communauté bienveillante, le chemin vers l’épanouissement personnel et professionnel n’a jamais été aussi accessible. Commencez votre aventure d’apprentissage dès aujourd’hui et ouvrez la voie à votre succès futur."
 
+filter:
+  label: "Filtrer par Niveau"
+  label_all: "Tous les Niveaux"
+  label_beginner: "Débutant"
+  label_intermediate: "Intermédiaire"
+  label_expert: "Expert"
+  apply_button: "Appliquer"
+
 auth_message: "Veuillez vous inscrire ou vous connecter pour accéder à nos formations et cours."
 form_register:
   title: "Inscription"
@@ -30,7 +38,7 @@ form_register:
   login_here: "Connectez-vous ici"
 
 form_login:
-  title: "Veuillez vous connecter"
+  title: "Se connecter"
   email: "Email"
   password: "Mot de passe"
   submit: "Se connecter"
