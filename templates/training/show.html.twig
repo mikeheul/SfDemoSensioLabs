@@ -33,16 +33,16 @@
                 {% if training.status == 'draft' %}
                     <a data-turbo="false" href="{{ path('training_to_review', {'id': training.id}) }}" 
                         class="inline-block px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200">
-                        Move to Review
+                        {{ 'workflow_button.to_review' | trans }}
                     </a>
                 {% elseif training.status == 'review' %}
                     <a data-turbo="false" href="{{ path('training_to_confirmed', {'id': training.id}) }}" 
                         class="inline-block px-4 py-2 mt-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200">
-                        Confirm Training
+                        {{ 'workflow_button.confirm' | trans }}
                     </a>
                     <a data-turbo="false" href="{{ path('training_to_draft', {'id': training.id}) }}" 
                         class="inline-block px-4 py-2 mt-2 ml-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200">
-                        Revert to Draft
+                        {{ 'workflow_button.revert' | trans }}
                     </a>
                 {% endif %}
             {% endif %}
@@ -67,13 +67,13 @@
             {% if isEnrolled %}
                 <form action="{{ path('enroll_training', {'id': training.id}) }}" method="post">
                     <button type="submit" class="py-2 px-4 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-                        Unsubscribe
+                        {{ 'subscribe_button.unsubscribe' | trans }}
                     </button>
                 </form>
             {% else %}
                 <form action="{{ path('enroll_training', {'id': training.id}) }}" method="post">
                     <button type="submit" class="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Subscribe
+                        {{ 'subscribe_button.subscribe' | trans }}
                     </button>
                 </form>
             {% endif %}

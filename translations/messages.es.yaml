@@ -25,6 +25,10 @@ workflow_button:
   confirm: "Confirmar Formación"
   revert: "Revertir a Borrador"
 
+subscribe_button:
+  subscribe: "Suscribirse"
+  unsubscribe: "Desuscribirse"
+
 dates:
   from: "Desde"
   to: "Hasta"

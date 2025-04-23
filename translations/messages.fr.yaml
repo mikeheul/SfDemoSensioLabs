@@ -28,6 +28,15 @@ filter:
 create_button:
   training: "Créer Nouvelle Formation"
 
+workflow_button:
+  to_review: "Déplacer vers Revue"
+  confirm: "Confirmer la Formation"
+  revert: "Revenir vers Brouillon"
+
+subscribe_button:
+  subscribe: "S'inscrire"
+  unsubscribe: "Se désinscrire"
+
 dates:
   from: "Du"
   to: "au"

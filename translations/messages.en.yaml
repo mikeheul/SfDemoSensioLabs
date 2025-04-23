@@ -25,6 +25,10 @@ workflow_button:
   confirm: "Confirm Training"
   revert: "Revert To Draft"
 
+subscribe_button:
+  subscribe: "Subscribe"
+  unsubscribe: "Unsubscribe"
+
 dates:
   from: "From"
   to: "To"
