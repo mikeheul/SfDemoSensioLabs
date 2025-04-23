@@ -85,3 +85,12 @@ form_login:
   email: "E-Mail"
   password: "Passwort"
   submit: "Anmelden"
+
+form_training:
+  title: "Neue Schulung erstellen"
+  title: "Title"
+  description: "Beschreibung"
+  start_date: "Startdatum"
+  end_date: "Enddatum"
+  price: "Preis"
+  submit: "Erstellen"

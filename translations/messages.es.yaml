@@ -85,3 +85,12 @@ form_login:
   email: "Correo electrónico"
   password: "Contraseña"
   submit: "Iniciar sesión"
+
+form_training:
+  title: "Crear Formación"
+  title: "Title"
+  description: "Descripción"
+  start_date: "Fecha de Inicio"
+  end_date: "Fecha de Fin"
+  price: "Precio"
+  submit: "Crear"
