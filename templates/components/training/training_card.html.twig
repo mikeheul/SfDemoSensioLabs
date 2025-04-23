@@ -35,8 +35,8 @@
             {% if not is_granted("ROLE_ADMIN") %}
                 {% if app.user.isEnrolledInTraining(training) %}
                     <!-- Show a "In" badge if the user is enrolled -->
-                    <div class="absolute top-3 right-3 bg-green-500 text-white text-xs py-1 px-3 rounded-full">
-                        In
+                    <div class="absolute bottom-7 right-3 bg-green-400 text-white text-xs py-1 px-3 rounded-full">
+                        <i class="fa-solid fa-arrow-down"></i>
                     </div>
                 {% endif %}
             {% endif %}
