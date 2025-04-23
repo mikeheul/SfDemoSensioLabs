@@ -48,6 +48,8 @@ training:
   not_sheduled_courses: "Not Scheduled Courses"
   view_unsheduled_courses: "View Unsheduled Courses"
   trainees: "Trainees"
+  enrolled_trainings: "Enrolled Trainings"
+  unenroll: "Unenroll"
 
 auth_message: "Please register or login to access our trainings and courses."
 form_register:

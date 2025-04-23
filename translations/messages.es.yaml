@@ -48,6 +48,8 @@ training:
   not_sheduled_courses: "Cursos No Programados"
   view_unsheduled_courses: "Ver Cursos No Programados"
   trainees: "Alumnos"
+  enrolled_trainings: "Formaciones Inscritas"
+  unenroll: "Desinscribirse"
 
 auth_message: "Por favor, regístrese o inicie sesión para acceder a nuestras formaciones y cursos."
 form_register:
