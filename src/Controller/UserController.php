@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // #[Route('/user')]
-#[Route('/{_locale}/user', requirements: ['_locale' => 'en|fr|es'], defaults: ['_locale' => 'en'])]
+#[Route('/{_locale}/user', requirements: ['_locale' => 'en|fr|es|de'], defaults: ['_locale' => 'en'])]
 final class UserController extends AbstractController
 {
     public function __construct(private UserService $userService) {}

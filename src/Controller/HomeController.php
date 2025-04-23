@@ -16,7 +16,7 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/{_locale}/home', name: 'app_home', requirements: ['_locale' => 'en|fr|es'], defaults: ['_locale' => 'en'])]
+    #[Route('/{_locale}/home', name: 'app_home', requirements: ['_locale' => 'en|fr|es|de'], defaults: ['_locale' => 'en'])]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', []);

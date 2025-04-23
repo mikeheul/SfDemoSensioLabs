@@ -1,0 +1,87 @@
+link_trainings: "Schulungen"
+link_courses: "Kurse"
+link_teachers: "Lehrer"
+link_students: "Schüler"
+link_register: "Registrieren"
+link_login: "Anmelden"
+
+welcome_title: "Willkommen in Ihrer Anwendung!"
+welcome_description: "Ihre Anwendung ist betriebsbereit. Sehen Sie sich die folgenden Details an, um loszulegen."
+
+page_title:
+  trainings: "Schulungen"
+  courses: "Kurse"
+  students: "Schüler"
+  teachers: "Lehrer"
+page_description:
+  trainings: "Bringen Sie Ihre beruflichen Fähigkeiten mit unserer vielfältigen Auswahl an Schulungsprogrammen auf das nächste Level. Wir bieten von Experten geleitete Sitzungen an, die auf verschiedene Branchen und Lernstile zugeschnitten sind, sodass für jeden etwas dabei ist. Ob Sie Ihre bestehenden Kenntnisse erweitern, eine Zertifizierung erwerben oder neue Interessensgebiete erkunden möchten – unsere Schulungen sind darauf ausgelegt, praktische Erfahrungen und fundiertes Wissen zu vermitteln. Werden Sie Teil einer Gemeinschaft von Lernenden, die leidenschaftlich an persönlichem Wachstum interessiert sind, und beginnen Sie noch heute, Ihre Karriere zu transformieren. Mit flexiblen Optionen, interaktiven Formaten und einem Team erfahrener Ausbilder ist Ihr Erfolg nur eine Schulung entfernt."
+  courses: "Nutzen Sie neue Möglichkeiten und fördern Sie Ihre Karriere mit unserem umfassenden Kursangebot. Von grundlegenden Kenntnissen bis hin zu fortgeschrittenen Techniken sind unsere Kurse sorgfältig darauf ausgelegt, Ihnen die Fähigkeiten und das Selbstvertrauen zu vermitteln, die Sie für den Erfolg in Ihrem Bereich benötigen. Ob Sie gerade erst anfangen oder sich weiterbilden möchten – jeder Kurs ist mit Fokus auf praxisnahe Anwendungen konzipiert, um Sie auf branchenspezifische Herausforderungen vorzubereiten. Unser Team von Experten ist bestrebt, Ihnen ein dynamisches Lernerlebnis zu bieten, das Theorie mit praktischem Wissen verbindet, um Ihnen zu helfen, Schlüsselkonzepte zu meistern. Mit flexiblen Lernpfaden und einer unterstützenden Gemeinschaft war der Weg zu persönlichem und beruflichem Wachstum noch nie so einfach. Beginnen Sie noch heute Ihr Lernabenteuer und ebnen Sie den Weg für zukünftigen Erfolg."
+
+create_button:
+  training: "Neue Schulung erstellen"
+
+workflow_button:
+  to_review: "Zur Überprüfung"
+  confirm: "Schulung bestätigen"
+  revert: "Zurück zum Entwurf"
+
+subscribe_button:
+  subscribe: "Abonnieren"
+  unsubscribe: "Abbestellen"
+
+details_link: "Details"
+
+dates:
+  from: "Von"
+  to: "Bis"
+
+level:
+  beginner: Anfänger
+  intermediate: Fortgeschritten
+  expert: Experte
+
+status:
+  confirmed: "Bestätigt"
+  review: "Überprüfung"
+  draft: "Entwurf"
+
+filter:
+  label: "Nach Niveau filtern"
+  label_all: "Alle Niveaus"
+  label_beginner: "Anfänger"
+  label_intermediate: "Fortgeschritten"
+  label_expert: "Experte"
+  apply_button: "Anwenden"
+
+training:
+  upcoming: "Bevorstehende Schulungen"
+  sheduled_courses: "Geplante Kurse"
+  not_sheduled_courses: "Nicht geplante Kurse"
+  view_unsheduled_courses: "Nicht geplante Kurse anzeigen"
+  trainees: "Teilnehmer"
+  enrolled_trainings: "Eingeschriebene Schulungen"
+  unenroll: "Abmelden"
+
+course:
+  trainings_included: "Schulungen, die diesen Kurs enthalten"
+  no_elements: "Keine Schulung enthält diesen Kurs"
+
+auth_message: "Bitte registrieren Sie sich oder melden Sie sich an, um auf unsere Schulungen und Kurse zuzugreifen."
+form_register:
+  title: "Registrieren"
+  description: "Erstellen Sie ein Konto, um auf unsere Schulungen und Kurse zuzugreifen."
+  firstName: "Vorname"
+  lastName: "Nachname"
+  email: "E-Mail"
+  password: "Passwort"
+  confirm_password: "Passwort bestätigen"
+  agree_terms: "Ich stimme den Allgemeinen Geschäftsbedingungen zu"
+  submit: "Registrieren"
+  already_account: "Haben Sie bereits ein Konto?"
+  login_here: "Hier anmelden"
+
+form_login:
+  title: "Bitte melden Sie sich an"
+  email: "E-Mail"
+  password: "Passwort"
+  submit: "Anmelden"

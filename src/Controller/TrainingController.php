@@ -36,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Route to handle all training-related actions
 // #[Route('/training')]
-#[Route('/{_locale}/training', requirements: ['_locale' => 'en|fr|es'], defaults: ['_locale' => 'en'])]
+#[Route('/{_locale}/training', requirements: ['_locale' => 'en|fr|es|de'], defaults: ['_locale' => 'en'])]
 final class TrainingController extends AbstractController
 {
     // Constructor dependency injection for services and components
