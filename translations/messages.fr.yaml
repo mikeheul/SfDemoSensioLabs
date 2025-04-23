@@ -23,6 +23,16 @@ filter:
   label_expert: "Expert"
   apply_button: "Appliquer"
 
+create_button:
+  training: "Créer Nouvelle Formation"
+
+training:
+  upcoming: "Formations à Venir"
+  sheduled_courses: "Cours Programmés"
+  not_sheduled_courses: "Cours Non Programmés"
+  view_unsheduled_courses: "Voir les Cours Non Programmés"
+  trainees: "Apprenants"
+
 auth_message: "Veuillez vous inscrire ou vous connecter pour accéder à nos formations et cours."
 form_register:
   title: "Inscription"

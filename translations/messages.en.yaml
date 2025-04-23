@@ -15,6 +15,9 @@ page_description:
   trainings: "Take your professional skills to the next level with our diverse selection of training programs. We offer expert-led sessions that cater to a variety of industries and learning styles, ensuring there’s something for everyone. Whether you’re looking to enhance your existing expertise, gain certification, or explore new areas of interest, our trainings are designed to provide practical, hands-on experience and in-depth knowledge. Join a community of learners who are passionate about growth and start transforming your career today. With flexible options, interactive formats, and a team of experienced instructors, your success is just a training away."
   courses: "Unlock new opportunities and advance your career with our comprehensive range of courses. From foundational knowledge to advanced techniques, our courses are carefully designed to equip you with the skills and confidence needed to succeed in your field. Whether you're just starting out or aiming to upskill, each course is crafted with a focus on real-world applications, ensuring you're ready to tackle industry challenges head-on. Our team of expert instructors is committed to providing a dynamic learning experience, blending theory with practical knowledge to help you master key concepts. With flexible learning paths and a supportive community, the journey to personal and professional growth has never been easier. Begin your learning adventure today and pave the way for future success."
 
+create_button:
+  training: "Create New Training"
+
 filter:
   label: "Filter by Level"
   label_all: "All Levels"
@@ -22,6 +25,13 @@ filter:
   label_intermediate: "Intermediate"
   label_expert: "Expert"
   apply_button: "Apply"
+
+training:
+  upcoming: "Upcoming Trainings"
+  sheduled_courses: "Schedules Courses"
+  not_sheduled_courses: "Not Scheduled Courses"
+  view_unsheduled_courses: "View Unsheduled Courses"
+  trainees: "Trainees"
 
 auth_message: "Please register or login to access our trainings and courses."
 form_register:
