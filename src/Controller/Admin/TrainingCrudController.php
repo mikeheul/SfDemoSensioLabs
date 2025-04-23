@@ -46,8 +46,8 @@ class TrainingCrudController extends AbstractCrudController
             TextField::new('status')
                 ->setLabel('Status')
                 ->setTemplatePath('admin/custom_status_field.html.twig'),
-            TextField::new('title'),
-            TextareaField::new('description'),
+            TextField::new('titleEn'),
+            TextareaField::new('descriptionEn'),
             DateField::new('startDate'),
             DateField::new('endDate'),
             MoneyField::new('price')
