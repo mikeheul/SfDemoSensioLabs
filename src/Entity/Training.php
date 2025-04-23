@@ -40,11 +40,11 @@ class Training
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Groups(['training:read', 'training_detail'])]
-    private ?string $title = null;
+    private ?string $titleEn = null;
     
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['training:read', 'training_detail'])]
-    private ?string $description = null;
+    private ?string $descriptionEn = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['training:read', 'training_detail'])]
@@ -84,6 +84,18 @@ class Training
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $level = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title_fr = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title_es = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description_fr = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description_es = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -97,26 +109,26 @@ class Training
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitleEn(): ?string
     {
-        return $this->title;
+        return $this->titleEn;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(string $titleEn): static
     {
-        $this->title = $title;
+        $this->titleEn = $titleEn;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescriptionEn(): ?string
     {
-        return $this->description;
+        return $this->descriptionEn;
     }
 
-    public function setDescription(string $description): static
+    public function setDescriptionEn(string $descriptionEn): static
     {
-        $this->description = $description;
+        $this->descriptionEn = $descriptionEn;
 
         return $this;
     }
@@ -252,6 +264,54 @@ class Training
     public function setLevel(?string $level): static
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getTitleFr(): ?string
+    {
+        return $this->title_fr;
+    }
+
+    public function setTitleFr(?string $title_fr): static
+    {
+        $this->title_fr = $title_fr;
+
+        return $this;
+    }
+
+    public function getTitleEs(): ?string
+    {
+        return $this->title_es;
+    }
+
+    public function setTitleEs(?string $title_es): static
+    {
+        $this->title_es = $title_es;
+
+        return $this;
+    }
+
+    public function getDescriptionFr(): ?string
+    {
+        return $this->description_fr;
+    }
+
+    public function setDescriptionFr(?string $description_fr): static
+    {
+        $this->description_fr = $description_fr;
+
+        return $this;
+    }
+
+    public function getDescriptionEs(): ?string
+    {
+        return $this->description_es;
+    }
+
+    public function setDescriptionEs(?string $description_es): static
+    {
+        $this->description_es = $description_es;
 
         return $this;
     }

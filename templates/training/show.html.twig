@@ -5,7 +5,7 @@
 
 {% block title %}Training Page{% endblock %}
 {% block meta_description %}
-    <meta name="description" content="Training Page - Details of the training {{ training.title }}.">
+    <meta name="description" content="Training Page - Details of the training {{ training | translate('title') }}.">
 {% endblock %}
 
 {% block body %}
@@ -14,14 +14,14 @@
         <div class="mb-6">
 
             <h1 class="flex flex-col md:flex-row md:items-center gap-2 text-4xl font-semibold text-gray-800 mb-8">
-                {{ training.title }}
+                {{ training | translate('title') }}
                 {% if is_granted('TRAINING_CREATE', training) %}
                     {{ status_macro.status_class(training.status) }}
                 {% endif %}
                 {{ level_macro.level_badge(training.level) }}
             </h1>
 
-            <p class="text-lg text-gray-600 mt-2">{{ training.description }}</p>
+            <p class="text-lg text-gray-600 mt-2">{{ training | translate('description') }}</p>
             {% if app.user %}
                 <p class="text-xl font-bold text-indigo-600 mt-4">{{ training.price }} €</p>
             {% endif %}

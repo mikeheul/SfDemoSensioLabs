@@ -20,14 +20,14 @@
     <div>
         <!-- Include a header card component with the training's title, route, and icon -->
         {% include 'components/ui/header_card.html.twig' with { 
-            'title': training.title, 
-            'route': 'show_training', 
+            'title': training | translate('title'), 
+            'route': 'show_training',
             'slug': training.slug, 
             'icon': '<i class="fas fa-graduation-cap"></i>' 
         } %}
         
         <!-- Display the training description, truncated to 150 characters -->
-        <p class="text-gray-600 mb-4">{{ training.description | slice(0, 150) }}...</p>
+        <p class="text-gray-600 mb-4">{{ training | translate('description') | slice(0, 150) }}...</p>
     </div>
     
     <div>
