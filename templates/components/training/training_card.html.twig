@@ -53,8 +53,8 @@
             <span class="inline-flex items-center text-sm">
                 <i class="fa-regular fa-calendar"></i>
                 <span class="ml-2">
-                    From {{ training.startDate|date('F j, Y') }}
-                    to {{ training.endDate|date('F j, Y') }}
+                    {{ 'from'|trans }} {{ training.startDate|date('d M Y') }}
+                    {{ 'to'|trans }} {{ training.endDate|date('d M Y') }}
                 </span>
             </span>
         </div>

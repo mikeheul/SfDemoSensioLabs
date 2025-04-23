@@ -18,6 +18,15 @@ page_description:
 create_button:
   training: "Crear Nueva Formación"
 
+dates:
+  from: "Desde"
+  to: "Hasta"
+
+level:
+  beginner: "Principiante"
+  intermediate: "Intermedio"
+  expert: "Experto"
+
 filter:
   label: "Filtrar por Nivel"
   label_all: "Todos los Niveles"

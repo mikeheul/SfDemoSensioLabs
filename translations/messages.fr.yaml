@@ -26,6 +26,15 @@ filter:
 create_button:
   training: "Créer Nouvelle Formation"
 
+dates:
+  from: "Du"
+  to: "au"
+
+level:
+  beginner: "Débutant"
+  intermediate: "Intermédiaire"
+  expert: "Expert"
+
 training:
   upcoming: "Formations à Venir"
   sheduled_courses: "Cours Programmés"

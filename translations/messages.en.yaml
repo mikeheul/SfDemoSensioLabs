@@ -18,6 +18,15 @@ page_description:
 create_button:
   training: "Create New Training"
 
+dates:
+  from: "From"
+  to: "To"
+
+level:
+  beginner: Beginner
+  intermediate: Intermediate
+  expert: Expert
+
 filter:
   label: "Filter by Level"
   label_all: "All Levels"
