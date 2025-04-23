@@ -88,7 +88,6 @@ form_login:
 
 form_training:
   title: "Crear Formación"
-  title: "Title"
   description: "Descripción"
   start_date: "Fecha de Inicio"
   end_date: "Fecha de Fin"
