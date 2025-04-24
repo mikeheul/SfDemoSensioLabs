@@ -85,7 +85,7 @@
                 <h2 class="text-2xl font-semibold text-gray-700">{{ 'training.sheduled_courses' | trans }}</h2>
                 {% if training.courses is empty %}
                     <div class="w-full text-gray-500 mt-4 mb-8">
-                        <p>No courses are included in this training.</p>
+                        <p>{{ 'training.no_courses' | trans }}</p>
                     </div>
                 {% else %}
                     <ul class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -125,7 +125,7 @@
 
                 {% if training.courses is empty %}
                     <div class="w-full text-gray-500 mt-4 mb-8">
-                        <p>No trainees enrolled in this training.</p>
+                        <p>{{ 'training.no_trainees' | trans }}</p>
                     </div>
                 {% else %}
                     <ul class="mt-4 space-y-4">

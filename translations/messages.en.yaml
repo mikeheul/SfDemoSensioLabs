@@ -61,6 +61,8 @@ training:
   trainees: "Trainees"
   enrolled_trainings: "Enrolled Trainings"
   unenroll: "Unenroll"
+  no_courses: "No courses are included in this training."
+  no_trainees: "No trainees enrolled in this training."
 
 course:
   trainings_included: "Trainings that included this course"

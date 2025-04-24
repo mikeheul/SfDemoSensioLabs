@@ -61,6 +61,8 @@ training:
   trainees: "Alumnos"
   enrolled_trainings: "Formaciones activas"
   unenroll: "Desinscribirse"
+  no_courses: "No hay cursos incluidos en esta formación."
+  no_trainees: "No hay alumnos inscritos en esta formación."
 
 course:
   trainings_included: "Formaciones que incluyen este curso"

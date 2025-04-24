@@ -61,6 +61,8 @@ training:
   trainees: "Teilnehmer"
   enrolled_trainings: "Eingeschriebene Schulungen"
   unenroll: "Abmelden"
+  no_courses: "Keine Kurse sind in dieser Schulung enthalten."
+  no_trainees: "Keine Teilnehmer sind in dieser Schulung eingeschrieben."
 
 course:
   trainings_included: "Schulungen, die diesen Kurs enthalten"
