@@ -2,7 +2,7 @@
 <li class="flex items-center justify-between p-3 bg-gray-100 rounded-md hover:bg-indigo-50 transition duration-300">
     <!-- Display the training title with text color and size styling -->
     <p class="text-md text-gray-800">
-        {{ training.title }} ({{ training.startDate|date('Y-m-d') }} to {{ training.endDate|date('Y-m-d') }})
+        {{ training | translate('title') }} ({{ training.startDate|date('Y-m-d') }} to {{ training.endDate|date('Y-m-d') }})
     </p>
     
     <!-- Link to the training details page, dynamically generated using the slug -->

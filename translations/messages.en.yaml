@@ -97,3 +97,7 @@ form_training:
 api:
   title: "Random Quiz Questions"
   show_answer: "Show Answer"
+
+profile:
+  title: "Profile"
+  enrolled_trainings: "Enrolled Trainings"

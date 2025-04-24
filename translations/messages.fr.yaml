@@ -97,3 +97,7 @@ form_training:
 api:
   title: "API"
   show_answer: "Afficher la Réponse"
+
+profile:
+  title: "Profil"
+  enrolled_trainings: "Formations Suivies"
