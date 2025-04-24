@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1 class="text-2xl font-bold mb-4">Random Quiz Questions</h1>
+    <h1 class="text-2xl font-bold mb-4">{{ 'api.title' | trans }}</h1>
     {% for result in results.results %}
         <div class="border border-slate-400 p-4 mb-2">
             {% if result.category is defined %}
@@ -17,7 +17,7 @@
             <p class="text-sm text-gray-500">Difficulty: {{ result.difficulty | capitalize }}</p>
 
             <details class="mt-2">
-                <summary class="text-blue-600 cursor-pointer">Show Answer</summary>
+                <summary class="text-blue-600 cursor-pointer">{{ 'api.show_answer' | trans }}</summary>
                 <p class="mt-2 font-semibold">{{ result.correct_answer }}</p>
             </details>
 

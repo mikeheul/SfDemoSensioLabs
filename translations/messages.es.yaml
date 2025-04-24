@@ -93,3 +93,7 @@ form_training:
   end_date: "Fecha de Fin"
   price: "Precio"
   submit: "Crear"
+
+api:
+  title: "API"
+  show_answer: "Mostrar Respuesta"

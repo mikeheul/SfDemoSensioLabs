@@ -93,3 +93,7 @@ form_training:
   end_date: "End Date"
   price: "Price"
   submit: "Save"
+
+api:
+  title: "Random Quiz Questions"
+  show_answer: "Show Answer"
