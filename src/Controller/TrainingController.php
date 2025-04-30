@@ -216,11 +216,11 @@ final class TrainingController extends AbstractController
             if (!$isEnrolled) {
                 // Unenroll the user from the training
                 $training->removeTrainee($user);
-                $this->notificationService->createNotification('You have successfully unenrolled from the training: ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You have successfully unenrolled from the training: ' . $training->getTitleEn(), $user);
             } else {
                 // Enroll the user in the training
                 $training->addTrainee($user);
-                $this->notificationService->createNotification('You are now enrolled in this training: ' . $training->getTitle(), $user);
+                $this->notificationService->createNotification('You are now enrolled in this training: ' . $training->getTitleEn(), $user);
 
                 // Dispatch enrollment notification (currently commented out)
                 // $this->bus->dispatch(new TrainingEnrollmentNotification(
