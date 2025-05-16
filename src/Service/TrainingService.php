@@ -8,7 +8,9 @@ use App\Repository\TrainingRepository;
 
 class TrainingService
 {
-    public function __construct(private TrainingRepository $trainingRepository) {}
+    public function __construct(
+        private TrainingRepository $trainingRepository
+    ) {}
     
     public function getAllTrainings($levelFilter = null): array
     {
