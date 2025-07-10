@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
             // Créer la formation
             $training = new Training();
             $training->setTitle($trainingName);
-            $training->setDescription("Formation complète sur $trainingName.");
+            // $training->setDescription("Formation complète sur $trainingName.");
 
             // Définir les dates de début et de fin
             $startDate = $faker->dateTimeBetween('+1 week', '+2 months');

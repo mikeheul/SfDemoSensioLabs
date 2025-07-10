@@ -42,7 +42,7 @@ class Training
     #[Groups(['training:read', 'training_detail'])]
     private ?string $titleEn = null;
     
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['training:read', 'training_detail'])]
     private ?string $descriptionEn = null;
 
