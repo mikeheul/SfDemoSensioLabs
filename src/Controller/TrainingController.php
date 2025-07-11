@@ -65,9 +65,9 @@ final class TrainingController extends AbstractController
         try {
             // Fetch the logged-in user
             $user = $security->getUser();
-
+            
             $levelFilter = $request->query->get('level', null);
-
+           
             // Fetch all or confirmed trainings based on user role (admin vs regular user)
             $trainings = ($user && in_array('ROLE_ADMIN', $user->getRoles())) 
                 ? $this->trainingService->getAllTrainings($levelFilter) 
